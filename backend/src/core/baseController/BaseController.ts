@@ -2,11 +2,11 @@
 import { Request, Response } from "express";
 import { inject } from "inversify";
 
-import { IBaseController } from "./IBaseController";
-import { TYPES } from "../../ioc/types";
-import { IValidator } from "../validator/IValidator";
-import { SuccessResponse } from "../../response/SuccessResponse";
 import { Schema } from "@hapi/joi";
+import { TYPES } from "../../ioc/types";
+import { SuccessResponse } from "../../response/SuccessResponse";
+import { IValidator } from "../validator/IValidator";
+import { IBaseController } from "./IBaseController";
 
 export abstract class BaseController implements IBaseController {
     @inject(TYPES.IValidator)

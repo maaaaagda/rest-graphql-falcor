@@ -1,9 +1,9 @@
-import { IDatabase } from "./IDatabase";
-import { Connection, createConnection } from "mongoose";
 import { inject } from "inversify";
-import { TYPES } from "../../ioc/types";
+import { Connection, createConnection } from "mongoose";
 import { IConfig } from "../../config/IConfig";
+import { TYPES } from "../../ioc/types";
 import { ILogger } from "../logger/ILogger";
+import { IDatabase } from "./IDatabase";
 
 export class Database implements IDatabase {
 
@@ -15,14 +15,14 @@ export class Database implements IDatabase {
     @inject(TYPES.ILogger)
     private readonly _logger: ILogger;
 
-    async getConnection(): Promise<Connection> {
+    public async getConnection(): Promise<Connection> {
         if (!this._connection) {
             this._connection = await this.connect();
         }
         return this._connection;
     }
 
-    async connect(): Promise<Connection> {
+    public async connect(): Promise<Connection> {
         try {
             const connection: Connection = await createConnection(
                 this._config.DB_URL,
@@ -30,9 +30,9 @@ export class Database implements IDatabase {
                     keepAlive: true,
                     reconnectTries: Number.MAX_VALUE,
                     useNewUrlParser: true,
-                    useUnifiedTopology: true
+                    useUnifiedTopology: true,
                 });
-            connection.on('error', (error) => {
+            connection.on("error", (error) => {
                 this.handleError(error);
             });
 

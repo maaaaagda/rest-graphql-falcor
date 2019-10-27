@@ -1,11 +1,11 @@
 import * as bodyParser from "body-parser";
-import express, { Application } from "express";
 import * as cors from "cors";
+import express, { Application } from "express";
 import * as helmet from "helmet";
 
 import { Container } from "inversify";
-import getContainer from "./ioc/inversify.config";
 import { IConfig } from "./config/IConfig";
+import getContainer from "./ioc/inversify.config";
 import { TYPES } from "./ioc/types";
 
 async function bootstrap(): Promise<void> {
@@ -21,7 +21,7 @@ async function bootstrap(): Promise<void> {
     });
 }
 
-function initMiddlewares(app): void {
+function initMiddlewares(app: Application): void {
     app.use(helmet());
     app.use(cors());
     app.use(bodyParser.json());

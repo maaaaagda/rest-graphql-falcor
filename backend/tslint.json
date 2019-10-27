@@ -38,8 +38,8 @@
         "deprecation": true,
         "prefer-readonly": true,
         "semicolon": true,
-        "underscore-privates": true,
         "prefer-const": true,
-        "quotemark": [true, "double"]
+        "quotemark": [true, "double"],
+        "object-literal-sort-keys": false
     }
 }

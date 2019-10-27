@@ -1,19 +1,18 @@
 import "reflect-metadata";
 
 import { Container } from "inversify";
-import { IConfig } from "../config/IConfig";
-import { TYPES } from "./types";
 import { Config } from "../config/Config";
-import { IValidator } from "../core/validator/IValidator";
-import { Validator } from "../core/validator/Validator";
+import { IConfig } from "../config/IConfig";
+import { Database } from "../core/database/Database";
+import { IDatabase } from "../core/database/IDatabase";
 import { ILogger } from "../core/logger/ILogger";
 import { Logger } from "../core/logger/Logger";
-import { IDatabase } from "../core/database/IDatabase";
-import { Database } from "../core/database/Database";
-
+import { IValidator } from "../core/validator/IValidator";
+import { Validator } from "../core/validator/Validator";
+import { TYPES } from "./types";
 
 const getContainer: (() => Container) = (): Container => {
-  const container = new Container();
+  const container: Container = new Container();
   container.bind<IConfig>(TYPES.IConfig)
     .to(Config)
     .inSingletonScope();
@@ -31,6 +30,6 @@ const getContainer: (() => Container) = (): Container => {
     .inSingletonScope();
   
   return container;
-}
+};
 
 export default getContainer;

@@ -1,5 +1,5 @@
-import * as dotenv from 'dotenv';
-import { IConfig } from './IConfig';
+import * as dotenv from "dotenv";
+import { IConfig } from "./IConfig";
 
 export class Config implements IConfig {
   public PORT: number;
@@ -19,7 +19,7 @@ export class Config implements IConfig {
 
     for (const key of this.requiredEnvs) {
       if (!(key in process.env)) {
-        throw `${key} is required, and is not specified in environment variables`;
+        throw new Error(`${key} is required, and is not specified in environment variables`);
       }
     }
 

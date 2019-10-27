@@ -13,7 +13,7 @@ export class Logger implements ILogger {
         this.log(message);
     }
 
-    private log(message): void {
+    private log(message: string): void {
         console.log(message);
     }
 }
