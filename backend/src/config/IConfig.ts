@@ -1,5 +1,6 @@
 export interface IConfig {
-    PORT: string;
-    
+    PORT: number;
+    DB_URL: string;
+
     loadConfiguration(): void;
 }

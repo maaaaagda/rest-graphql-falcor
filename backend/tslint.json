@@ -6,9 +6,6 @@
             "../models/entities/*"
         ]
     },
-    "rulesDirectory": [
-        "./rules/"
-    ],
     "jsRules": {},
     "rules": {
         "no-trailing-whitespace": false,

@@ -2,13 +2,15 @@ import * as dotenv from 'dotenv';
 import { IConfig } from './IConfig';
 
 export class Config implements IConfig {
-  public PORT: string;
+  public PORT: number;
+  public DB_URL: string;
 
   private readonly requiredEnvs: string[];
 
   constructor() {
     this.requiredEnvs = [
       "PORT",
+      "DB_URL",
     ];
   }
 
@@ -19,7 +21,9 @@ export class Config implements IConfig {
       if (!(key in process.env)) {
         throw `${key} is required, and is not specified in environment variables`;
       }
-      this[key] = process.env[key];
     }
+
+    this.PORT = parseInt(process.env.PORT, 10);
+    this.DB_URL = process.env.DB_URL;
   }
 }

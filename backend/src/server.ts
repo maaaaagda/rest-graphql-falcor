@@ -1,5 +1,5 @@
 import * as bodyParser from "body-parser";
-import * as express from "express";
+import express, { Application } from "express";
 import * as cors from "cors";
 import * as helmet from "helmet";
 
@@ -12,8 +12,20 @@ async function bootstrap(): Promise<void> {
     const container: Container = getContainer();
     const config: IConfig = container.get<IConfig>(TYPES.ILogger);
 
-    const app = express();
-    const port = process.env.PORT || 3000;
+    const app: Application = express();
+    const port: number = config.PORT || 3000;
+
+    initMiddlewares(app);
+    app.listen(port, () => {
+        console.log(`App listening on port ${port}`);
+    });
+}
+
+function initMiddlewares(app): void {
+    app.use(helmet());
+    app.use(cors());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded());
 }
 
 bootstrap();
