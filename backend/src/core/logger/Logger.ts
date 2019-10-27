@@ -1,5 +1,7 @@
 import { ILogger } from "./ILogger";
+import { injectable } from "inversify";
 
+@injectable()
 export class Logger implements ILogger {
     public info(message: string): void {
         this.log(message);

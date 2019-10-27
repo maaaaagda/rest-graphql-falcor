@@ -2,9 +2,8 @@
   "name": "diet-in-a-box",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "ts-node ./src/server.ts",
     "lint": "tslint -c ./tslint.json --project ./tsconfig.json",
     "lint:fix": "tslint -c ./tslint.json --project ./tsconfig.json --fix"
   },
@@ -17,7 +16,7 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "helmet": "^3.16.0",
+    "helmet": "^3.21.2",
     "inversify": "^5.0.1",
     "jsonwebtoken": "^8.5.0",
     "moment": "^2.24.0",

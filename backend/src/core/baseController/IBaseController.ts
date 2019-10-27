@@ -1,5 +1,5 @@
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 
 export interface IBaseController {
-    process(req: Request, res: Response): Promise<Response>;
+    process(req: Request, res: Response, next: NextFunction): Promise<Response>;
 }

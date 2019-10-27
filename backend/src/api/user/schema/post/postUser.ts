@@ -2,11 +2,11 @@ import Joi = require("@hapi/joi");
 import moment from "moment";
 import { UserRole } from "../../model/UserRole";
 
-export const postUserSchema: Joi.Schema = Joi.object().keys({
+export const userPostSchema: Joi.Schema = Joi.object().keys({
     name: Joi.string().required(),
     email: Joi.string().email().lowercase().required(),
     password: Joi.string().required(),
-    role: Joi.string().allow([UserRole.USER, UserRole.ADMIN]).default(UserRole.USER),
+    role: Joi.string().valid(UserRole.USER, UserRole.ADMIN).default(UserRole.USER),
     verification: Joi.string(),
     verified: Joi.boolean().default(false),
     phone: Joi.string(),

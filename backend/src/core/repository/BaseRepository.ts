@@ -1,24 +1,32 @@
-import { inject } from "inversify";
-import { Connection, Document, Model, MongooseDocument } from "mongoose";
+import { inject, injectable } from "inversify";
+import { Connection, Document, Model, Schema } from "mongoose";
 import { TYPES } from "../../ioc/types";
 import { IDatabase } from "../database/IDatabase";
 import { IBaseRepository } from "./IBaseRepository";
 
+@injectable()
 export abstract class BaseRepository<T extends Document> implements IBaseRepository<T> {
-    protected _model: string;
+    protected model: string;
+    protected schema: Schema<T>;
 
     @inject(TYPES.IDatabase)
     private readonly _db: IDatabase;
 
-    public async insertOne(data: T): Promise<MongooseDocument> {
+    public async insertOne(data: T): Promise<T> {
         const model: Model<T> = await this.getModel();
         return model.create(data);
     }
 
+    public async getMany(limit?: number, page?: number): Promise<T[]> {
+        const model: Model<T> = await this.getModel();
+        if (!limit || !page) {
+            return model.find({});
+        }
+        return model.find({}).limit(limit).skip(page*limit);
+    }
+
     private async getModel(): Promise<Model<T>> {
         const connection: Connection = await this._db.getConnection();
-        console.log("Does this work?");
-        console.log(this._model.toString());
-        return connection.model<T>(this._model);
+        return connection.model<T>(this.model, this.schema);
     }
 }

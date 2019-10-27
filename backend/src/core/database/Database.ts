@@ -1,10 +1,11 @@
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { Connection, createConnection } from "mongoose";
 import { IConfig } from "../../config/IConfig";
 import { TYPES } from "../../ioc/types";
 import { ILogger } from "../logger/ILogger";
 import { IDatabase } from "./IDatabase";
 
+@injectable()
 export class Database implements IDatabase {
 
     private _connection: Connection;

@@ -1,6 +1,8 @@
 import * as dotenv from "dotenv";
 import { IConfig } from "./IConfig";
+import { injectable } from "inversify";
 
+@injectable()
 export class Config implements IConfig {
   public PORT: number;
   public DB_URL: string;
@@ -12,13 +14,14 @@ export class Config implements IConfig {
       "PORT",
       "DB_URL",
     ];
+    this.loadConfiguration();
   }
 
   public loadConfiguration(): void {
     dotenv.config();
 
     for (const key of this.requiredEnvs) {
-      if (!(key in process.env)) {
+      if (!process.env[key]) {
         throw new Error(`${key} is required, and is not specified in environment variables`);
       }
     }

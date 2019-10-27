@@ -10,6 +10,8 @@ import { Logger } from "../core/logger/Logger";
 import { IValidator } from "../core/validator/IValidator";
 import { Validator } from "../core/validator/Validator";
 import { TYPES } from "./types";
+import { IErrorHandler } from "../core/errorHandler/IErrorHandler";
+import { ErrorHandler } from "../core/errorHandler/ErrorHandler";
 
 const getContainer: (() => Container) = (): Container => {
   const container: Container = new Container();
@@ -27,6 +29,10 @@ const getContainer: (() => Container) = (): Container => {
 
   container.bind<IDatabase>(TYPES.IDatabase)
     .to(Database)
+    .inSingletonScope();
+
+  container.bind<IErrorHandler>(TYPES.IErrorHandler)
+    .to(ErrorHandler)
     .inSingletonScope();
   
   return container;
