@@ -11,6 +11,7 @@ import { TYPES } from "./ioc/types";
 import { initUserRoutes } from "./api/user";
 import { IErrorHandler } from "./core/errorHandler/IErrorHandler";
 import { IDatabase } from "./core/database/IDatabase";
+import { initDietOrderRoutes } from "./api/dietOrder";
 
 async function bootstrap(): Promise<void> {
     const container: Container = getContainer();
@@ -26,6 +27,7 @@ async function bootstrap(): Promise<void> {
 
     const apiPrefix: string = "/api";
     initUserRoutes(app, apiPrefix);
+    initDietOrderRoutes(app, apiPrefix)
 
     app.use(errorHandler.handle());
     process.on("unhandledRejection", (reason: any, p: any) => {
