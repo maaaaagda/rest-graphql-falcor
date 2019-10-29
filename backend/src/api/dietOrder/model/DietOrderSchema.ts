@@ -12,7 +12,7 @@ export const dietOrderSchema: mongoose.Schema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: [Object.values(OrderStatus)],
+      enum: [...Object.values(OrderStatus)],
       default: OrderStatus.IN_REALISATION,
     }
   });

@@ -10,7 +10,7 @@ import { IGetDietOrderController } from "./IGetController";
 @injectable()
 export class GetDietOrderController extends BaseController implements IGetDietOrderController {
 
-    @inject(DIET_ORDER_REPOSITORIES.IUserRepository)
+    @inject(DIET_ORDER_REPOSITORIES.IDietOrderRepository)
     private readonly _dietOrderRepository: IDietOrderRepository;
 
     async process(req: Request, res: Response): Promise<Response> {
