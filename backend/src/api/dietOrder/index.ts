@@ -6,6 +6,7 @@ import { Application } from "express";
 import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
 import { IGetDietOrderController } from "./controller/getDietOrderController/IGetController";
+import { IPutDietOrderController } from "./controller/putDietOrderController/IPutController";
 
 export const initDietOrderRoutes = (app: Application, prefix: string = "" ): void => {
   const container: Container = getContainer();
@@ -15,7 +16,10 @@ export const initDietOrderRoutes = (app: Application, prefix: string = "" ): voi
 
   const postDietOrderController: IPostDietOrderController = container.get(DIET_ORDER_TYPES.IPostDietOrderController);
   const getDietOrderController: IGetDietOrderController = container.get(DIET_ORDER_TYPES.IGetDietOrderController);
+  const updateDietOrderController: IPutDietOrderController = container.get(DIET_ORDER_TYPES.IPutDietOrderController)
 
-  app.post(`${prefix}/dietOrder`, postDietOrderController.process.bind(postDietOrderController));
-  app.get(`${prefix}/dietOrder`, getDietOrderController.process.bind(getDietOrderController));
+  const path = `${prefix}/dietOrder`
+  app.post(path, postDietOrderController.process.bind(postDietOrderController));
+  app.get(path, getDietOrderController.process.bind(getDietOrderController));
+  app.put(`${path}/:id`, updateDietOrderController.process.bind(updateDietOrderController))
 };

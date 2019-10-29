@@ -17,6 +17,8 @@ import { IDietOrderRepository } from "../repository/IDietOrderRepository";
 import { DietOrderRepository } from "../repository/DietOrderRepository";
 import { IGetDietOrderController } from "../controller/getDietOrderController/IGetController";
 import { GetDietOrderController } from "../controller/getDietOrderController/GetController";
+import { IPutDietOrderController } from "../controller/putDietOrderController/IPutController";
+import { PutDietOrderController } from "../controller/putDietOrderController/PutController";
 
 const getContainer: (() => Container) = (): Container => {
   const container: Container = new Container();
@@ -45,6 +47,10 @@ const getContainer: (() => Container) = (): Container => {
 
   container.bind<IGetDietOrderController>(DIET_ORDER_TYPES.IGetDietOrderController)
     .to(GetDietOrderController)
+    .inSingletonScope();
+
+  container.bind<IPutDietOrderController>(DIET_ORDER_TYPES.IPutDietOrderController)
+    .to(PutDietOrderController)
     .inSingletonScope();
 
   return container;

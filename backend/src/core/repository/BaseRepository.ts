@@ -25,6 +25,17 @@ export abstract class BaseRepository<T extends Document> implements IBaseReposit
         return model.find({}).limit(limit).skip(page*limit);
     }
 
+    public async getOne(params: object): Promise<T> {
+        const model: Model<T> = await this.getModel();
+        const p = await model.find(params)
+        return model.findOne(params)
+    }
+
+    public async updateOne(query: object, params: object): Promise<T> {
+        const model: Model<T> = await this.getModel();
+        return model.updateOne(query, params)
+    }
+
     private async getModel(): Promise<Model<T>> {
         const connection: Connection = await this._db.getConnection();
         return connection.model<T>(this.model, this.schema);

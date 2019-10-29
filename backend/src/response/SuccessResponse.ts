@@ -8,6 +8,10 @@ export class SuccessResponse {
         return new this(200, message);
     }
 
+    public static Updated(message: any = "Updated"): SuccessResponse {
+        return new this(200, message);
+    }
+
     public status: number;
     public message: any;
 
