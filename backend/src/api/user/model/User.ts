@@ -2,7 +2,7 @@ import { Document } from "mongoose";
 import { Entity } from "../../../core/database/Entity";
 
 export interface IUser extends Document, Entity {
-    id: string,
+    id: string;
     name: string;
     email: string;
     password: string;

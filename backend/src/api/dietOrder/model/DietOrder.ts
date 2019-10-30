@@ -1,6 +1,6 @@
 import { Document } from "mongoose";
-import OrderStatus from "./OrderStatus";
 import { Entity } from "../../../core/database/Entity";
+import { OrderStatus } from "./OrderStatus";
 
 export interface IDietOrder extends Document, Entity {
     id: string;

@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import uuidv1 from "uuid/v1";
-import OrderStatus from "./OrderStatus";
+import { OrderStatus } from "./OrderStatus";
 
 export const dietOrderSchema: mongoose.Schema = new mongoose.Schema(
   {

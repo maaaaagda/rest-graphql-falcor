@@ -1,5 +1,5 @@
 import Joi = require("@hapi/joi");
-import OrderStatus from "../../model/OrderStatus";
+import { OrderStatus } from "../../model/OrderStatus";
 
 export const dietOrderPostSchema: Joi.Schema = Joi.object().keys({
     name: Joi.string().required(),
