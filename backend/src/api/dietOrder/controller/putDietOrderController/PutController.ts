@@ -20,7 +20,7 @@ export class PutDietOrderController extends BaseController implements IPutDietOr
         const dietOrderToModify: IDietOrder = await this._dietOrderRepository.getOne({id: req.params.id})
         if(dietOrderToModify) {
             const updated = await this._dietOrderRepository.updateOne({id: req.params.id},  { $set: { status: req.body.status }})
-            return res.json(SuccessResponse.Updated(updated));
+            return res.json(SuccessResponse.Ok(updated));
         }
         return res.json(ErrorResponse.BadRequest());
 
