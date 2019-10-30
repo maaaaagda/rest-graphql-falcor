@@ -30,9 +30,9 @@ export abstract class BaseRepository<T extends Document> implements IBaseReposit
         return model.findOne(params);
     }
 
-    public async updateOne(query: object, params: object): Promise<T> {
+    public async updateOneById(id: string, params: object): Promise<T> {
         const model: Model<T> = await this.getModel();
-        return model.updateOne(query, params);
+        return model.updateOne({id}, params);
     }
 
     private async getModel(): Promise<Model<T>> {
