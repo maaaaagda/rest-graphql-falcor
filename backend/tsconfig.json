@@ -12,10 +12,11 @@
       "resolveJsonModule": true,
       "esModuleInterop": true,
       "types": ["node", "reflect-metadata"],
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "noUnusedLocals": true
     },
     "exclude": [
       "tslint",
       "__tests__/KiwSearchFlight"
     ]
-  }
+}
