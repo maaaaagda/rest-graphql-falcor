@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
-import OrderStatus from "./OrderStatus";
 import uuidv1 from "uuid/v1";
+import OrderStatus from "./OrderStatus";
 
 export const dietOrderSchema: mongoose.Schema = new mongoose.Schema(
   {
     id: {
       type: String,
       unique: true,
-      default: uuidv1()
+      default: uuidv1(),
     },
     name: {
       type: String,
@@ -20,5 +20,5 @@ export const dietOrderSchema: mongoose.Schema = new mongoose.Schema(
       type: String,
       enum: [...Object.values(OrderStatus)],
       default: OrderStatus.IN_REALISATION,
-    }
+    },
   });

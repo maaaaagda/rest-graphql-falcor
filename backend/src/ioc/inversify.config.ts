@@ -5,13 +5,13 @@ import { Config } from "../config/Config";
 import { IConfig } from "../config/IConfig";
 import { Database } from "../core/database/Database";
 import { IDatabase } from "../core/database/IDatabase";
+import { ErrorHandler } from "../core/errorHandler/ErrorHandler";
+import { IErrorHandler } from "../core/errorHandler/IErrorHandler";
 import { ILogger } from "../core/logger/ILogger";
 import { Logger } from "../core/logger/Logger";
 import { IValidator } from "../core/validator/IValidator";
 import { Validator } from "../core/validator/Validator";
 import { TYPES } from "./types";
-import { IErrorHandler } from "../core/errorHandler/IErrorHandler";
-import { ErrorHandler } from "../core/errorHandler/ErrorHandler";
 
 const getContainer: (() => Container) = (): Container => {
   const container: Container = new Container();

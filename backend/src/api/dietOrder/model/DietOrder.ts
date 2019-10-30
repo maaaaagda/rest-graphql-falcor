@@ -2,8 +2,8 @@ import { Document } from "mongoose";
 import OrderStatus from "./OrderStatus";
 
 export interface IDietOrder extends Document {
-    id: string,
+    id: string;
     name: string;
     dates: string [];
-    status: OrderStatus
+    status: OrderStatus;
 }

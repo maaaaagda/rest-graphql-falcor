@@ -1,24 +1,24 @@
 import "reflect-metadata";
 
 import { Container } from "inversify";
-import { TYPES } from "../../../ioc/types";
 import { Config } from "../../../config/Config";
 import { IConfig } from "../../../config/IConfig";
+import { Database } from "../../../core/database/Database";
+import { IDatabase } from "../../../core/database/IDatabase";
+import { ILogger } from "../../../core/logger/ILogger";
+import { Logger } from "../../../core/logger/Logger";
 import { IValidator } from "../../../core/validator/IValidator";
 import { Validator } from "../../../core/validator/Validator";
-import { ILogger } from "../../../core/logger/ILogger";
-import { IDatabase } from "../../../core/database/IDatabase";
-import { Logger } from "../../../core/logger/Logger";
-import { Database } from "../../../core/database/Database";
-import { IPostDietOrderController } from "../controller/postDietOrderController/IPostController";
-import { DIET_ORDER_TYPES, DIET_ORDER_REPOSITORIES } from "./DietOrderTypes";
-import { PostDietOrderController } from "../controller/postDietOrderController/PostController";
-import { IDietOrderRepository } from "../repository/IDietOrderRepository";
-import { DietOrderRepository } from "../repository/DietOrderRepository";
-import { IGetDietOrderController } from "../controller/getDietOrderController/IGetController";
+import { TYPES } from "../../../ioc/types";
 import { GetDietOrderController } from "../controller/getDietOrderController/GetController";
+import { IGetDietOrderController } from "../controller/getDietOrderController/IGetController";
+import { IPostDietOrderController } from "../controller/postDietOrderController/IPostController";
+import { PostDietOrderController } from "../controller/postDietOrderController/PostController";
 import { IPutDietOrderController } from "../controller/putDietOrderController/IPutController";
 import { PutDietOrderController } from "../controller/putDietOrderController/PutController";
+import { DietOrderRepository } from "../repository/DietOrderRepository";
+import { IDietOrderRepository } from "../repository/IDietOrderRepository";
+import { DIET_ORDER_REPOSITORIES, DIET_ORDER_TYPES } from "./DietOrderTypes";
 
 const getContainer: (() => Container) = (): Container => {
   const container: Container = new Container();

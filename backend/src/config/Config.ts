@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
-import { IConfig } from "./IConfig";
 import { injectable } from "inversify";
+import { IConfig } from "./IConfig";
 
 @injectable()
 export class Config implements IConfig {

@@ -1,7 +1,7 @@
 import Joi, { ValidationResult } from "@hapi/joi";
-import { IValidator } from "./IValidator";
 import { injectable } from "inversify";
 import { ValidationError } from "../error/ValidationError";
+import { IValidator } from "./IValidator";
 
 @injectable()
 export class Validator implements IValidator {
