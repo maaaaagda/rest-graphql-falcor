@@ -1,10 +1,10 @@
-import { Container } from "inversify";
-import getContainer from "./ioc/inversify.config";
-import { IPostUserController } from "./controller/postUserController/IPostController";
-import { USER_TYPES } from "./ioc/UserTypes";
 import { Application } from "express";
+import { Container } from "inversify";
 import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
+import { IPostUserController } from "./controller/postUserController/IPostController";
+import getContainer from "./ioc/inversify.config";
+import { USER_TYPES } from "./ioc/UserTypes";
 
 export const initUserRoutes = (app: Application, prefix: string = "" ): void => {
   const container: Container = getContainer();

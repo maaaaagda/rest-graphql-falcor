@@ -1,9 +1,16 @@
 import moment from "moment";
 import mongoose from "mongoose";
+import uuidv1 from "uuid/v1";
+
 import { UserRole } from "./UserRole";
 
 export const userSchema: mongoose.Schema = new mongoose.Schema(
   {
+    id: {
+      type: String,
+      unique: true,
+      default: uuidv1(),
+    },
     name: {
       type: String,
       required: true,

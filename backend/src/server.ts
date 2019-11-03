@@ -1,16 +1,17 @@
-import "reflect-metadata";
 import * as bodyParser from "body-parser";
 import express, { Application } from "express";
+import "reflect-metadata";
 const helmet = require("helmet");
 const cors = require("cors");
 
 import { Container } from "inversify";
+import { initDietOrderRoutes } from "./api/dietOrder";
+import { initUserRoutes } from "./api/user";
 import { IConfig } from "./config/IConfig";
+import { IDatabase } from "./core/database/IDatabase";
+import { IErrorHandler } from "./core/errorHandler/IErrorHandler";
 import getContainer from "./ioc/inversify.config";
 import { TYPES } from "./ioc/types";
-import { initUserRoutes } from "./api/user";
-import { IErrorHandler } from "./core/errorHandler/IErrorHandler";
-import { IDatabase } from "./core/database/IDatabase";
 
 async function bootstrap(): Promise<void> {
     const container: Container = getContainer();
@@ -26,6 +27,7 @@ async function bootstrap(): Promise<void> {
 
     const apiPrefix: string = "/api";
     initUserRoutes(app, apiPrefix);
+    initDietOrderRoutes(app, apiPrefix);
 
     app.use(errorHandler.handle());
     process.on("unhandledRejection", (reason: any, p: any) => {
