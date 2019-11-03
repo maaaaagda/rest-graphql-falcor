@@ -4,7 +4,7 @@ import { OrderStatus } from "./OrderStatus";
 
 export interface IDietOrder extends Document, Entity {
   _id: string;
-  diet: string;
+  dietId: string;
   dates: string[];
   status: OrderStatus;
 }

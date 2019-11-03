@@ -7,7 +7,7 @@ export const dietOrderSchema: mongoose.Schema = new mongoose.Schema({
     type: String,
     default: uuidv1()
   },
-  diet: {
+  dietId: {
     type: String,
     ref: "DietOrder",
     required: true

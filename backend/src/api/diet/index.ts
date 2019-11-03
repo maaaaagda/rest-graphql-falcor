@@ -27,8 +27,5 @@ export const initDietRoutes = (app: Application, prefix: string = ""): void => {
   const path: string = `${prefix}/diet`;
   app.post(path, postDietController.process.bind(postDietController));
   app.get(path, getDietController.process.bind(getDietController));
-  app.put(
-    `${path}/:id`,
-    updateDietController.process.bind(updateDietController)
-  );
+  app.put(path, updateDietController.process.bind(updateDietController));
 };

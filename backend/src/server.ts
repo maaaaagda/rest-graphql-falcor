@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 
 import { Container } from "inversify";
+import { initDietRoutes } from "./api/diet";
 import { initDietOrderRoutes } from "./api/dietOrder";
 import { initUserRoutes } from "./api/user";
 import { IConfig } from "./config/IConfig";
@@ -12,7 +13,6 @@ import { IDatabase } from "./core/database/IDatabase";
 import { IErrorHandler } from "./core/errorHandler/IErrorHandler";
 import getContainer from "./ioc/inversify.config";
 import { TYPES } from "./ioc/types";
-import { initDietRoutes } from "./api/diet";
 
 async function bootstrap(): Promise<void> {
   const container: Container = getContainer();
