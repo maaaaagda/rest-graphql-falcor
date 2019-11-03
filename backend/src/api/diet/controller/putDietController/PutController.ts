@@ -18,7 +18,7 @@ export class PutDietController extends BaseController
   public async process(req: Request, res: Response): Promise<Response> {
     this._validator.validate(req.body, dietPutSchema);
     const dietToModify: IDiet = await this._dietRepository.getOne({
-      id: req.params.id
+      _id: req.params.id
     });
     if (dietToModify) {
       const updated = await this._dietRepository.updateOneById(req.params.id, {

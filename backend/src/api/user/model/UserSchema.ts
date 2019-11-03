@@ -6,65 +6,68 @@ import { UserRole } from "./UserRole";
 
 export const userSchema: mongoose.Schema = new mongoose.Schema(
   {
-    id: {
+    _id: {
       type: String,
-      unique: true,
       default: uuidv1(),
+      primary_key: true
     },
     name: {
       type: String,
-      required: true,
+      required: true
     },
     email: {
       type: String,
       unique: true,
       required: true,
-      index: true,
+      index: true
     },
     password: {
       type: String,
       required: true,
-      select: false,
+      select: false
     },
     role: {
       type: String,
       enum: [UserRole.ADMIN, UserRole.USER],
-      default: UserRole.USER,
+      default: UserRole.USER
     },
     verification: {
-      type: String,
+      type: String
     },
     verified: {
       type: Boolean,
-      default: false,
+      default: false
     },
     phone: {
-      type: String,
+      type: String
     },
     city: {
-      type: String,
+      type: String
     },
     country: {
-      type: String,
+      type: String
     },
     urlTwitter: {
-      type: String,
+      type: String
     },
     urlGitHub: {
-      type: String,
+      type: String
     },
     loginAttempts: {
       type: Number,
       default: 0,
-      select: false,
+      select: false
     },
     blockExpires: {
       type: String,
-      default: moment().utc().toISOString(),
-      select: false,
-    },
+      default: moment()
+        .utc()
+        .toISOString(),
+      select: false
+    }
   },
   {
     versionKey: false,
-    timestamps: true,
-  });
+    timestamps: true
+  }
+);
