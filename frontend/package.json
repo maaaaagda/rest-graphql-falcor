@@ -1,18 +1,28 @@
 {
-  "name": "diet-in-a-box",
+  "name": "diab",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@7ninjas/scss-mixins": "^1.0.1",
     "@blueprintjs/core": "^3.19.1",
+    "bootstrap": "^4.3.1",
+    "moment": "^2.24.0",
+    "node-sass": "^4.13.0",
     "react": "^16.10.2",
+    "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
+    "react-hot-loader": "^4.12.15",
+    "react-scripts": "3.2.0",
+    "recharts": "^1.8.5",
+    "restful-react": "^9.1.0",
+    "typescript": "3.6.4"
   },
+  "proxy": "http://localhost:9000",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -27,6 +37,30 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "24.0.19",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^12.11.2",
+    "@types/react": "16.9.9",
+    "@types/react-dom": "16.9.2",
+    "@types/recharts": "^1.8.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2",
+    "react-app-rewire-hot-loader": "^2.0.1",
+    "react-app-rewired": "^2.1.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,css,json,md,ts,tsx}": [
+      "prettier --write",
+      "git add"
     ]
   }
 }
