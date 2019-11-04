@@ -1,6 +1,7 @@
 import { Application } from "express";
 import { Container } from "inversify";
 import { IDatabase } from "../../core/database/IDatabase";
+import { handleEndpointError } from "../../core/errorHandler/handleEndpointError";
 import { TYPES } from "../../ioc/types";
 import { IGetDietOrderController } from "./controller/getDietOrderController/IGetController";
 import { IPostDietOrderController } from "./controller/postDietOrderController/IPostController";
@@ -18,8 +19,8 @@ export const initDietOrderRoutes = (app: Application, prefix: string = "" ): voi
   const getDietOrderController: IGetDietOrderController = container.get(DIET_ORDER_TYPES.IGetDietOrderController);
   const updateDietOrderController: IPutDietOrderController = container.get(DIET_ORDER_TYPES.IPutDietOrderController);
 
-  const path = `${prefix}/dietOrder`;
-  app.post(path, postDietOrderController.process.bind(postDietOrderController));
-  app.get(path, getDietOrderController.process.bind(getDietOrderController));
-  app.put(`${path}/:id`, updateDietOrderController.process.bind(updateDietOrderController));
+  const path = `${prefix}/diet-order`;
+  app.post(path, handleEndpointError(postDietOrderController.process.bind(postDietOrderController)));
+  app.get(path, handleEndpointError(getDietOrderController.process.bind(getDietOrderController)));
+  app.put(`${path}/:id`, handleEndpointError(updateDietOrderController.process.bind(updateDietOrderController)));
 };
