@@ -1,18 +1,15 @@
 import React from 'react'
-import './App.css'
+import { Card, Elevation } from '@blueprintjs/core'
+import { analyticQuery } from './rest'
 
-const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer">
-        Learn React
-      </a>
-    </header>
-  </div>
-)
+const App = () => {
+  const { data, loading } = analyticQuery({
+    source: 'bleh',
+    key: 'a',
+    grain: 'a',
+  })
+
+  return <Card elevation={Elevation.THREE} />
+}
 
 export default App
