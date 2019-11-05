@@ -2,6 +2,7 @@ import { injectable } from "inversify";
 import jwt from "jsonwebtoken";
 import { AuthenticationError } from "../error/AuthenticationError";
 import { IAuthenticator } from "./IAuthenticator";
+const TOKEN_REGEX: RegExp = /^Bearer (?<TOKEN>.+)$/;
 
 @injectable()
 export class Authenticator implements IAuthenticator {
@@ -10,7 +11,10 @@ export class Authenticator implements IAuthenticator {
       throw new AuthenticationError("Authorization required");
     }
     try {
-      jwt.verify(authorization, process.env.JWT_SECRET);
+      const tokenRegexMatch: RegExpMatchArray = authorization.match(
+        TOKEN_REGEX
+      );
+      jwt.verify(tokenRegexMatch.groups.TOKEN, process.env.JWT_SECRET);
     } catch (err) {
       throw new AuthenticationError("Not authorized");
     }
