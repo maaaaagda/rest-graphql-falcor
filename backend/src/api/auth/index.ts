@@ -7,7 +7,7 @@ import { ILoginController } from "./controller/loginController/ILoginController"
 import { AUTH_TYPES } from "./ioc/AuthTypes";
 import getContainer from "./ioc/inversify.config";
 
-export const initUserRoutes = (app: Application, prefix: string = ""): void => {
+export const initAuthRoutes = (app: Application, prefix: string = ""): void => {
   const container: Container = getContainer();
 
   const database: IDatabase = container.get<IDatabase>(TYPES.IDatabase);
