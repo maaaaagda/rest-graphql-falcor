@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { inject, injectable } from "inversify";
+import { IAuthenticator } from "../../../../core/auth/IAuthenticator";
 import { IValidator } from "../../../../core/validator/IValidator";
 import { TYPES } from "../../../../ioc/types";
 import { SuccessResponse } from "../../../../response/SuccessResponse";
@@ -15,10 +16,14 @@ export class PostUserController implements IPostUserController {
     @inject(TYPES.IValidator)
     protected readonly _validator: IValidator;
 
+    @inject(TYPES.IAuthenticator)
+    private readonly _authenticator: IAuthenticator;
+
     @inject(USER_REPOSITORIES.IUserRepository)
     private readonly _userRepository: IUserRepository;
 
     public async process(req: Request, res: Response): Promise<Response> {
+        this._authenticator.authenticate(req.headers.authorization);
         this._validator.validate(req.body, userPostSchema);
         const user: IUser = await this._userRepository.insertOne(req.body);
 

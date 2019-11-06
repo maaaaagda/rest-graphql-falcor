@@ -3,6 +3,8 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { Config } from "../config/Config";
 import { IConfig } from "../config/IConfig";
+import { Authenticator } from "../core/auth/Authenticator";
+import { IAuthenticator } from "../core/auth/IAuthenticator";
 import { Database } from "../core/database/Database";
 import { IDatabase } from "../core/database/IDatabase";
 import { ErrorHandler } from "../core/errorHandler/ErrorHandler";
@@ -13,28 +15,38 @@ import { IValidator } from "../core/validator/IValidator";
 import { Validator } from "../core/validator/Validator";
 import { TYPES } from "./types";
 
-const getContainer: (() => Container) = (): Container => {
+const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
-  container.bind<IConfig>(TYPES.IConfig)
+  container
+    .bind<IConfig>(TYPES.IConfig)
     .to(Config)
     .inSingletonScope();
 
-  container.bind<IValidator>(TYPES.IValidator)
+  container
+    .bind<IValidator>(TYPES.IValidator)
     .to(Validator)
     .inSingletonScope();
 
-  container.bind<ILogger>(TYPES.ILogger)
+  container
+    .bind<ILogger>(TYPES.ILogger)
     .to(Logger)
     .inSingletonScope();
 
-  container.bind<IDatabase>(TYPES.IDatabase)
+  container
+    .bind<IDatabase>(TYPES.IDatabase)
     .to(Database)
     .inSingletonScope();
 
-  container.bind<IErrorHandler>(TYPES.IErrorHandler)
+  container
+    .bind<IErrorHandler>(TYPES.IErrorHandler)
     .to(ErrorHandler)
     .inSingletonScope();
-  
+
+  container
+    .bind<IAuthenticator>(TYPES.IAuthenticator)
+    .to(Authenticator)
+    .inSingletonScope();
+
   return container;
 };
 

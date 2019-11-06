@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 
 import { Container } from "inversify";
+import { initAuthRoutes } from "./api/auth";
 import { initDietRoutes } from "./api/diet";
 import { initDietOrderRoutes } from "./api/dietOrder";
 import { initUserRoutes } from "./api/user";
@@ -29,6 +30,7 @@ async function bootstrap(): Promise<void> {
   initMiddlewares(app);
 
   const apiPrefix: string = "/api";
+  initAuthRoutes(app, apiPrefix);
   initUserRoutes(app, apiPrefix);
   initDietOrderRoutes(app, apiPrefix);
   initDietRoutes(app, apiPrefix);

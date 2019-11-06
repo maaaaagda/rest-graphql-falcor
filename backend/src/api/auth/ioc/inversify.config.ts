@@ -12,15 +12,12 @@ import { Logger } from "../../../core/logger/Logger";
 import { IValidator } from "../../../core/validator/IValidator";
 import { Validator } from "../../../core/validator/Validator";
 import { TYPES } from "../../../ioc/types";
-import { GetDietController } from "../controller/getDietController/GetController";
-import { IGetDietController } from "../controller/getDietController/IGetController";
-import { IPostDietController } from "../controller/postDietController/IPostController";
-import { PostDietController } from "../controller/postDietController/PostController";
-import { IPutDietController } from "../controller/putDietController/IPutController";
-import { PutDietController } from "../controller/putDietController/PutController";
-import { DietRepository } from "../repository/DietRepository";
-import { IDietRepository } from "../repository/IDietRepository";
-import { DIET_ORDER_REPOSITORIES, DIET_ORDER_TYPES } from "./DietTypes";
+import { USER_REPOSITORIES } from "../../user/ioc/UserTypes";
+import { IUserRepository } from "../../user/repository/IUserRepository";
+import { UserRepository } from "../../user/repository/UserRepository";
+import { ILoginController } from "../controller/loginController/ILoginController";
+import { LoginController } from "../controller/loginController/LoginController";
+import { AUTH_TYPES } from "./AuthTypes";
 
 const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
@@ -45,26 +42,15 @@ const getContainer: () => Container = (): Container => {
     .inSingletonScope();
 
   container
-    .bind<IDietRepository>(DIET_ORDER_REPOSITORIES.IDietRepository)
-    .to(DietRepository);
+    .bind<IUserRepository>(USER_REPOSITORIES.IUserRepository)
+    .to(UserRepository);
 
   container
-    .bind<IPostDietController>(DIET_ORDER_TYPES.IPostDietController)
-    .to(PostDietController)
+    .bind<ILoginController>(AUTH_TYPES.ILoginController)
+    .to(LoginController)
     .inSingletonScope();
 
-  container
-    .bind<IGetDietController>(DIET_ORDER_TYPES.IGetDietController)
-    .to(GetDietController)
-    .inSingletonScope();
-
-  container
-    .bind<IPutDietController>(DIET_ORDER_TYPES.IPutDietController)
-    .to(PutDietController)
-    .inSingletonScope();
-
-  container
-    .bind<IAuthenticator>(TYPES.IAuthenticator)
+  container.bind<IAuthenticator>(TYPES.IAuthenticator)
     .to(Authenticator)
     .inSingletonScope();
 

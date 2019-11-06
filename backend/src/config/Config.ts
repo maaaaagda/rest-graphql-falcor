@@ -6,6 +6,7 @@ import { IConfig } from "./IConfig";
 export class Config implements IConfig {
   public PORT: number;
   public DB_URL: string;
+  public JWT_SECRET: string;
 
   private readonly requiredEnvs: string[];
 
@@ -13,6 +14,7 @@ export class Config implements IConfig {
     this.requiredEnvs = [
       "PORT",
       "DB_URL",
+      "JWT_SECRET"
     ];
     this.loadConfiguration();
   }
@@ -28,5 +30,6 @@ export class Config implements IConfig {
 
     this.PORT = parseInt(process.env.PORT, 10);
     this.DB_URL = process.env.DB_URL;
+    this.JWT_SECRET = process.env.JWT_SECRET;
   }
 }
