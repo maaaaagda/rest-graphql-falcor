@@ -17,6 +17,8 @@ import { PostUserController } from "../controller/postUserController/PostControl
 import { IUserRepository } from "../repository/IUserRepository";
 import { UserRepository } from "../repository/UserRepository";
 import { USER_REPOSITORIES, USER_TYPES } from "./UserTypes";
+import { IAuthenticator } from "../../../core/auth/IAuthenticator";
+import { Authenticator } from "../../../core/auth/Authenticator";
 
 const getContainer: (() => Container) = (): Container => {
   const container: Container = new Container();
@@ -46,7 +48,12 @@ const getContainer: (() => Container) = (): Container => {
   container.bind<IGetUserController>(USER_TYPES.IGetUserController)
     .to(GetUserController)
     .inSingletonScope();
-  
+
+  container
+    .bind<IAuthenticator>(TYPES.IAuthenticator)
+    .to(Authenticator)
+    .inSingletonScope();
+
   return container;
 };
 

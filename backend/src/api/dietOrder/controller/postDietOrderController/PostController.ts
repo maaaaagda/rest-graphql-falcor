@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { inject, injectable } from "inversify";
+import { IAuthenticator } from "../../../../core/auth/IAuthenticator";
 import { IValidator } from "../../../../core/validator/IValidator";
 import { TYPES } from "../../../../ioc/types";
 import { SuccessResponse } from "../../../../response/SuccessResponse";
@@ -12,6 +13,9 @@ import { IPostDietOrderController } from "./IPostController";
 @injectable()
 export class PostDietOrderController implements IPostDietOrderController {
 
+    @inject(TYPES.IAuthenticator)
+    private readonly _authenticator: IAuthenticator;
+
     @inject(DIET_ORDER_REPOSITORIES.IDietOrderRepository)
     private readonly _dietOrderRepository: IDietOrderRepository;
 
@@ -19,6 +23,7 @@ export class PostDietOrderController implements IPostDietOrderController {
     private readonly _validator: IValidator;
 
     public async process(req: Request, res: Response): Promise<Response> {
+        this._authenticator.authenticate(req.headers.authorization);
         this._validator.validate(req.body, dietOrderPostSchema);
         const dietOrder: IDietOrder = await this._dietOrderRepository.insertOne(req.body);
 

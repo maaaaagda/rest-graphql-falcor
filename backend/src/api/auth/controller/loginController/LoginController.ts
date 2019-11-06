@@ -31,6 +31,7 @@ export class LoginController implements ILoginController {
       email: req.body.email,
       password: req.body.password
     });
+
     if (!user) {
       throw new AuthenticationError("Wrong credentials sent");
     }

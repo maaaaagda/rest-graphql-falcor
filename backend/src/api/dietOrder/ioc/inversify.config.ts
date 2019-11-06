@@ -3,6 +3,8 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { Config } from "../../../config/Config";
 import { IConfig } from "../../../config/IConfig";
+import { Authenticator } from "../../../core/auth/Authenticator";
+import { IAuthenticator } from "../../../core/auth/IAuthenticator";
 import { Database } from "../../../core/database/Database";
 import { IDatabase } from "../../../core/database/IDatabase";
 import { ILogger } from "../../../core/logger/ILogger";
@@ -51,6 +53,11 @@ const getContainer: (() => Container) = (): Container => {
 
   container.bind<IPutDietOrderController>(DIET_ORDER_TYPES.IPutDietOrderController)
     .to(PutDietOrderController)
+    .inSingletonScope();
+
+  container
+    .bind<IAuthenticator>(TYPES.IAuthenticator)
+    .to(Authenticator)
     .inSingletonScope();
 
   return container;
