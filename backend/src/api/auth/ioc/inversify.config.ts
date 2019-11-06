@@ -3,6 +3,8 @@ import "reflect-metadata";
 import { Container } from "inversify";
 import { Config } from "../../../config/Config";
 import { IConfig } from "../../../config/IConfig";
+import { Authenticator } from "../../../core/auth/Authenticator";
+import { IAuthenticator } from "../../../core/auth/IAuthenticator";
 import { Database } from "../../../core/database/Database";
 import { IDatabase } from "../../../core/database/IDatabase";
 import { ILogger } from "../../../core/logger/ILogger";
@@ -16,8 +18,6 @@ import { UserRepository } from "../../user/repository/UserRepository";
 import { ILoginController } from "../controller/loginController/ILoginController";
 import { LoginController } from "../controller/loginController/LoginController";
 import { AUTH_TYPES } from "./AuthTypes";
-import { IAuthenticator } from "../../../core/auth/IAuthenticator";
-import { Authenticator } from "../../../core/auth/Authenticator";
 
 const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
@@ -52,7 +52,7 @@ const getContainer: () => Container = (): Container => {
 
   container.bind<IAuthenticator>(TYPES.IAuthenticator)
     .to(Authenticator)
-    .inSingletonScope()
+    .inSingletonScope();
 
   return container;
 };

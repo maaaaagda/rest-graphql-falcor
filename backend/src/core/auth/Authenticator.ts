@@ -1,10 +1,10 @@
 import { inject, injectable } from "inversify";
 import jwt from "jsonwebtoken";
+import { UserRole } from "../../api/user/model/UserRole";
+import { IConfig } from "../../config/IConfig";
+import { TYPES } from "../../ioc/types";
 import { AuthenticationError } from "../error/AuthenticationError";
 import { IAuthenticator } from "./IAuthenticator";
-import { UserRole } from "../../api/user/model/UserRole";
-import { TYPES } from "../../ioc/types";
-import { IConfig } from "../../config/IConfig";
 const TOKEN_REGEX: RegExp = /^Bearer (?<TOKEN>.+)$/;
 
 @injectable()
@@ -12,7 +12,6 @@ export class Authenticator implements IAuthenticator {
 
   @inject(TYPES.IConfig)
   private readonly _config: IConfig;
-
 
   public authenticate(authorization?: string): boolean {
     if (!authorization) {

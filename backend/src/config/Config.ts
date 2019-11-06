@@ -6,7 +6,7 @@ import { IConfig } from "./IConfig";
 export class Config implements IConfig {
   public PORT: number;
   public DB_URL: string;
-  public JWT_SECRET: string
+  public JWT_SECRET: string;
 
   private readonly requiredEnvs: string[];
 
