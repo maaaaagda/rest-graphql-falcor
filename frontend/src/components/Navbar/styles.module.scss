@@ -38,7 +38,7 @@
 
     transition: color .1s;
     &:hover {
-        color: $white-color;
+        color: rgba(33,33,33,.5);
     }
 }
 
@@ -47,11 +47,12 @@
 
     border-radius: 5px;
     background-color: $cta-color;
-    color: white;
+    color: $white-color;
 
     transition: box-shadow .3s;
     &:hover {
         box-shadow: 0 0 15px orange;
+        color: $white-color;
     }
 }
 
