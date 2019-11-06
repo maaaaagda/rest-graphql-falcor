@@ -16,6 +16,8 @@ import { UserRepository } from "../../user/repository/UserRepository";
 import { ILoginController } from "../controller/loginController/ILoginController";
 import { LoginController } from "../controller/loginController/LoginController";
 import { AUTH_TYPES } from "./AuthTypes";
+import { IAuthenticator } from "../../../core/auth/IAuthenticator";
+import { Authenticator } from "../../../core/auth/Authenticator";
 
 const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
@@ -47,6 +49,10 @@ const getContainer: () => Container = (): Container => {
     .bind<ILoginController>(AUTH_TYPES.ILoginController)
     .to(LoginController)
     .inSingletonScope();
+
+  container.bind<IAuthenticator>(TYPES.IAuthenticator)
+    .to(Authenticator)
+    .inSingletonScope()
 
   return container;
 };
