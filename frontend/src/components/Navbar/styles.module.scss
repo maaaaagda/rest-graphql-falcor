@@ -29,7 +29,9 @@
     font-size: 2em;
     min-width: 30px;
     min-height: 30px;
-    outline: none;
+    &:active, &:focus {
+        outline: none;
+    }
 
     transition: color .1s;
     &:hover {
