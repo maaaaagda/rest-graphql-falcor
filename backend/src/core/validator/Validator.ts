@@ -1,5 +1,5 @@
-import Joi, { ValidationResult } from "@hapi/joi";
 import { injectable } from "inversify";
+import Joi, { ValidationResult } from "joi";
 import { ValidationError } from "../error/ValidationError";
 import { IValidator } from "./IValidator";
 

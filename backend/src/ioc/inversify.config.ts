@@ -1,6 +1,8 @@
 import "reflect-metadata";
 
+import fs from "fs";
 import { Container } from "inversify";
+import path from "path";
 import { Config } from "../config/Config";
 import { IConfig } from "../config/IConfig";
 import { Authenticator } from "../core/auth/Authenticator";
@@ -47,7 +49,16 @@ const getContainer: () => Container = (): Container => {
     .to(Authenticator)
     .inSingletonScope();
 
+  getControllers();
+
   return container;
 };
 
 export default getContainer;
+
+function getControllers(): void {
+  const controllers = fs.readdirSync(path.resolve(__dirname, "../api"));
+  controllers.forEach((controller) => {
+    import(path.resolve(__dirname, "../api", controller, "index.ts"));
+  });
+}

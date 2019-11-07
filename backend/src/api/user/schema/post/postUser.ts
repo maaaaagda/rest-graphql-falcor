@@ -1,4 +1,4 @@
-import Joi = require("@hapi/joi");
+import Joi from "joi";
 import moment from "moment";
 import { UserRole } from "../../model/UserRole";
 
