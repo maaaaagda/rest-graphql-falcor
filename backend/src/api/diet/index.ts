@@ -45,7 +45,7 @@ export class DietController implements interfaces.Controller {
   @httpGet("/")
   public async getDiet(req: Request, res: Request, next: Request) {
     await this.database.getConnection();
-    this.getDietController.process.bind(this.getDietController)(req, res, next);
+    await this.getDietController.process.bind(this.getDietController)(req, res, next);
   }
 
   @ApiOperationPost({
@@ -57,9 +57,9 @@ export class DietController implements interfaces.Controller {
     }
   })
   @httpPost("/")
-  public async postDiet() {
+  public async postDiet(req: Request, res: Request, next: Request) {
     await this.database.getConnection();
-    this.postDietController.process.bind(this.postDietController)();
+    await this.postDietController.process.bind(this.postDietController)(req, res, next);
   }
 
   @ApiOperationPut({
@@ -71,8 +71,8 @@ export class DietController implements interfaces.Controller {
     }
   })
   @httpPut("/")
-  public async updateDiet() {
+  public async updateDiet(req: Request, res: Request, next: Request) {
     await this.database.getConnection();
-    this.updateDietController.process.bind(this.updateDietController)();
+    await this.updateDietController.process.bind(this.updateDietController)(req, res, next);
   }
 }
