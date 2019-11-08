@@ -12,7 +12,6 @@
     "typedef": [
       true,
       "call-signature",
-      "property-declaration",
       "parameter",
       "variable-declaration",
       "member-variable-declaration",

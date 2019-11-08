@@ -4,6 +4,7 @@ import express, { Application } from "express";
 import helmet from "helmet";
 import { Container } from "inversify";
 import "reflect-metadata";
+// tslint:disable-next-line: ordered-imports
 import { InversifyExpressServer } from "inversify-express-utils";
 import * as swagger from "swagger-express-ts";
 import { IConfig } from "./config/IConfig";
@@ -21,29 +22,35 @@ async function bootstrap(): Promise<void> {
   const database: IDatabase = container.get<IDatabase>(TYPES.IDatabase);
   await database.getConnection();
 
-  const server: InversifyExpressServer = new InversifyExpressServer ( container );
+  const server: InversifyExpressServer = new InversifyExpressServer(container);
   const port: number = config.PORT || 3000;
 
-  server.setConfig( ( app: Application ) => {
-   app.use( "/api-docs/swagger" , express.static( "swagger" ) );
-   app.use( "/api-docs/swagger/assets" , express.static( "node_modules/swagger-ui-dist" ) );
-   app.use(helmet());
-   app.use(cors());
-   app.use(bodyParser.json());
-   app.use(bodyParser.urlencoded());
-   app.use(errorHandler.handle());
-   app.use( swagger.express(
-     {
-       definition : {
-         info : {
-           title : "Diet In A Box API" ,
-           version : "1.0"
-         },
-         basePath: "/api"
-       }
-     }
-   ) );
- } );
+  server.setConfig((app: Application) => {
+    app.use("/api-docs/swagger", express.static("swagger"));
+    app.use(
+      "/api-docs/swagger/assets",
+      express.static("node_modules/swagger-ui-dist")
+    );
+    app.use(helmet());
+    app.use(cors());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded());
+    app.use(
+      swagger.express({
+        definition: {
+          info: {
+            title: "Diet In A Box API",
+            version: "1.0"
+          },
+          basePath: "/api"
+        }
+      })
+    );
+  });
+
+  server.setErrorConfig((app: Application) => {
+    app.use(errorHandler.handle());
+  });
 
   process
     .on("unhandledRejection", (reason: any, p: any) => {
@@ -54,8 +61,8 @@ async function bootstrap(): Promise<void> {
       process.exit(1);
     });
 
-  const app: Application = server.build();
-  app.listen(port, () => {
+  const application: Application = server.build();
+  application.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
 }

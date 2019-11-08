@@ -1,7 +1,7 @@
 import { Application } from "express";
 import { Container } from "inversify";
 import { IDatabase } from "../../core/database/IDatabase";
-import { handleEndpointError } from "../../core/errorHandler/handleEndpointError";
+// import { handleEndpointError } from "../../core/errorHandler/handleEndpointError";
 import { TYPES } from "../../ioc/types";
 import { ILoginController } from "./controller/loginController/ILoginController";
 import { AUTH_TYPES } from "./ioc/AuthTypes";
@@ -17,8 +17,5 @@ export const initAuthRoutes = (app: Application, prefix: string = ""): void => {
     AUTH_TYPES.ILoginController
   );
 
-  app.post(
-    `${prefix}/login`,
-    handleEndpointError(loginController.process.bind(loginController))
-  );
+  app.post(`${prefix}/login`, loginController.process.bind(loginController));
 };
