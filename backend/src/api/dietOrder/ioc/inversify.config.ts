@@ -21,6 +21,7 @@ import { PutDietOrderController } from "../controller/putDietOrderController/Put
 import { DietOrderRepository } from "../repository/DietOrderRepository";
 import { IDietOrderRepository } from "../repository/IDietOrderRepository";
 import { DIET_ORDER_REPOSITORIES, DIET_ORDER_TYPES } from "./DietOrderTypes";
+import { DietOrderService } from "../service/DietOrderService";
 
 const getContainer: (() => Container) = (): Container => {
   const container: Container = new Container();
@@ -58,6 +59,10 @@ const getContainer: (() => Container) = (): Container => {
   container
     .bind<IAuthenticator>(TYPES.IAuthenticator)
     .to(Authenticator)
+    .inSingletonScope();
+
+  container.bind<DietOrderService>(DIET_ORDER_TYPES.IDietOrderService)
+    .to(DietOrderService)
     .inSingletonScope();
 
   return container;
