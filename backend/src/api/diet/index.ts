@@ -7,113 +7,68 @@ import {
   httpPut,
   interfaces
 } from "inversify-express-utils";
-import j2s from "joi-to-swagger";
-import {
-  ApiOperationGet,
-  ApiOperationPost,
-  ApiOperationPut,
-  ApiPath
-} from "swagger-express-ts";
 import { IDatabase } from "../../core/database/IDatabase";
-import { handleEndpointError } from "../../core/errorHandler/handleEndpointError";
-import { createPath } from "../../core/utils/apiUtils";
 import { TYPES } from "../../ioc/types";
 import { IGetDietController } from "./controller/getDietController/IGetController";
 import { IPostDietController } from "./controller/postDietController/IPostController";
 import { IPutDietController } from "./controller/putDietController/IPutController";
-import { DIET_ORDER_TYPES } from "./ioc/DietTypes";
+import { DIET_TYPES } from "./ioc/DietTypes";
 import getContainer from "./ioc/inversify.config";
-import { dietPostSchema } from "./schema/post/postDiet";
-import { dietPutSchema } from "./schema/put/putDiet";
+import { ApiPath } from "swagger-express-ts";
+import { Config } from "../../config/Config";
 
+const config: Config = new Config();
 const ENDPOINT: string = "diet";
 
 @ApiPath({
-  path: createPath(ENDPOINT),
+  path: `${config.API_PATH}${ENDPOINT}`,
   name: ENDPOINT
 })
-@controller(createPath(ENDPOINT))
+@controller(`${config.API_PATH}${ENDPOINT}`)
 export class DietController implements interfaces.Controller {
-  private readonly container: Container = getContainer();
-  private readonly database: IDatabase = this.container.get<IDatabase>(
+  private readonly _container: Container = getContainer();
+  private readonly _database: IDatabase = this._container.get<IDatabase>(
     TYPES.IDatabase
   );
 
-  private readonly postDietController: IPostDietController = this.container.get(
-    DIET_ORDER_TYPES.IPostDietController
+  private readonly postDietController: IPostDietController = this._container.get(
+    DIET_TYPES.IPostDietController
   );
-  private readonly getDietController: IGetDietController = this.container.get(
-    DIET_ORDER_TYPES.IGetDietController
+  private readonly getDietController: IGetDietController = this._container.get(
+    DIET_TYPES.IGetDietController
   );
-  private readonly updateDietController: IPutDietController = this.container.get(
-    DIET_ORDER_TYPES.IPutDietController
+  private readonly updateDietController: IPutDietController = this._container.get(
+    DIET_TYPES.IPutDietController
   );
 
   constructor() {
-    this.database.getConnection();
+    this._database.getConnection();
   }
 
-  @ApiOperationGet({
-    parameters: {},
-    responses: {
-      200: { description: "Success" }
-    }
-  })
   @httpGet("/")
   public async getDiet(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return handleEndpointError(
-      req,
-      res,
-      next,
-      this.getDietController.process.bind(this.getDietController)
-    );
+    return this.getDietController.process.bind(this.getDietController)(req, res, next)
   }
 
-  @ApiOperationPost({
-    parameters: {
-      body: { ...j2s(dietPostSchema).swagger }
-    },
-    responses: {
-      200: { description: "Success" }
-    }
-  })
   @httpPost("/")
   public async postDiet(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return handleEndpointError(
-      req,
-      res,
-      next,
-      this.postDietController.process.bind(this.postDietController)
-    );
+    return this.postDietController.process.bind(this.postDietController)(req, res, next)
   }
 
-  @ApiOperationPut({
-    parameters: {
-      body: { ...j2s(dietPutSchema).swagger }
-    },
-    responses: {
-      200: { description: "Success" }
-    }
-  })
   @httpPut("/")
   public async updateDiet(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return handleEndpointError(
-      req,
-      res,
-      next,
-      this.updateDietController.process.bind(this.updateDietController)
-    );
+   return this.updateDietController.process.bind(this.updateDietController)(req, res, next)
   }
 }

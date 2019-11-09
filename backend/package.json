@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^14.5.0",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
@@ -24,7 +25,6 @@
     "helmet": "^3.21.2",
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.3.2",
-    "joi": "^14.3.1",
     "joi-to-swagger": "^3.3.0",
     "jsonwebtoken": "^8.5.0",
     "moment": "^2.24.0",

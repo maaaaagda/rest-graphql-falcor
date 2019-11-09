@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from "@hapi/joi";
 import moment from "moment";
 import { UserRole } from "../../model/UserRole";
 

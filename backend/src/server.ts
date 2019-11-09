@@ -1,10 +1,9 @@
+import "reflect-metadata";
 import * as bodyParser from "body-parser";
 import cors from "cors";
 import express, { Application } from "express";
 import helmet from "helmet";
 import { Container } from "inversify";
-import "reflect-metadata";
-// tslint:disable-next-line: ordered-imports
 import { InversifyExpressServer } from "inversify-express-utils";
 import * as swagger from "swagger-express-ts";
 import { IConfig } from "./config/IConfig";

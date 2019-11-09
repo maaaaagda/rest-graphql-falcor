@@ -1,20 +1,25 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "inversify";
 import { SuccessResponse } from "../../../../response/SuccessResponse";
-import { DIET_ORDER_REPOSITORIES } from "../../ioc/DietTypes";
+import { DIET_TYPES } from "../../ioc/DietTypes";
 import { IDiet } from "../../model/Diet";
-import { IDietRepository } from "../../repository/IDietRepository";
 import { IGetDietController } from "./IGetController";
+import { IDietService } from "../../service/IDietService";
 
 @injectable()
 export class GetDietController implements IGetDietController {
-  
-  @inject(DIET_ORDER_REPOSITORIES.IDietRepository)
-  private readonly _dietRepository: IDietRepository;
 
-  public async process(req: Request, res: Response): Promise<Response> {
-    const users: IDiet[] = await this._dietRepository.getMany();
+  @inject(DIET_TYPES.IDietService)
+  private readonly _dietService: IDietService;
 
-    return res.json(SuccessResponse.Ok(users));
+  public async process(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    try {
+      const diets: IDiet[] = await this._dietService.getDiets()
+      return res.json(SuccessResponse.Ok(diets));
+    } catch (error) {
+      return new Promise(() => {
+        next(error)
+      });
+    }
   }
 }
