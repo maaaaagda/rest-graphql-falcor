@@ -30,7 +30,7 @@ export class PostDietController implements IPostDietController {
       return res.json(SuccessResponse.Created(diet));
     } catch (error) {
       return new Promise(() => {
-        next(error)
+        next(error);
       });
     }
   }

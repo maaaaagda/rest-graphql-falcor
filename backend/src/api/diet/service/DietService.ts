@@ -14,8 +14,8 @@ export class DietService {
     return await this._dietRepository.getMany();
   }
 
-  public async postDiet(dietParams: IDiet){
-    return await this._dietRepository.insertOne(dietParams)
+  public async postDiet(dietParams: IDiet) {
+    return await this._dietRepository.insertOne(dietParams);
   }
 
   public async putDiet(id: string, dietParams: IDiet) {
@@ -29,6 +29,6 @@ export class DietService {
       });
       return updated;
     }
-    throw new BadRequestError()
+    throw new BadRequestError();
   }
 }

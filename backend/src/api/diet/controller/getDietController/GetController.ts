@@ -14,11 +14,11 @@ export class GetDietController implements IGetDietController {
 
   public async process(req: Request, res: Response, next: NextFunction): Promise<Response> {
     try {
-      const diets: IDiet[] = await this._dietService.getDiets()
+      const diets: IDiet[] = await this._dietService.getDiets();
       return res.json(SuccessResponse.Ok(diets));
     } catch (error) {
       return new Promise(() => {
-        next(error)
+        next(error);
       });
     }
   }

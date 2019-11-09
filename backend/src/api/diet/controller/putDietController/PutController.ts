@@ -26,11 +26,11 @@ export class PutDietController implements IPutDietController {
     try {
       this._authenticator.authenticate(req.headers.authorization);
       this._validator.validate(req.body, dietPutSchema);
-      const updatedDiet: IDiet = await this._dietService.putDiet(req.query.id, req.body)
+      const updatedDiet: IDiet = await this._dietService.putDiet(req.query.id, req.body);
       return res.json(SuccessResponse.Ok(updatedDiet));
     } catch (error) {
       return new Promise(() => {
-        next(error)
+        next(error);
       });
     }
 

@@ -34,6 +34,6 @@ export class Config implements IConfig {
     this.DB_URL = process.env.DB_URL;
     this.JWT_SECRET = process.env.JWT_SECRET;
     this.API_PREFIX = "api";
-    this.API_PATH = `/${this.API_PREFIX}/`
+    this.API_PATH = `/${this.API_PREFIX}/`;
   }
 }
