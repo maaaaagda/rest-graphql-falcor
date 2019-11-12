@@ -1,8 +1,9 @@
 import "reflect-metadata";
-
 import { Container } from "inversify";
 import { Config } from "../../../config/Config";
 import { IConfig } from "../../../config/IConfig";
+import { Authenticator } from "../../../core/auth/Authenticator";
+import { IAuthenticator } from "../../../core/auth/IAuthenticator";
 import { Database } from "../../../core/database/Database";
 import { IDatabase } from "../../../core/database/IDatabase";
 import { ILogger } from "../../../core/logger/ILogger";
@@ -17,8 +18,7 @@ import { PostUserController } from "../controller/postUserController/PostControl
 import { IUserRepository } from "../repository/IUserRepository";
 import { UserRepository } from "../repository/UserRepository";
 import { USER_REPOSITORIES, USER_TYPES } from "./UserTypes";
-import { IAuthenticator } from "../../../core/auth/IAuthenticator";
-import { Authenticator } from "../../../core/auth/Authenticator";
+import { UserService } from "../service/UserService";
 
 const getContainer: (() => Container) = (): Container => {
   const container: Container = new Container();
@@ -52,6 +52,10 @@ const getContainer: (() => Container) = (): Container => {
   container
     .bind<IAuthenticator>(TYPES.IAuthenticator)
     .to(Authenticator)
+    .inSingletonScope();
+
+  container.bind<UserService>(USER_TYPES.IUserService)
+    .to(UserService)
     .inSingletonScope();
 
   return container;

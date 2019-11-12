@@ -1,26 +1,74 @@
-import { Application } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Container } from "inversify";
+import {
+  controller,
+  httpGet,
+  httpPost,
+  httpPut,
+  interfaces
+} from "inversify-express-utils";
 import { IDatabase } from "../../core/database/IDatabase";
-import { handleEndpointError } from "../../core/errorHandler/handleEndpointError";
 import { TYPES } from "../../ioc/types";
 import { IGetDietOrderController } from "./controller/getDietOrderController/IGetController";
 import { IPostDietOrderController } from "./controller/postDietOrderController/IPostController";
 import { IPutDietOrderController } from "./controller/putDietOrderController/IPutController";
 import { DIET_ORDER_TYPES } from "./ioc/DietOrderTypes";
 import getContainer from "./ioc/inversify.config";
+import { ApiPath } from "swagger-express-ts";
+import { Config } from "../../config/Config";
 
-export const initDietOrderRoutes = (app: Application, prefix: string = "" ): void => {
-  const container: Container = getContainer();
+const config: Config = new Config();
+const ENDPOINT: string = "diet-order";
 
-  const database: IDatabase = container.get<IDatabase>(TYPES.IDatabase);
-  database.getConnection();
+@ApiPath({
+  path: `${config.API_PATH}${ENDPOINT}`,
+  name: ENDPOINT
+})
+@controller(`${config.API_PATH}${ENDPOINT}`)
+export class DietOrderController implements interfaces.Controller {
+  private readonly _container: Container = getContainer();
+  private readonly _database: IDatabase = this._container.get<IDatabase>(
+    TYPES.IDatabase
+  );
 
-  const postDietOrderController: IPostDietOrderController = container.get(DIET_ORDER_TYPES.IPostDietOrderController);
-  const getDietOrderController: IGetDietOrderController = container.get(DIET_ORDER_TYPES.IGetDietOrderController);
-  const updateDietOrderController: IPutDietOrderController = container.get(DIET_ORDER_TYPES.IPutDietOrderController);
+  private readonly postDietOrderController: IPostDietOrderController = this._container.get(
+    DIET_ORDER_TYPES.IPostDietOrderController
+  );
+  private readonly getDietOrderController: IGetDietOrderController = this._container.get(
+    DIET_ORDER_TYPES.IGetDietOrderController
+  );
+  private readonly updateDietOrderController: IPutDietOrderController = this._container.get(
+    DIET_ORDER_TYPES.IPutDietOrderController
+  );
 
-  const path = `${prefix}/diet-order`;
-  app.post(path, handleEndpointError(postDietOrderController.process.bind(postDietOrderController)));
-  app.get(path, handleEndpointError(getDietOrderController.process.bind(getDietOrderController)));
-  app.put(`${path}/:id`, handleEndpointError(updateDietOrderController.process.bind(updateDietOrderController)));
-};
+  constructor() {
+    this._database.getConnection();
+  }
+
+  @httpGet("/")
+  public async getDietOrder(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    return this.getDietOrderController.process.bind(this.getDietOrderController)(req, res, next);
+  }
+
+  @httpPost("/")
+  public async postDietOrder(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    return this.postDietOrderController.process.bind(this.postDietOrderController)(req, res, next);
+  }
+
+  @httpPut("/")
+  public async updateDietOrder(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    return this.updateDietOrderController.process.bind(this.updateDietOrderController)(req, res, next);
+  }
+}

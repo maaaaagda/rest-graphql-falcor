@@ -15,12 +15,12 @@
       "property-declaration",
       "parameter",
       "variable-declaration",
-      "member-variable-declaration",
-      "variable-declaration-ignore-function"
+      "member-variable-declaration"
     ],
     "interface-name": [true, "always-prefix"],
     "unified-signatures": true,
     "no-console": false,
+    "ordered-imports": false,
     "no-duplicate-super": true,
     "no-duplicate-variable": true,
     "no-implicit-dependencies": [true, "dev"],

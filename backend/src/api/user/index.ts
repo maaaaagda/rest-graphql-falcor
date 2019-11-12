@@ -1,21 +1,60 @@
-import { Application } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Container } from "inversify";
+import {
+  controller,
+  httpGet,
+  httpPost,
+  interfaces
+} from "inversify-express-utils";
 import { IDatabase } from "../../core/database/IDatabase";
-import { handleEndpointError } from "../../core/errorHandler/handleEndpointError";
 import { TYPES } from "../../ioc/types";
+import { IGetUserController } from "./controller/getUserController/IGetController";
 import { IPostUserController } from "./controller/postUserController/IPostController";
-import getContainer from "./ioc/inversify.config";
 import { USER_TYPES } from "./ioc/UserTypes";
+import getContainer from "./ioc/inversify.config";
+import { ApiPath } from "swagger-express-ts";
+import { Config } from "../../config/Config";
 
-export const initUserRoutes = (app: Application, prefix: string = "" ): void => {
-  const container: Container = getContainer();
+const config: Config = new Config();
+const ENDPOINT: string = "user";
 
-  const database: IDatabase = container.get<IDatabase>(TYPES.IDatabase);
-  database.getConnection();
-  
-  const postUserController: IPostUserController = container.get(USER_TYPES.IPostUserController);
-  const getUserController: IPostUserController = container.get(USER_TYPES.IGetUserController);
+@ApiPath({
+  path: `${config.API_PATH}${ENDPOINT}`,
+  name: ENDPOINT
+})
+@controller(`${config.API_PATH}${ENDPOINT}`)
+export class UserController implements interfaces.Controller {
+  private readonly _container: Container = getContainer();
+  private readonly _database: IDatabase = this._container.get<IDatabase>(
+    TYPES.IDatabase
+  );
 
-  app.post(`${prefix}/user`, handleEndpointError(postUserController.process.bind(postUserController)));
-  app.get(`${prefix}/user`, handleEndpointError(getUserController.process.bind(getUserController)));
-};
+  private readonly postUserController: IPostUserController = this._container.get(
+    USER_TYPES.IPostUserController
+  );
+  private readonly getUserController: IGetUserController = this._container.get(
+    USER_TYPES.IGetUserController
+  );
+
+  constructor() {
+    this._database.getConnection();
+  }
+
+  @httpGet("/")
+  public async getUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    return this.getUserController.process.bind(this.getUserController)(req, res, next);
+  }
+
+  @httpPost("/")
+  public async postUser(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    return this.postUserController.process.bind(this.postUserController)(req, res, next);
+  }
+}

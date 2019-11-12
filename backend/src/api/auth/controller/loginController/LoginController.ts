@@ -1,16 +1,12 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { inject, injectable } from "inversify";
-import { IAuthenticator } from "../../../../core/auth/IAuthenticator";
-import { AuthenticationError } from "../../../../core/error/AuthenticationError";
 import { IValidator } from "../../../../core/validator/IValidator";
 import { TYPES } from "../../../../ioc/types";
 import { SuccessResponse } from "../../../../response/SuccessResponse";
-import { USER_REPOSITORIES } from "../../../user/ioc/UserTypes";
-import { IUser } from "../../../user/model/User";
-import { UserRole } from "../../../user/model/UserRole";
-import { IUserRepository } from "../../../user/repository/IUserRepository";
-import { ILoginController } from "../../controller/loginController/ILoginController";
+import { ILoginController } from "./ILoginController";
 import { loginSchema } from "../../schema/post/login";
+import { AUTH_TYPES } from "../../ioc/AuthTypes";
+import { IAuthService } from "../../service/IAuthService";
 
 @injectable()
 export class LoginController implements ILoginController {
@@ -18,27 +14,22 @@ export class LoginController implements ILoginController {
   @inject(TYPES.IValidator)
   protected readonly _validator: IValidator;
 
-  @inject(USER_REPOSITORIES.IUserRepository)
-  private readonly _userRepository: IUserRepository;
+  @inject(AUTH_TYPES.IAuthService)
+  private readonly _authService: IAuthService;
 
-  @inject(TYPES.IAuthenticator)
-  private readonly _authenticator: IAuthenticator;
-
-  public async process(req: Request, res: Response): Promise<Response> {
-    this._validator.validate(req.body, loginSchema);
-
-    const user: IUser = await this._userRepository.getOne({
-      email: req.body.email,
-      password: req.body.password
-    });
-
-    if (!user) {
-      throw new AuthenticationError("Wrong credentials sent");
+  public async process(req: Request, res: Response, next: NextFunction): Promise<Response> {
+    try {
+      this._validator.validate(req.body, loginSchema);
+      const token = await this._authService.login(req.body.email, req.body.password);
+      return res.json(
+        SuccessResponse.Ok({
+          token
+        })
+      );
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
     }
-    return res.json(
-      SuccessResponse.Ok({
-        token: this._authenticator.generateJWTToken(user.role as UserRole)
-      })
-    );
   }
 }

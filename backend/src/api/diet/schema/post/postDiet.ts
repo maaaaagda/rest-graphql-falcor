@@ -1,4 +1,4 @@
-import Joi = require("@hapi/joi");
+import Joi from "@hapi/joi";
 
 export const dietPostSchema: Joi.Schema = Joi.object().keys({
   name: Joi.string().required(),

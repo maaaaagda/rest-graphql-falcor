@@ -1,4 +1,4 @@
-import Joi = require("@hapi/joi");
+import Joi from "@hapi/joi";
 import { OrderStatus } from "../../model/OrderStatus";
 
 export const dietOrderPutSchema: Joi.Schema = Joi.object().keys({

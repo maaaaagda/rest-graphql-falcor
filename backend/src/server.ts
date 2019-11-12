@@ -1,14 +1,11 @@
-import * as bodyParser from "body-parser";
-import express, { Application } from "express";
 import "reflect-metadata";
-const helmet = require("helmet");
-const cors = require("cors");
-
+import * as bodyParser from "body-parser";
+import cors from "cors";
+import express, { Application } from "express";
+import helmet from "helmet";
 import { Container } from "inversify";
-import { initAuthRoutes } from "./api/auth";
-import { initDietRoutes } from "./api/diet";
-import { initDietOrderRoutes } from "./api/dietOrder";
-import { initUserRoutes } from "./api/user";
+import { InversifyExpressServer } from "inversify-express-utils";
+import * as swagger from "swagger-express-ts";
 import { IConfig } from "./config/IConfig";
 import { IDatabase } from "./core/database/IDatabase";
 import { IErrorHandler } from "./core/errorHandler/IErrorHandler";
@@ -17,25 +14,43 @@ import { TYPES } from "./ioc/types";
 
 async function bootstrap(): Promise<void> {
   const container: Container = getContainer();
-  const config: IConfig = container.get<IConfig>(TYPES.ILogger);
+  const config: IConfig = container.get<IConfig>(TYPES.IConfig);
   const errorHandler: IErrorHandler = container.get<IErrorHandler>(
     TYPES.IErrorHandler
   );
   const database: IDatabase = container.get<IDatabase>(TYPES.IDatabase);
-  database.getConnection();
+  await database.getConnection();
 
-  const app: Application = express();
+  const server: InversifyExpressServer = new InversifyExpressServer(container);
   const port: number = config.PORT || 3000;
 
-  initMiddlewares(app);
+  server.setConfig((app: Application) => {
+    app.use("/api-docs/swagger", express.static("swagger"));
+    app.use(
+      "/api-docs/swagger/assets",
+      express.static("node_modules/swagger-ui-dist")
+    );
+    app.use(helmet());
+    app.use(cors());
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded());
+    app.use(
+      swagger.express({
+        definition: {
+          info: {
+            title: "Diet In A Box API",
+            version: "1.0"
+          },
+          basePath: "/api"
+        }
+      })
+    );
+  });
 
-  const apiPrefix: string = "/api";
-  initAuthRoutes(app, apiPrefix);
-  initUserRoutes(app, apiPrefix);
-  initDietOrderRoutes(app, apiPrefix);
-  initDietRoutes(app, apiPrefix);
+  server.setErrorConfig((app: Application) => {
+    app.use(errorHandler.handle());
+  });
 
-  app.use(errorHandler.handle());
   process
     .on("unhandledRejection", (reason: any, p: any) => {
       console.error(reason, "Unhandled rejection at Promise", p);
@@ -45,16 +60,10 @@ async function bootstrap(): Promise<void> {
       process.exit(1);
     });
 
-  app.listen(port, () => {
+  const application: Application = server.build();
+  application.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
-}
-
-function initMiddlewares(app: Application): void {
-  app.use(helmet());
-  app.use(cors());
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded());
 }
 
 bootstrap();

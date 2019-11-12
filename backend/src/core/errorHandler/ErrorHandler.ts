@@ -6,6 +6,7 @@ import { AuthenticationError } from "../error/AuthenticationError";
 import { ValidationError } from "../error/ValidationError";
 import { ILogger } from "../logger/ILogger";
 import { IErrorHandler } from "./IErrorHandler";
+import { BadRequestError } from "../error/BadRequestError";
 
 @injectable()
 export class ErrorHandler implements IErrorHandler {
@@ -36,6 +37,12 @@ export class ErrorHandler implements IErrorHandler {
         return res
           .status(403)
           .json(ErrorResponse.Unauthorized(error.message || "Unauthorized"));
+      }
+
+      if (error instanceof BadRequestError) {
+        return res
+          .status(403)
+          .json(ErrorResponse.BadRequest(error.message || "Bad request"));
       }
 
       this._logger.error(error.message);

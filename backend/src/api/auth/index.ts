@@ -1,24 +1,46 @@
-import { Application } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Container } from "inversify";
+import {
+  controller,
+  httpPost,
+  interfaces
+} from "inversify-express-utils";
 import { IDatabase } from "../../core/database/IDatabase";
-import { handleEndpointError } from "../../core/errorHandler/handleEndpointError";
 import { TYPES } from "../../ioc/types";
+import getContainer from "./ioc/inversify.config";
+import { ApiPath } from "swagger-express-ts";
+import { Config } from "../../config/Config";
 import { ILoginController } from "./controller/loginController/ILoginController";
 import { AUTH_TYPES } from "./ioc/AuthTypes";
-import getContainer from "./ioc/inversify.config";
 
-export const initAuthRoutes = (app: Application, prefix: string = ""): void => {
-  const container: Container = getContainer();
+const config: Config = new Config();
+const ENDPOINT: string = "auth";
 
-  const database: IDatabase = container.get<IDatabase>(TYPES.IDatabase);
-  database.getConnection();
+@ApiPath({
+  path: `${config.API_PATH}${ENDPOINT}`,
+  name: ENDPOINT
+})
+@controller(`${config.API_PATH}${ENDPOINT}`)
+export class AuthController implements interfaces.Controller {
+  private readonly _container: Container = getContainer();
+  private readonly _database: IDatabase = this._container.get<IDatabase>(
+    TYPES.IDatabase
+  );
 
-  const loginController: ILoginController = container.get(
+  private readonly loginController: ILoginController = this._container.get(
     AUTH_TYPES.ILoginController
   );
 
-  app.post(
-    `${prefix}/login`,
-    handleEndpointError(loginController.process.bind(loginController))
-  );
-};
+  constructor() {
+    this._database.getConnection();
+  }
+
+  @httpPost("/login")
+  public async login(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    return this.loginController.process.bind(this.loginController)(req, res, next);
+  }
+}
