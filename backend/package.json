@@ -5,7 +5,8 @@
   "scripts": {
     "start": "ts-node ./src/server.ts",
     "lint": "tslint -c ./tslint.json --project ./tsconfig.json",
-    "lint:fix": "tslint -c ./tslint.json --project ./tsconfig.json --fix"
+    "lint:fix": "tslint -c ./tslint.json --project ./tsconfig.json --fix",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts\n"
   },
   "husky": {
     "hooks": {
@@ -44,6 +45,7 @@
     "@types/node": "^12.11.2",
     "husky": "^3.0.9",
     "install": "^0.13.0",
+    "nodemon": "^1.19.4",
     "npm": "^6.12.0"
   }
 }
