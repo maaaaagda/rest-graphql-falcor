@@ -1,16 +1,17 @@
 import "reflect-metadata";
 import * as bodyParser from "body-parser";
 import cors from "cors";
-import express, { Application } from "express";
+import { Application } from "express";
 import helmet from "helmet";
 import { Container } from "inversify";
 import { InversifyExpressServer } from "inversify-express-utils";
-import * as swagger from "swagger-express-ts";
 import { IConfig } from "./config/IConfig";
 import { IDatabase } from "./core/database/IDatabase";
 import { IErrorHandler } from "./core/errorHandler/IErrorHandler";
 import getContainer from "./ioc/inversify.config";
 import { TYPES } from "./ioc/types";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../swagger/swagger.json";
 
 async function bootstrap(): Promise<void> {
   const container: Container = getContainer();
@@ -25,26 +26,11 @@ async function bootstrap(): Promise<void> {
   const port: number = config.PORT || 3000;
 
   server.setConfig((app: Application) => {
-    app.use("/api-docs/swagger", express.static("swagger"));
-    app.use(
-      "/api-docs/swagger/assets",
-      express.static("node_modules/swagger-ui-dist")
-    );
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     app.use(helmet());
     app.use(cors());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded());
-    app.use(
-      swagger.express({
-        definition: {
-          info: {
-            title: "Diet In A Box API",
-            version: "1.0"
-          },
-          basePath: "/api"
-        }
-      })
-    );
   });
 
   server.setErrorConfig((app: Application) => {

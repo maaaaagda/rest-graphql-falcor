@@ -12,16 +12,11 @@ import { IGetUserController } from "./controller/getUserController/IGetControlle
 import { IPostUserController } from "./controller/postUserController/IPostController";
 import { USER_TYPES } from "./ioc/UserTypes";
 import getContainer from "./ioc/inversify.config";
-import { ApiPath } from "swagger-express-ts";
 import { Config } from "../../config/Config";
 
 const config: Config = new Config();
 const ENDPOINT: string = "user";
 
-@ApiPath({
-  path: `${config.API_PATH}${ENDPOINT}`,
-  name: ENDPOINT
-})
 @controller(`${config.API_PATH}${ENDPOINT}`)
 export class UserController implements interfaces.Controller {
   private readonly _container: Container = getContainer();
@@ -46,7 +41,11 @@ export class UserController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.getUserController.process.bind(this.getUserController)(req, res, next);
+    return this.getUserController.process.bind(this.getUserController)(
+      req,
+      res,
+      next
+    );
   }
 
   @httpPost("/")
@@ -55,6 +54,10 @@ export class UserController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.postUserController.process.bind(this.postUserController)(req, res, next);
+    return this.postUserController.process.bind(this.postUserController)(
+      req,
+      res,
+      next
+    );
   }
 }

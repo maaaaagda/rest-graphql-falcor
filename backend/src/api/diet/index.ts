@@ -14,16 +14,11 @@ import { IPostDietController } from "./controller/postDietController/IPostContro
 import { IPutDietController } from "./controller/putDietController/IPutController";
 import { DIET_TYPES } from "./ioc/DietTypes";
 import getContainer from "./ioc/inversify.config";
-import { ApiPath } from "swagger-express-ts";
 import { Config } from "../../config/Config";
 
 const config: Config = new Config();
 const ENDPOINT: string = "diet";
 
-@ApiPath({
-  path: `${config.API_PATH}${ENDPOINT}`,
-  name: ENDPOINT
-})
 @controller(`${config.API_PATH}${ENDPOINT}`)
 export class DietController implements interfaces.Controller {
   private readonly _container: Container = getContainer();
@@ -51,7 +46,11 @@ export class DietController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.getDietController.process.bind(this.getDietController)(req, res, next);
+    return this.getDietController.process.bind(this.getDietController)(
+      req,
+      res,
+      next
+    );
   }
 
   @httpPost("/")
@@ -60,7 +59,11 @@ export class DietController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.postDietController.process.bind(this.postDietController)(req, res, next);
+    return this.postDietController.process.bind(this.postDietController)(
+      req,
+      res,
+      next
+    );
   }
 
   @httpPut("/")
@@ -69,6 +72,10 @@ export class DietController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-   return this.updateDietController.process.bind(this.updateDietController)(req, res, next);
+    return this.updateDietController.process.bind(this.updateDietController)(
+      req,
+      res,
+      next
+    );
   }
 }
