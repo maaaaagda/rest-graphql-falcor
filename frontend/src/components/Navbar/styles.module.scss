@@ -1,0 +1,61 @@
+@import '../../common/styles/constants';
+
+.navbarLogo {
+    width: 60%;
+    height: auto;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.appHeader {
+    min-height: 7em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $white-color;
+}
+
+.headerButton {
+    box-shadow: none;
+    background: none;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    vertical-align: middle;
+    text-align: left;
+    font-size: 2em;
+    min-width: 30px;
+    min-height: 30px;
+    &:active, &:focus {
+        outline: none;
+    }
+
+    transition: color .1s;
+    &:hover {
+        color: rgba(33,33,33,.5);
+    }
+}
+
+.headerCTAButton {
+    @extend .headerButton;
+
+    border-radius: 5px;
+    background-color: $cta-color;
+    color: $white-color;
+
+    transition: box-shadow .3s;
+    &:hover {
+        box-shadow: 0 0 15px orange;
+        color: $white-color;
+    }
+}
+
+.navbarContent {
+    width: 80%;
+}
