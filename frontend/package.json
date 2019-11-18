@@ -7,6 +7,7 @@
     "@blueprintjs/core": "^3.19.1",
     "bootstrap": "^4.3.1",
     "classnames": "^2.2.6",
+    "formik": "^2.0.3",
     "moment": "^2.24.0",
     "node-sass": "^4.13.0",
     "react": "^16.10.2",
@@ -14,15 +15,16 @@
     "react-dom": "^16.10.2",
     "react-hot-loader": "^4.12.15",
     "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "recharts": "^1.8.5",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-form": "^8.2.6",
     "restful-react": "^9.1.0",
     "typesafe-actions": "^5.1.0",
-    "typescript": "3.6.4"
+    "typescript": "3.6.4",
+    "yup": "^0.27.0"
   },
   "proxy": "http://localhost:9000",
   "scripts": {
@@ -54,12 +56,15 @@
     "@types/react": "16.9.9",
     "@types/react-dom": "16.9.2",
     "@types/react-redux": "^7.1.5",
+    "@types/react-router-dom": "^5.1.2",
     "@types/recharts": "^1.8.0",
+    "@types/yup": "^0.26.24",
     "husky": "^3.0.9",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
     "react-app-rewire-hot-loader": "^2.0.1",
-    "react-app-rewired": "^2.1.4"
+    "react-app-rewired": "^2.1.4",
+    "tslib": "^1.10.0"
   },
   "husky": {
     "hooks": {

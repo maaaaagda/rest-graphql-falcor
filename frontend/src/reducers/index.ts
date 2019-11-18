@@ -1,3 +1,1 @@
-import { combineReducers } from 'redux'
-
-export const rootReducer = combineReducers({})
+export { default as userReducer } from './user'

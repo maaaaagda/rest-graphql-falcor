@@ -1,11 +1,17 @@
 import React from 'react'
-import { Card, Elevation } from '@blueprintjs/core'
+import { Route, Switch } from 'react-router'
+import { LoginView } from './views'
 import { MainNavbar } from './components/Navbar'
 
 const App = () => (
-  <div>
-    <MainNavbar />
-  </div>
+  <Switch>
+    <Route path="/login">
+      <LoginView />
+    </Route>
+    <Route path="/">
+      <MainNavbar />
+    </Route>
+  </Switch>
 )
 
 export default App

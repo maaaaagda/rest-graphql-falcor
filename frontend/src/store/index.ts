@@ -1,14 +1,12 @@
-import { Store, createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { logger } from 'src/middleware'
-import { rootReducer } from 'src/reducers'
+import rootReducer from './root-reducer'
 
-export function configureStore(initialState?: any): Store<{}> {
-  let middleware = applyMiddleware(logger)
+let middleware = applyMiddleware(logger)
 
-  if (process.env.NODE_ENV !== 'production') {
-    middleware = composeWithDevTools(middleware)
-  }
-
-  return createStore(rootReducer, initialState, middleware) as Store<{}>
+if (process.env.NODE_ENV !== 'production') {
+  middleware = composeWithDevTools(middleware)
 }
+
+export default createStore(rootReducer, {}, middleware)

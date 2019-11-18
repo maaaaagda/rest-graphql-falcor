@@ -4,14 +4,15 @@ import { Provider } from 'react-redux'
 import { RestfulProvider } from 'restful-react'
 import App from './App'
 import { hot } from 'react-hot-loader/root'
-import { configureStore } from './store'
-
-const store = configureStore()
+import store from './store'
+import { BrowserRouter } from 'react-router-dom'
 
 const Root = () => (
   <Provider store={store}>
     <RestfulProvider base={process.env.REACT_APP_API_ENDPOINT as string}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </RestfulProvider>
   </Provider>
 )
