@@ -8,7 +8,7 @@ export const MainNavbar = (props: Props) => (
   <Navbar className={styles.appHeader} fixedToTop>
     <div className={styles.navbarContent}>
       <div className="bp3-navbar-group bp3-align-left">
-        <img className={styles.navbarLogo} src="logo200.png" alt="logo"></img>
+        <img className={styles.navbarLogo} src="logo200.png" alt="logo" />
       </div>
       <div className="bp3-navbar-group bp3-align-right">
         <a className={styles.headerButton} href="/">
