@@ -3,6 +3,7 @@ import { Card } from '@blueprintjs/core'
 import WhoAreWe from './WhoAreWe'
 import WhyWe from './WhyWe'
 import ReallyEko from './ReallyEko'
+import PeopleWhoTrustedUs from './PeopleWhoTrustedUs'
 
 const HomePage: React.FC = props => {
   return (
@@ -10,6 +11,7 @@ const HomePage: React.FC = props => {
       <WhoAreWe />
       <WhyWe />
       <ReallyEko />
+      <PeopleWhoTrustedUs />
     </Card>
   )
 }
