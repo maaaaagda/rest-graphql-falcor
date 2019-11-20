@@ -7,4 +7,4 @@ const LoginView = () => (
   </React.Fragment>
 )
 
-export default LoginView
+export { LoginView }

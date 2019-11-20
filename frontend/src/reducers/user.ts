@@ -1,11 +1,19 @@
-import { createReducer } from 'typesafe-actions'
-import { User } from 'MyModels'
-import { setLoggedInUser } from 'src/actions'
-import { combineReducers } from 'redux'
+import { User } from 'src/models'
+import * as actions from 'src/actions'
 
-export default combineReducers({
-  loggedInUser: createReducer(null as Nullable<User>).handleAction(
-    setLoggedInUser,
-    (_, action) => action.payload
-  ),
-})
+export const userReducer = (
+  state = {
+    loggedInUser: null as Nullable<User>,
+  },
+  action: actions.ActionType
+) => {
+  switch (action.type) {
+    case actions.SET_LOGGED_IN_USER:
+      return {
+        ...state,
+        loggedInUser: action.payload,
+      }
+    default:
+      return state
+  }
+}
