@@ -1,5 +1,6 @@
 import { Navbar } from '@blueprintjs/core'
 import React from 'react'
+import logo from 'src/media/logo200.png'
 import styles from './styles.module.scss'
 
 type Props = {}
@@ -8,7 +9,7 @@ export const MainNavbar = (props: Props) => (
   <Navbar className={styles.appHeader} fixedToTop>
     <div className={styles.navbarContent}>
       <div className="bp3-navbar-group bp3-align-left">
-        <img className={styles.navbarLogo} src="logo200.png" alt="logo"></img>
+        <img className={styles.navbarLogo} src={logo} alt="logo"></img>
       </div>
       <div className="bp3-navbar-group bp3-align-right">
         <a className={styles.headerButton} href="/">
