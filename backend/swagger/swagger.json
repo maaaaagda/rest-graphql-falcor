@@ -18,6 +18,9 @@
     },
     {
       "name": "auth"
+    },
+    {
+      "name": "product"
     }
   ],
   "schemes": [
@@ -25,7 +28,7 @@
     "http"
   ],
   "paths": {
-    "/diet": {
+    "/diets": {
       "post": {
         "tags": [
           "diet"
@@ -88,7 +91,7 @@
         ]
       }
     },
-    "/diet?dietId=1": {
+    "/diets?dietId=1": {
       "put": {
         "tags": [
           "diet"
@@ -132,7 +135,7 @@
         ]
       }
     },
-    "/diet-order": {
+    "/diet-orders": {
       "post": {
         "tags": [
           "diet-order"
@@ -195,7 +198,7 @@
         ]
       }
     },
-    "/diet-order?dietOrderId=1": {
+    "/diet-orders?dietOrderId=1": {
       "put": {
         "tags": [
           "diet-order"
@@ -239,7 +242,114 @@
         ]
       }
     },
-    "/user": {
+    "/products": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Add a new product",
+        "operationId": "addProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Product object to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ProductPostPut"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getProducts",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/products?productId=1": {
+      "put": {
+        "tags": [
+          "product"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "productId",
+            "description": "ID of product",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Product object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          }
+        ],
+        "summary": "Update an existing product",
+        "description": "",
+        "operationId": "updateProduct",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/users": {
       "post": {
         "tags": [
           "user"
@@ -337,10 +447,10 @@
       "type": "object",
       "properties": {
         "_id": {
-          "type": "integer"
+          "type": "string"
         },
         "name": {
-          "type": "integer"
+          "type": "string"
         },
         "dailyCost": {
           "type": "integer"
@@ -355,6 +465,64 @@
         },
         "dailyCost": {
           "type": "integer"
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kcal": {
+          "type": "number"
+        },
+        "protein": {
+          "type": "number"
+        },
+        "carbohydrate": {
+          "type": "number"
+        },
+        "fat": {
+          "type": "number"
+        },
+        "fibre": {
+          "type": "number"
+        },
+        "photo": {
+          "type": "string"
+        }
+      }
+    },
+    "ProductPostPut": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "kcal": {
+          "type": "number"
+        },
+        "protein": {
+          "type": "number"
+        },
+        "carbohydrate": {
+          "type": "number"
+        },
+        "fat": {
+          "type": "number"
+        },
+        "fibre": {
+          "type": "number"
+        },
+        "photo": {
+          "type": "string"
         }
       }
     },
