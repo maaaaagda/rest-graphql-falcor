@@ -14,7 +14,11 @@ const Opinion: React.FC<{
       className={classNames(s.opinionContainer, 'm-3')}>
       <div className={'row'}>
         <div className={'col-7'}>
-          <img src={photoPath} className={s.customerPhoto} />
+          <img
+            src={photoPath}
+            className={s.customerPhoto}
+            alt="reviewer opinion"
+          />
         </div>
         <div className={'col-5'}>
           <p>{name}</p>
