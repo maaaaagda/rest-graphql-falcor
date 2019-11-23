@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Switch } from 'react-router'
+import { MainNavbar } from './components/Navbar'
 import { LoginView, DashboardView } from './views'
 import EnsureLoginStatus from './components/EnsureLoginStatus'
 import { RouteBuilder } from './views/routes'
@@ -16,6 +17,7 @@ const App = () => (
       </EnsureLoginStatus>
     </Route>
     <Route path="/">
+      <MainNavbar />
       <EnsureLoginStatus
         needsToBeLoggedIn={true}
         redirectRoute={{

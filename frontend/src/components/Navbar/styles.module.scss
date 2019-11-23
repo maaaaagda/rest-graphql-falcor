@@ -1,61 +1,62 @@
 @import '../../common/styles/constants';
 
 .navbarLogo {
-    width: 60%;
-    height: auto;
+  width: 60%;
+  height: auto;
 
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .appHeader {
-    min-height: 7em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $white-color;
+  min-height: $navbar-min-height;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $white-color;
 }
 
 .headerButton {
-    box-shadow: none;
-    background: none;
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    cursor: pointer;
-    padding: 5px 10px;
-    vertical-align: middle;
-    text-align: left;
-    font-size: 2em;
-    min-width: 30px;
-    min-height: 30px;
-    &:active, &:focus {
-        outline: none;
-    }
+  box-shadow: none;
+  background: none;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 2em;
+  min-width: 30px;
+  min-height: 30px;
+  &:active,
+  &:focus {
+    outline: none;
+  }
 
-    transition: color .1s;
-    &:hover {
-        color: rgba(33,33,33,.5);
-    }
+  transition: color 0.1s;
+  &:hover {
+    color: rgba(33, 33, 33, 0.5);
+  }
 }
 
 .headerCTAButton {
-    @extend .headerButton;
+  @extend .headerButton;
 
-    border-radius: 5px;
-    background-color: $cta-color;
+  border-radius: 5px;
+  background-color: $cta-color;
+  color: $white-color;
+
+  transition: box-shadow 0.3s;
+  &:hover {
+    box-shadow: 0 0 15px orange;
     color: $white-color;
-
-    transition: box-shadow .3s;
-    &:hover {
-        box-shadow: 0 0 15px orange;
-        color: $white-color;
-    }
+  }
 }
 
 .navbarContent {
-    width: 80%;
+  width: 80%;
 }
