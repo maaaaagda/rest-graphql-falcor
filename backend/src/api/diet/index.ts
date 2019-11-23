@@ -17,7 +17,7 @@ import getContainer from "./ioc/inversify.config";
 import { Config } from "../../config/Config";
 
 const config: Config = new Config();
-const ENDPOINT: string = "diet";
+const ENDPOINT: string = "diets";
 
 @controller(`${config.API_PATH}${ENDPOINT}`)
 export class DietController implements interfaces.Controller {

@@ -15,7 +15,7 @@ import getContainer from "./ioc/inversify.config";
 import { Config } from "../../config/Config";
 
 const config: Config = new Config();
-const ENDPOINT: string = "user";
+const ENDPOINT: string = "users";
 
 @controller(`${config.API_PATH}${ENDPOINT}`)
 export class UserController implements interfaces.Controller {
