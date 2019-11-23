@@ -349,6 +349,113 @@
         ]
       }
     },
+    "/meals": {
+      "post": {
+        "tags": [
+          "meal"
+        ],
+        "summary": "Add a new meal",
+        "operationId": "addDMeal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Meal object to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MealPostPut"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "meal"
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getMeals",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Meal"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/meals?dietId=1": {
+      "put": {
+        "tags": [
+          "meal"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "mealId",
+            "description": "ID of a meal",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Meal object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/MealPostPut"
+            }
+          }
+        ],
+        "summary": "Update an existing meal",
+        "description": "",
+        "operationId": "updateMeal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/users": {
       "post": {
         "tags": [
@@ -500,9 +607,6 @@
     "ProductPostPut": {
       "type": "object",
       "properties": {
-        "_id": {
-          "type": "string"
-        },
         "name": {
           "type": "string"
         },
@@ -579,6 +683,90 @@
         "cancelled",
         "waiting_for_payment"
       ]
+    },
+    "Meal": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Ingredient"
+          }
+        },
+        "kcal": {
+          "type": "number"
+        },
+        "protein": {
+          "type": "number"
+        },
+        "carbohydrate": {
+          "type": "number"
+        },
+        "fat": {
+          "type": "number"
+        },
+        "fibre": {
+          "type": "number"
+        },
+        "photo": {
+          "type": "string"
+        }
+      }
+    },
+    "MealPostPut": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Ingredient"
+          }
+        },
+        "receipe": {
+          "type": "string"
+        },
+        "authorId": {
+          "type": "string"
+        },
+        "kcal": {
+          "type": "number"
+        },
+        "protein": {
+          "type": "number"
+        },
+        "carbohydrate": {
+          "type": "number"
+        },
+        "fat": {
+          "type": "number"
+        },
+        "fibre": {
+          "type": "number"
+        },
+        "photo": {
+          "type": "string"
+        }
+      }
+    },
+    "Ingredient": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "number"
+        }
+      }
     },
     "User": {
       "type": "object",

@@ -72,10 +72,8 @@ export class ProductController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.updateProductController.process.bind(this.updateProductController)(
-      req,
-      res,
-      next
-    );
+    return this.updateProductController.process.bind(
+      this.updateProductController
+    )(req, res, next);
   }
 }
