@@ -5,7 +5,7 @@ import { OrderStatus } from "./OrderStatus";
 export const dietOrderSchema: mongoose.Schema = new mongoose.Schema({
   _id: {
     type: String,
-    default: uuidv1()
+    default: uuidv1
   },
   dietId: {
     type: String,
