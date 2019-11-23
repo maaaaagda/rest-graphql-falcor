@@ -29,6 +29,15 @@ export abstract class BaseRepository<T extends Document>
       .skip(page * limit);
   }
 
+  public async getCountByIds(ids: string[]): Promise<number> {
+    const model: Model<T> = await this.getModel();
+    return model.countDocuments({
+      _id: {
+        $in: ids
+      }
+    });
+  }
+
   public async getOne(params: object): Promise<T> {
     const model: Model<T> = await this.getModel();
     return model.findOne(params);

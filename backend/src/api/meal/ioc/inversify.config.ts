@@ -21,6 +21,9 @@ import { MealRepository } from "../repository/MealRepository";
 import { IMealRepository } from "../repository/IMealRepository";
 import { MEAL_REPOSITORIES, MEAL_TYPES } from "./MealTypes";
 import { MealService } from "../service/MealService";
+import { IProductRepository } from "../../product/repository/IProductRepository";
+import { PRODUCT_REPOSITORIES } from "../../product/ioc/ProductTypes";
+import { ProductRepository } from "../../product/repository/ProductRepository";
 
 const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
@@ -72,6 +75,10 @@ const getContainer: () => Container = (): Container => {
     .bind<MealService>(MEAL_TYPES.IMealService)
     .to(MealService)
     .inSingletonScope();
+
+  container
+    .bind<IProductRepository>(PRODUCT_REPOSITORIES.IProductRepository)
+    .to(ProductRepository);
 
   return container;
 };

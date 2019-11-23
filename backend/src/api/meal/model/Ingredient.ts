@@ -1,4 +1,4 @@
 export interface Ingredient {
-  product: string;
+  productId: string;
   weight: number;
 }
