@@ -23,7 +23,7 @@ async function bootstrap(): Promise<void> {
   await database.getConnection();
 
   const server: InversifyExpressServer = new InversifyExpressServer(container);
-  const port: number = config.PORT || 3000;
+  const port: number = config.PORT || 3001;
 
   server.setConfig((app: Application) => {
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
