@@ -8,7 +8,7 @@ export const userSchema: mongoose.Schema = new mongoose.Schema(
   {
     _id: {
       type: String,
-      default: uuidv1(),
+      default: uuidv1,
       primary_key: true
     },
     name: {

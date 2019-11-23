@@ -9,31 +9,31 @@ import {
 } from "inversify-express-utils";
 import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
-import { IGetDietController } from "./controller/getDietController/IGetController";
-import { IPostDietController } from "./controller/postDietController/IPostController";
-import { IPutDietController } from "./controller/putDietController/IPutController";
-import { DIET_TYPES } from "./ioc/DietTypes";
+import { IGetProductController } from "./controller/getProductController/IGetController";
+import { IPostProductController } from "./controller/postProductController/IPostController";
+import { IPutProductController } from "./controller/putProductController/IPutController";
+import { PRODUCT_TYPES } from "./ioc/ProductTypes";
 import getContainer from "./ioc/inversify.config";
 import { Config } from "../../config/Config";
 
 const config: Config = new Config();
-const ENDPOINT: string = "diets";
+const ENDPOINT: string = "products";
 
 @controller(`${config.API_PATH}${ENDPOINT}`)
-export class DietController implements interfaces.Controller {
+export class ProductController implements interfaces.Controller {
   private readonly _container: Container = getContainer();
   private readonly _database: IDatabase = this._container.get<IDatabase>(
     TYPES.IDatabase
   );
 
-  private readonly postDietController: IPostDietController = this._container.get(
-    DIET_TYPES.IPostDietController
+  private readonly postProductController: IPostProductController = this._container.get(
+    PRODUCT_TYPES.IPostProductController
   );
-  private readonly getDietController: IGetDietController = this._container.get(
-    DIET_TYPES.IGetDietController
+  private readonly getProductController: IGetProductController = this._container.get(
+    PRODUCT_TYPES.IGetProductController
   );
-  private readonly updateDietController: IPutDietController = this._container.get(
-    DIET_TYPES.IPutDietController
+  private readonly updateProductController: IPutProductController = this._container.get(
+    PRODUCT_TYPES.IPutProductController
   );
 
   constructor() {
@@ -41,12 +41,12 @@ export class DietController implements interfaces.Controller {
   }
 
   @httpGet("/")
-  public async getDiet(
+  public async getProduct(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.getDietController.process.bind(this.getDietController)(
+    return this.getProductController.process.bind(this.getProductController)(
       req,
       res,
       next
@@ -54,12 +54,12 @@ export class DietController implements interfaces.Controller {
   }
 
   @httpPost("/")
-  public async postDiet(
+  public async postProduct(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.postDietController.process.bind(this.postDietController)(
+    return this.postProductController.process.bind(this.postProductController)(
       req,
       res,
       next
@@ -67,12 +67,12 @@ export class DietController implements interfaces.Controller {
   }
 
   @httpPut("/")
-  public async updateDiet(
+  public async updateProduct(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.updateDietController.process.bind(this.updateDietController)(
+    return this.updateProductController.process.bind(this.updateProductController)(
       req,
       res,
       next
