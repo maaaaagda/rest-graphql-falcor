@@ -18,5 +18,4 @@ export const productPutSchema: Joi.Schema = Joi.object().keys({
     .min(0)
     .required(),
   photo: Joi.string()
-    .required()
 });
