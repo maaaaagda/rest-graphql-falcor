@@ -4,16 +4,16 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import './common/styles/constants';
 
-body {
-  padding-top: $navbar-min-height;
-}
-
 body,
 html,
 #root {
   width: 100%;
   height: 100%;
   font-family: 'Cairo', sans-serif;
+}
+
+#root {
+    padding-top: $navbar-min-height;
 }
 
 a {
