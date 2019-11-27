@@ -1,6 +1,7 @@
 import React from 'react'
-import { DailyDiet, MEAL_TIME } from 'src/models'
+import { DailyDiet, MEAL_TIME, MEAL_TIME_KEYS } from 'src/models'
 import { Table } from 'react-bootstrap'
+import moment from 'moment'
 //import style from './DietSchedule.module.scss'
 
 const MEAL_TIME_TRANSLATION: Record<MEAL_TIME, string> = {
@@ -19,18 +20,18 @@ const DietSchedule = ({ dailyDiets }: Props) => (
   <Table responsive>
     <thead>
       <tr>
-        <th>Dzień</th>
-        {Object.values(MEAL_TIME_TRANSLATION).map(meal => (
-          <th key={meal}>{meal}</th>
+        <th>dzień</th>
+        {MEAL_TIME_KEYS.map(key => (
+          <th key={key}>{MEAL_TIME_TRANSLATION[key]}</th>
         ))}
       </tr>
     </thead>
     <tbody>
       {dailyDiets.map(diet => (
         <tr key={diet.id}>
-          <td>{diet.date.toString()}</td>
-          {Object.entries(MEAL_TIME_TRANSLATION).map(([key, _]) => (
-            <th key={key}>{key}</th>
+          <td>{moment(diet.date).format('DD/MM/YY (dddd)')}</td>
+          {MEAL_TIME_KEYS.map(key => (
+            <td key={key}>{diet.dailyMeals[key]}</td>
           ))}
         </tr>
       ))}
