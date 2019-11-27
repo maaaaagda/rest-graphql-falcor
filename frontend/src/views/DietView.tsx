@@ -6,7 +6,7 @@ import { DailyDiet } from 'src/models'
 
 const dailyDiets: DailyDiet[] = [
   {
-    id: '1',
+    _id: '1',
     diet: '0',
     dailyMeals: {
       breakfast: 'cos',
@@ -18,7 +18,7 @@ const dailyDiets: DailyDiet[] = [
     date: new Date(),
   },
   {
-    id: '2',
+    _id: '2',
     diet: '0',
     dailyMeals: {
       breakfast: null,
@@ -30,7 +30,7 @@ const dailyDiets: DailyDiet[] = [
     date: new Date(),
   },
   {
-    id: '3',
+    _id: '3',
     diet: '0',
     dailyMeals: {
       breakfast: null,
@@ -42,7 +42,7 @@ const dailyDiets: DailyDiet[] = [
     date: new Date(),
   },
   {
-    id: '4',
+    _id: '4',
     diet: '0',
     dailyMeals: {
       breakfast: null,

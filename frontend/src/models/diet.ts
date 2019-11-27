@@ -1,5 +1,5 @@
 export type Diet = {
-  id: string
+  _id: string
   name: string
   dailyCost: number
 }

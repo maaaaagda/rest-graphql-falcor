@@ -10,7 +10,7 @@ type Props = {
 } & ICardProps
 
 const DietCard = ({
-  data: { id, name, dailyCost },
+  data: { _id, name, dailyCost },
   className,
   ...rest
 }: Props) => (
@@ -22,7 +22,7 @@ const DietCard = ({
     <span className={style.cost}>{dailyCost}zł / dzień</span>
     <div className={style.navigation}>
       <Link
-        to={RouteBuilder.toDiet(id)}
+        to={RouteBuilder.toDiet(_id)}
         className="bp3-button bp3-intent-success">
         Pokaż
       </Link>

@@ -13,7 +13,7 @@ export type DailyMeals = {
 }
 
 export type DailyDiet = {
-  id: ID
+  _id: ID
   diet: ID
   dailyMeals: DailyMeals
   date: Date

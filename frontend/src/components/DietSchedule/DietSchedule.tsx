@@ -28,7 +28,7 @@ const DietSchedule = ({ dailyDiets }: Props) => (
     </thead>
     <tbody>
       {dailyDiets.map(diet => (
-        <tr key={diet.id}>
+        <tr key={diet._id}>
           <td>{moment(diet.date).format('DD/MM/YY (dddd)')}</td>
           {MEAL_TIME_KEYS.map(key => (
             <td key={key}>{diet.dailyMeals[key]}</td>
