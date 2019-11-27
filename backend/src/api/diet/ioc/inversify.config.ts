@@ -11,12 +11,6 @@ import { Logger } from "../../../core/logger/Logger";
 import { IValidator } from "../../../core/validator/IValidator";
 import { Validator } from "../../../core/validator/Validator";
 import { TYPES } from "../../../ioc/types";
-import { GetDietController } from "../controller/getDietController/GetController";
-import { IGetDietController } from "../controller/getDietController/IGetController";
-import { IPostDietController } from "../controller/postDietController/IPostController";
-import { PostDietController } from "../controller/postDietController/PostController";
-import { IPutDietController } from "../controller/putDietController/IPutController";
-import { PutDietController } from "../controller/putDietController/PutController";
 import { DietRepository } from "../repository/DietRepository";
 import { IDietRepository } from "../repository/IDietRepository";
 import { DIET_REPOSITORIES, DIET_TYPES } from "./DietTypes";
@@ -49,26 +43,12 @@ const getContainer: () => Container = (): Container => {
     .to(DietRepository);
 
   container
-    .bind<IPostDietController>(DIET_TYPES.IPostDietController)
-    .to(PostDietController)
-    .inSingletonScope();
-
-  container
-    .bind<IGetDietController>(DIET_TYPES.IGetDietController)
-    .to(GetDietController)
-    .inSingletonScope();
-
-  container
-    .bind<IPutDietController>(DIET_TYPES.IPutDietController)
-    .to(PutDietController)
-    .inSingletonScope();
-
-  container
     .bind<IAuthenticator>(TYPES.IAuthenticator)
     .to(Authenticator)
     .inSingletonScope();
 
-  container.bind<DietService>(DIET_TYPES.IDietService)
+  container
+    .bind<DietService>(DIET_TYPES.IDietService)
     .to(DietService)
     .inSingletonScope();
 

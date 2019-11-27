@@ -6,12 +6,15 @@ import { BadRequestError } from "../../../core/error/BadRequestError";
 
 @injectable()
 export class DietService {
-
   @inject(DIET_REPOSITORIES.IDietRepository)
   private readonly _dietRepository: IDietRepository;
 
   public async getDiets(): Promise<IDiet[]> {
     return await this._dietRepository.getMany();
+  }
+
+  public async getDietById(id: string): Promise<IDiet> {
+    return await this._dietRepository.getOneById(id);
   }
 
   public async postDiet(dietParams: IDiet) {

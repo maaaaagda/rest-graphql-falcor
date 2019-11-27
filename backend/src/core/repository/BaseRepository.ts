@@ -43,6 +43,11 @@ export abstract class BaseRepository<T extends Document>
     return model.findOne(params);
   }
 
+  public async getOneById(id: string): Promise<T> {
+    const model: Model<T> = await this.getModel();
+    return model.findOne({ _id: id });
+  }
+
   public async updateOneById(id: string, params: object): Promise<T> {
     const model: Model<T> = await this.getModel();
     return model.updateOne({ _id: id }, params);
