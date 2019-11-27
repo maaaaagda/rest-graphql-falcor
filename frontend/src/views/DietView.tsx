@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { DietSchedule } from 'src/components/DietSchedule'
 import { DailyDiet } from 'src/models'
+import { useDietsQuery } from 'src/rest'
 
 const dailyDiets: DailyDiet[] = [
   {
@@ -58,9 +59,12 @@ const dailyDiets: DailyDiet[] = [
 const DietView = () => {
   const { dietId } = useParams()
 
+  const { data, loading } = useDietsQuery()
+  const diet = (loading || !data) ? null : data.find(v => v._id == dietId) || null
+
   return (
     <Container fluid={true}>
-      <h1>Dieta {dietId}</h1>
+      {diet ? <h1>Dieta {diet.name}</h1> : <h1 className="bp3-skeleton">Dieta abc</h1>}
       <DietSchedule dailyDiets={dailyDiets} />
     </Container>
   )

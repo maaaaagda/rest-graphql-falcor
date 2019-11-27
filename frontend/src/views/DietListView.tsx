@@ -11,7 +11,6 @@ const makePlaceholderData = (n: number) => (
 const DietListView = () => {
   const { data, loading } = useDietsQuery()
   const dat = (loading || !data) ? makePlaceholderData(10) : data
-  console.log(dat)
 
   return (
     <Container>
