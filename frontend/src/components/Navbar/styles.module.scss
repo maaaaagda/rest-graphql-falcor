@@ -1,4 +1,5 @@
 @import '../../common/styles/constants';
+@import '../../common/styles/functions';
 
 .navbarLogo {
   width: 60%;
@@ -17,7 +18,7 @@
   background-color: $white-color;
 }
 
-.headerButton {
+.headerLink {
   box-shadow: none;
   background: none;
   display: inline-flex;
@@ -29,7 +30,7 @@
   padding: 5px 10px;
   vertical-align: middle;
   text-align: left;
-  font-size: 2em;
+  font-size: 1.25em;
   min-width: 30px;
   min-height: 30px;
   &:active,
@@ -43,17 +44,22 @@
   }
 }
 
-.headerCTAButton {
-  @extend .headerButton;
+.headerButton {
+  @extend .headerLink;
 
   border-radius: 5px;
-  background-color: $cta-color;
   color: $white-color;
-
   transition: box-shadow 0.3s;
-  &:hover {
-    box-shadow: 0 0 15px orange;
-    color: $white-color;
+
+  @each $key in $site-colors {
+    &_#{$key}, &_primary {
+      background-color: get-color($site-colors, $key);
+      color: $white-color;
+
+      &:hover {
+        box-shadow: 0 0 15px get-color($site-colors, $key, "++");
+      }
+    }
   }
 }
 

@@ -1,7 +1,20 @@
-$primary-color: #409e18;
-$secondary-color: #dbd5b5;
+@import './functions';
+
+$colors: (
+    "blue": #0E5A8A,
+    "green": #0A6640,
+    "orange": #A66321,
+    "red": #A82A2A,
+    "beige": #dbd5b5
+);
+
+$site-colors: (
+    "primary": get-color($colors, "blue"),
+    "secondary": get-color($colors, "beige"),
+    "action": get-color($colors, "orange")
+);
+
 $white-color: #ffffff;
-$cta-color: #ff9933;
 
 $navbar-min-height: 7em;
 
