@@ -27,10 +27,12 @@
     "inversify": "^5.0.1",
     "inversify-express-utils": "^6.3.2",
     "jsonwebtoken": "^8.5.0",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongoose": "^5.7.7",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.0",
+    "request-promise": "^4.2.5",
     "swagger-ui-express": "^4.1.2",
     "ts-node": "^8.4.1",
     "tslib": "^1.9.3",
@@ -45,7 +47,6 @@
     "husky": "^3.0.9",
     "install": "^0.13.0",
     "nodemon": "^1.19.4",
-    "npm": "^6.12.0",
-    "request-promise": "^4.2.5"
+    "npm": "^6.12.0"
   }
 }

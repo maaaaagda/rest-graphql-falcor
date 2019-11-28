@@ -53,8 +53,8 @@ export class ProductController implements interfaces.Controller {
     );
   }
 
-  @httpPost("/")
-  public async postProduct(
+  @httpPost("/seed")
+  public async seedProducts(
     req: Request,
     res: Response,
     next: NextFunction
@@ -65,6 +65,19 @@ export class ProductController implements interfaces.Controller {
       next
     );
   }
+
+  // @httpPost("/")
+  // public async postProduct(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ): Promise<Response> {
+  //   return this.postProductController.process.bind(this.postProductController)(
+  //     req,
+  //     res,
+  //     next
+  //   );
+  // }
 
   @httpPut("/")
   public async updateProduct(
