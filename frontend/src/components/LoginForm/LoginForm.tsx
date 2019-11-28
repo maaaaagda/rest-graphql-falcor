@@ -12,6 +12,7 @@ import * as Yup from 'yup'
 import { PasswordInput } from './PasswordInput'
 import { connect } from 'react-redux'
 import { setLoggedInUser } from 'src/actions'
+import { User } from 'src/models'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -35,7 +36,7 @@ const LoginFormComponent = ({ loginUser, ...rest }: Props) => (
       }}
       validationSchema={loginSchema}
       onSubmit={values => {
-        loginUser({ id: 'foo', email: values.email })
+        loginUser({ id: 'foo', email: values.email, role: "admin" } as User)
       }}>
       {({
         values,
