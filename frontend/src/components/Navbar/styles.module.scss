@@ -1,4 +1,5 @@
 @import '../../common/styles/constants';
+@import '../../common/styles/functions';
 
 .navbarLogo {
   width: 60%;
@@ -14,10 +15,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: $white-color;
+  background-color: white;
 }
 
-.headerButton {
+.headerLink {
   box-shadow: none;
   background: none;
   display: inline-flex;
@@ -29,7 +30,7 @@
   padding: 5px 10px;
   vertical-align: middle;
   text-align: left;
-  font-size: 2em;
+  font-size: 1.25em;
   min-width: 30px;
   min-height: 30px;
   &:active,
@@ -38,22 +39,29 @@
   }
 
   transition: color 0.1s;
+
   &:hover {
     color: rgba(33, 33, 33, 0.5);
   }
 }
 
-.headerCTAButton {
-  @extend .headerButton;
+.headerButton {
+  @extend .headerLink;
 
   border-radius: 5px;
-  background-color: $cta-color;
-  color: $white-color;
+  transition: background-color 0.3s;
 
-  transition: box-shadow 0.3s;
-  &:hover {
-    box-shadow: 0 0 15px orange;
-    color: $white-color;
+  @each $key, $color in $state-colors {
+    &_#{$key} {
+      background-color: array-get($color, base);
+      color: array-get($color, inverse);
+
+      &:hover {
+        background-color: lighten(array-get($color, base), 5%);
+        color: array-get($color, inverse);
+        text-decoration: none;
+      }
+    }
   }
 }
 

@@ -737,21 +737,6 @@
         "authorId": {
           "type": "string"
         },
-        "kcal": {
-          "type": "number"
-        },
-        "protein": {
-          "type": "number"
-        },
-        "carbohydrate": {
-          "type": "number"
-        },
-        "fat": {
-          "type": "number"
-        },
-        "fibre": {
-          "type": "number"
-        },
         "photo": {
           "type": "string"
         }
