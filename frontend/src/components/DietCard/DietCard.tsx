@@ -7,27 +7,39 @@ import { RouteBuilder } from 'src/views/routes'
 
 type Props = {
   data: Diet
+  editable?: boolean
 } & ICardProps
+
+export type DietCardProps = Props
 
 const DietCard = ({
   data: { _id, name, dailyCost },
   className,
+  editable,
   ...rest
 }: Props) => (
-  <Card
-    elevation={Elevation.TWO}
-    className={`${style.dietCard} ${className || ''}`}
-    {...rest}>
-    <h5 className={style.name}>{name}</h5>
-    <span className={style.cost}>{dailyCost}zł / dzień</span>
-    <div className={style.navigation}>
-      <Link
-        to={RouteBuilder.toDiet(_id)}
-        className="bp3-button bp3-intent-success">
-        Pokaż
+    <Card
+      elevation={Elevation.TWO}
+      className={`${style.dietCard} ${className || ''}`}
+      {...rest}>
+      <h5 className={style.name}>{name}</h5>
+      <span className={style.cost}>{dailyCost}zł / dzień</span>
+      <div className={style.navigation}>
+        {editable ? (
+          <Link
+            to={RouteBuilder.toDietAdmin(_id)}
+            className="bp3-button bp3-intent-success">
+            Edytuj
       </Link>
-    </div>
-  </Card>
-)
+        ) : (
+            <Link
+              to={RouteBuilder.toDiet(_id)}
+              className="bp3-button bp3-intent-success">
+              Pokaż
+      </Link>
+          )}
+      </div>
+    </Card>
+  )
 
 export { DietCard }
