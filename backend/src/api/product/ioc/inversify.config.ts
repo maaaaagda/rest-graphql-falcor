@@ -11,12 +11,6 @@ import { Logger } from "../../../core/logger/Logger";
 import { IValidator } from "../../../core/validator/IValidator";
 import { Validator } from "../../../core/validator/Validator";
 import { TYPES } from "../../../ioc/types";
-import { GetProductController } from "../controller/getProductController/GetController";
-import { IGetProductController } from "../controller/getProductController/IGetController";
-import { IPostProductController } from "../controller/postProductController/IPostController";
-import { PostProductController } from "../controller/postProductController/PostController";
-import { IPutProductController } from "../controller/putProductController/IPutController";
-import { PutProductController } from "../controller/putProductController/PutController";
 import { ProductRepository } from "../repository/ProductRepository";
 import { IProductRepository } from "../repository/IProductRepository";
 import { PRODUCT_REPOSITORIES, PRODUCT_TYPES } from "./ProductTypes";
@@ -49,26 +43,12 @@ const getContainer: () => Container = (): Container => {
     .to(ProductRepository);
 
   container
-    .bind<IPostProductController>(PRODUCT_TYPES.IPostProductController)
-    .to(PostProductController)
-    .inSingletonScope();
-
-  container
-    .bind<IGetProductController>(PRODUCT_TYPES.IGetProductController)
-    .to(GetProductController)
-    .inSingletonScope();
-
-  container
-    .bind<IPutProductController>(PRODUCT_TYPES.IPutProductController)
-    .to(PutProductController)
-    .inSingletonScope();
-
-  container
     .bind<IAuthenticator>(TYPES.IAuthenticator)
     .to(Authenticator)
     .inSingletonScope();
 
-  container.bind<ProductService>(PRODUCT_TYPES.IProductService)
+  container
+    .bind<ProductService>(PRODUCT_TYPES.IProductService)
     .to(ProductService)
     .inSingletonScope();
 
