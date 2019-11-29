@@ -49,8 +49,7 @@
   @extend .headerLink;
 
   border-radius: 5px;
-  color: white;
-  transition: box-shadow 0.3s;
+  transition: background-color 0.3s;
 
   @each $key, $color in $state-colors {
     &_#{$key} {
@@ -58,8 +57,9 @@
       color: array-get($color, inverse);
 
       &:hover {
-        box-shadow: 0 0 15px lighten(array-get($color, base), 10%);
+        background-color: lighten(array-get($color, base), 5%);
         color: array-get($color, inverse);
+        text-decoration: none;
       }
     }
   }
