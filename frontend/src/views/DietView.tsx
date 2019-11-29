@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
-import { DietSchedule } from 'src/components/DietSchedule'
+import { DietSchedule, DietScheduleProps } from 'src/components/DietSchedule'
 import { DailyDiet } from 'src/models'
 import { useDietsQuery } from 'src/rest'
 
@@ -56,16 +56,22 @@ const dailyDiets: DailyDiet[] = [
   },
 ]
 
-const DietView = () => {
+type Props = {
+  DietSchedule?: (props: DietScheduleProps) => JSX.Element
+}
+
+const DietView = (props: Props) => {
   const { dietId } = useParams()
 
   const { data, loading } = useDietsQuery()
-  const diet = (loading || !data) ? null : data.find(v => v._id == dietId) || null
+  const diet = (loading || !data) ? null : data.find(v => v._id === dietId) || null
+
+  const DietScheduleComponent = props.DietSchedule || DietSchedule
 
   return (
     <Container fluid={true}>
       {diet ? <h1>Dieta {diet.name}</h1> : <h1 className="bp3-skeleton">Dieta abc</h1>}
-      <DietSchedule dailyDiets={dailyDiets} />
+      <DietScheduleComponent dailyDiets={dailyDiets} />
     </Container>
   )
 }
