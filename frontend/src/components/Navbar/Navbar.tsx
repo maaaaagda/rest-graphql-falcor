@@ -41,7 +41,7 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
           </>
         )}
         <span className="bp3-navbar-divider"></span>
-        <a className={classnames(styles.headerButton, styles.headerButton_action)} href="/">
+        <a className={classnames(styles.headerButton, styles.headerButton_brand)} href="/">
           ZAMÓW
         </a>
       </div>

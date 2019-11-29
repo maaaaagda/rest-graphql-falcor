@@ -1,20 +1,48 @@
-@import './functions';
+$brand-color: #F29D49;
+$brand-inverse-color: white;
 
-$colors: (
-    "blue": #0E5A8A,
-    "green": #0A6640,
-    "orange": #A66321,
-    "red": #A82A2A,
-    "beige": #dbd5b5
-);
-
-$site-colors: (
-    "primary": get-color($colors, "blue"),
-    "secondary": get-color($colors, "beige"),
-    "action": get-color($colors, "orange")
-);
-
-$white-color: #ffffff;
+$state-colors: (
+    brand: (
+        base: $brand-color,
+        inverse: $brand-inverse-color
+    ),
+    metal: (
+        base: #c4c5d6,
+        inverse: #ffffff
+    ),  
+    light: (
+        base: #ffffff,
+        inverse: #282a3c 
+    ),
+    accent: (
+        base: #00c5dc,
+        inverse: #ffffff 
+    ),
+    focus: (
+        base: #9816f4,
+        inverse: #ffffff 
+    ),
+    primary: (
+        base: #5867dd,
+        inverse: #ffffff
+    ),
+    success: (
+        base: #34bfa3,
+        inverse: #ffffff
+    ),
+    info: (
+        base: #36a3f7,
+        inverse: #ffffff
+    ),
+    warning: (
+        base: #ffb822,
+        inverse: #111111
+    ),
+    danger: (
+        base: #f4516c,
+        inverse: #ffffff
+    )    
+) !default;
 
 $navbar-min-height: 7em;
 
