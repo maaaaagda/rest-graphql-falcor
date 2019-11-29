@@ -5,7 +5,7 @@ import { IProduct } from "../model/Product";
 import { BadRequestError } from "../../../core/error/BadRequestError";
 import _ from "lodash";
 const requestPromise = require("request-promise");
-const NR_OF_PRODUCTS_TO_SEED: number = 800;
+const NR_OF_PRODUCTS_TO_SEED: number = 4000;
 
 @injectable()
 export class ProductService {
@@ -47,7 +47,6 @@ export class ProductService {
     const offset: number = 40;
     let nrOfProductsFetched: number = 0;
     while (nrOfProductsFetched < NR_OF_PRODUCTS_TO_SEED) {
-      console.log(nrOfProductsFetched / 40);
       const requestParams: any = {
         uri: "https://api.edamam.com/api/food-database/parser",
         qs: {
@@ -60,14 +59,23 @@ export class ProductService {
         },
         json: true
       };
-      const productsPayload: any = await requestPromise(requestParams);
-      products = products.concat(productsPayload.hints);
-      nrOfProductsFetched += offset;
+      try {
+        const productsPayload: any = await requestPromise(requestParams);
+        products = products.concat(productsPayload.hints);
+        nrOfProductsFetched += offset;
 
-      // really ugly workaround for 30 requests per minute for free database subscription
-      await this.sleep(2000);
+        // really ugly workaround for 30 requests per minute for free database subscription
+        await this.sleep(2000);
+      } catch (err) {
+        throw new BadRequestError(
+          "Cannot fetch products from external source. Please check if needed params are valid."
+        );
+      }
     }
-    return this.getProductsInDBSchape(_.uniq(products, "label"));
+    const productsToSave: IProduct[] = this.getProductsInDBSchape(
+      _.uniq(products, "label")
+    );
+    return await this._productRepository.insertMany(productsToSave);
   }
 
   private getProductsInDBSchape(products: any): IProduct[] {

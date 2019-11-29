@@ -67,11 +67,8 @@ export class ProductController implements interfaces.Controller {
   ): Promise<Response> {
     this._authenticator.authenticate(req.headers.authorization);
     req.setTimeout(300000);
-    // const products: IProduct[] = await this._productService.seedProducts(
-    //   req.query.appId,
-    //   req.query.appKey
-    // );
-    return res.json(SuccessResponse.Created("ok"));
+    await this._productService.seedProducts(req.query.appId, req.query.appKey);
+    return res.json(SuccessResponse.Created("Seeding completed"));
   }
 
   @httpPost("/")
