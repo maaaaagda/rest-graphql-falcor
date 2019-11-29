@@ -13,10 +13,10 @@ const AdminPanelView = () => {
     return (
         <Container fluid>
             <Row>
-                <Col md={2}>
+                <Col md={4} lg={2} className="px-0">
                     <SideNavigation />
                 </Col>
-                <Col md={10}>
+                <Col md={8} lg={10}>
                     <Route path={`${url}/diets`} exact={true} component={() => <DietListView DietCard={props => <DietCard {...props} editable />} />} />
                     <Route path={`${url}/diets/:dietId`} exact={true} component={() => <DietView DietSchedule={props => <DietSchedule {...props} editable />} />} />
                 </Col>
