@@ -13,6 +13,7 @@ import { PasswordInput } from './PasswordInput'
 import { connect } from 'react-redux'
 import { setLoggedInUser } from 'src/actions'
 import { User, UserRole } from 'src/models'
+import { useLoginMutation } from 'src/rest/loginMutation'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -21,70 +22,80 @@ const loginSchema = Yup.object().shape({
 })
 
 const mapDispatchToProps = {
-  loginUser: setLoggedInUser,
+  loginUserAction: setLoggedInUser,
 }
 
 type Props = ICardProps & typeof mapDispatchToProps
 
-const LoginFormComponent = ({ loginUser, ...rest }: Props) => (
-  <Card elevation={Elevation.TWO} {...rest}>
-    <h5>Zaloguj się</h5>
-    <Formik
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={loginSchema}
-      onSubmit={values => {
-        loginUser({ id: 'foo', email: values.email, role: values.password as UserRole } as User)
-      }}>
-      {({
-        values,
-        errors,
-        touched,
-        handleBlur,
-        handleChange,
-        isSubmitting,
-      }) => (
-        <Form>
-          <FormGroup
-            label="email"
-            labelFor="email"
-            helperText={touched.email && errors.email}
-            intent={touched.email && errors.email ? 'danger' : 'none'}>
-            <InputGroup
-              name="email"
-              placeholder="your@email.com"
-              intent={touched.email && errors.email ? 'danger' : 'none'}
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </FormGroup>
-          <FormGroup
-            label="hasło"
-            labelFor="password"
-            helperText={touched.password && errors.password}
-            intent={touched.password && errors.password ? 'danger' : 'none'}>
-            <PasswordInput
-              name="password"
-              value={values.password}
-              intent={touched.password && errors.password ? 'danger' : 'none'}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </FormGroup>
-          <Button
-            intent="success"
-            text="Zaloguj"
-            type="submit"
-            disabled={isSubmitting}
-          />
-        </Form>
-      )}
-    </Formik>
-  </Card>
-)
+const LoginFormComponent = ({ loginUserAction, ...rest }: Props) => {
+  const { mutate: login } = useLoginMutation()
+
+  return (
+    <Card elevation={Elevation.TWO} {...rest}>
+      <h5>Zaloguj się</h5>
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        validationSchema={loginSchema}
+        onSubmit={(values, actions) => {
+          return login({ email: values.email, password: values.password }).then(resp => {
+            loginUserAction({ id: 'foo', email: values.email, role: values.password as UserRole, token: resp.message.token } as User)
+          }).catch(err => {
+            actions.setStatus(err.data ? err.data.message : err.message)
+          })
+        }}>
+        {({
+          values,
+          errors,
+          touched,
+          handleBlur,
+          handleChange,
+          isSubmitting,
+          status
+        }) => (
+            <Form>
+              <FormGroup
+                label="email"
+                labelFor="email"
+                helperText={touched.email && errors.email}
+                intent={touched.email && errors.email ? 'danger' : 'none'}>
+                <InputGroup
+                  name="email"
+                  placeholder="your@email.com"
+                  intent={touched.email && errors.email ? 'danger' : 'none'}
+                  value={values.email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </FormGroup>
+              <FormGroup
+                label="hasło"
+                labelFor="password"
+                helperText={touched.password && errors.password}
+                intent={touched.password && errors.password ? 'danger' : 'none'}>
+                <PasswordInput
+                  name="password"
+                  value={values.password}
+                  intent={touched.password && errors.password ? 'danger' : 'none'}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </FormGroup>
+              <Button
+                intent="success"
+                text="Zaloguj"
+                type="submit"
+                disabled={isSubmitting}
+              />
+              {status && <p className="text-danger mt-2">{status}</p>}
+            </Form>
+          )}
+      </Formik>
+    </Card>
+  )
+}
 
 const LoginForm = connect(
   null,
