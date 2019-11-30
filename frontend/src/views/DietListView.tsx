@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container } from 'react-bootstrap'
 import { DietList } from 'src/components/DietList'
-import { useDietsQuery } from "src/rest"
+import { useDietListQuery } from "src/rest"
 import { Diet } from 'src/models'
 import { DietCard, DietCardProps } from 'src/components/DietCard'
 
@@ -14,7 +14,7 @@ type Props = {
 }
 
 const DietListView = (props: Props) => {
-  const { data, loading } = useDietsQuery()
+  const { data, loading } = useDietListQuery()
   const dat = (loading || !data) ? makePlaceholderData(10) : data
 
   return (

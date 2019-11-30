@@ -9,6 +9,8 @@ import { DietSchedule } from 'src/components/DietSchedule'
 import { RouteBuilder } from './routes'
 import { MealListView } from './MealListView'
 import { MealCard } from 'src/components/MealCard'
+import { MealView } from './MealView'
+import { MealDetails } from 'src/components/MealDetails'
 
 const AdminPanelView = () => {
     const { url } = useRouteMatch() as any
@@ -26,6 +28,7 @@ const AdminPanelView = () => {
                     <Route path={`${url}/diets`} exact={true} component={() => <DietListView DietCard={props => <DietCard {...props} editable />} />} />
                     <Route path={`${url}/diets/:dietId`} exact={true} component={() => <DietView DietSchedule={props => <DietSchedule {...props} editable />} />} />
                     <Route path={`${url}/meals`} exact={true} component={() => <MealListView MealCard={props => <MealCard {...props} editable />} />} />
+                    <Route path={`${url}/meals/:mealId`} exact={true} component={() => <MealView MealDetails={props => <MealDetails {...props} editable />} />} />
                 </Col>
             </Row>
         </Container>

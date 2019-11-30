@@ -14,3 +14,16 @@ export type Meal = {
     fibre: number
     photo: string
 }
+
+export const createMeal = (meal: Partial<Meal>) => ({
+    _id: "",
+    name: "A",
+    ingredients: [],
+    kcal: 0,
+    protein: 0,
+    carbohydrate: 0,
+    fat: 0,
+    fibre: 0,
+    photo: "",
+    ...meal
+})

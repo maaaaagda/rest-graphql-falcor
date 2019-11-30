@@ -4,7 +4,7 @@ import { Diet } from 'src/models'
 
 interface DietsQuery extends Query {}
 
-export const useDietsQuery = (query: DietsQuery = {}) =>
+export const useDietListQuery = (query: DietsQuery = {}) =>
   useGet<Diet[]>({
     path: `/diets`,
     queryParams: buildQueryParams(query),
