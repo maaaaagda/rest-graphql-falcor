@@ -19,6 +19,7 @@ import { dailyDietPostSchema } from "./schema/post/postDailyDiet";
 import { IAuthenticator } from "../../core/auth/IAuthenticator";
 import { IValidator } from "../../core/validator/IValidator";
 import { dailyDietPutSchema } from "./schema/put/putDailyDiet";
+import { BadRequestError } from "../../core/error/BadRequestError";
 
 const config: Config = new Config();
 const ENDPOINT: string = "daily-diets";
@@ -50,7 +51,10 @@ export class DailyDietController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      const dailyDiets: IDailyDiet[] = await this._dailyDietService.getDailyDiets();
+      const dailyDiets: IDailyDiet[] = await this._dailyDietService.getDailyDiets(
+        req.query.date,
+        req.query.dietId
+      );
       return res.json(SuccessResponse.Ok(dailyDiets));
     } catch (error) {
       return new Promise(() => {
@@ -69,7 +73,10 @@ export class DailyDietController implements interfaces.Controller {
       const dailyDiet: IDailyDiet = await this._dailyDietService.getDailyDietById(
         req.params.dailyDietId
       );
-      return res.json(SuccessResponse.Ok(dailyDiet));
+      if (dailyDiet) {
+        return res.json(SuccessResponse.Ok(dailyDiet));
+      }
+      throw new BadRequestError("Daily diet with given id does not exist");
     } catch (error) {
       return new Promise(() => {
         next(error);

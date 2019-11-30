@@ -19,12 +19,15 @@ export class DailyDietService {
   @inject(DIET_REPOSITORIES.IDietRepository)
   private readonly _dietRepository: IDietRepository;
 
-  public async getDailyDiets(): Promise<IDailyDiet[]> {
-    return await this._dailyDietRepository.getMany();
+  public async getDailyDiets(
+    date: string,
+    dietId: string
+  ): Promise<IDailyDiet[]> {
+    return await this._dailyDietRepository.getDailyDiets(date, dietId);
   }
 
   public async getDailyDietById(id: string): Promise<IDailyDiet> {
-    return await this._dailyDietRepository.getOneById(id);
+    return (await this._dailyDietRepository.getDailyDietById(id))[0];
   }
 
   public async postDailyDiet(dailyDietParams: IDailyDiet) {

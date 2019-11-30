@@ -62,7 +62,7 @@ export abstract class BaseRepository<T extends Document>
     return model.updateOne({ _id: id }, params);
   }
 
-  private async getModel(): Promise<Model<T>> {
+  protected async getModel(): Promise<Model<T>> {
     const connection: Connection = await this._db.getConnection();
     return connection.model<T>(this.model, this.schema);
   }
