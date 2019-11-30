@@ -25,6 +25,7 @@ type Props = {}
 export const SideNavigation = (_: Props) => (
     <Nav className={`flex-column ${styles.navbar}`}>
         <LinkComponent href={RouteBuilder.toDietListAdmin()}>Diety</LinkComponent>
+        <LinkComponent href={RouteBuilder.toMealListAdmin()}>Posiłki</LinkComponent>
         <LinkComponent href={RouteBuilder.toFoodListAdmin()}>Produkty</LinkComponent>
     </Nav>
 )
