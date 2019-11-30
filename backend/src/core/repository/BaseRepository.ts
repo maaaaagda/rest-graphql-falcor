@@ -18,6 +18,11 @@ export abstract class BaseRepository<T extends Document>
     return model.create(data);
   }
 
+  public async insertMany(data: T[]): Promise<T[]> {
+    const model: Model<T> = await this.getModel();
+    return model.insertMany(data);
+  }
+
   public async getMany(limit?: number, page?: number): Promise<T[]> {
     const model: Model<T> = await this.getModel();
     if (!limit || !page) {

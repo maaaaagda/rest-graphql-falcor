@@ -17,7 +17,12 @@ export interface Query {
   sort?: SortedQuery
 }
 
-export const buildQueryParams = (query: Query): Record<string, keyof any> => {
+export type QueryResponse<T> = {
+  message: T
+  status: number
+}
+
+export function buildQueryParams(query: Query): Record<string, keyof any> {
   let params: Record<string, keyof any> = {}
   if (query.pagination) {
     params = { ...query.pagination }
@@ -27,4 +32,13 @@ export const buildQueryParams = (query: Query): Record<string, keyof any> => {
     params.order_by = query.sort.orderBy
   }
   return params
+}
+
+export const resolveData = <TData>() => (data: any): TData => {
+  const dat = data as QueryResponse<TData>
+  if (dat.message) {
+    return dat.message
+  } else {
+    throw new Error(`GET resolved with status code ${dat.status}`)
+  }
 }

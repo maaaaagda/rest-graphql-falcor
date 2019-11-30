@@ -1,0 +1,29 @@
+@import "../../common/styles/constants";
+@import "../../common/styles/functions";
+
+.navbar {
+    padding: 20px 0;
+    width: 100%;
+    height: 100%;
+    
+    .navLink {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 1.25rem;
+        font-weight: bold;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        &_active {
+            background: array-get($state-colors, brand, base);
+            color: array-get($state-colors, brand, inverse);
+
+            &:hover {
+                background: array-get($state-colors, brand, base);
+                color: array-get($state-colors, brand, inverse);
+            }
+        }
+    }
+}
