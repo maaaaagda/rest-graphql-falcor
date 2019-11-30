@@ -95,6 +95,39 @@
       }
     },
     "/diets?dietId=1": {
+      "get": {
+        "tags": [
+          "diet"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dietId",
+            "description": "ID of diet",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getDietsById",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Diet"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "put": {
         "tags": [
           "diet"
@@ -415,7 +448,40 @@
         ]
       }
     },
-    "/meals?dietId=1": {
+    "/meals?mealId=1": {
+      "get": {
+        "tags": [
+          "meal"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "mealId",
+            "description": "ID of meal",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getMealById",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Meal"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "put": {
         "tags": [
           "meal"
@@ -539,6 +605,39 @@
       }
     },
     "/dailyDiets?dailyDietId=1": {
+      "get": {
+        "tags": [
+          "daily-diet"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dailyDietId",
+            "description": "ID of daily diet",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getDailyDietsById",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DailyDiet"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "put": {
         "tags": [
           "daily-diet"

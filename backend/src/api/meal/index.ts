@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Container } from "inversify";
+import { Container, inject } from "inversify";
 import {
   controller,
   httpGet,
@@ -9,12 +9,17 @@ import {
 } from "inversify-express-utils";
 import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
-import { IGetMealController } from "./controller/getMealController/IGetController";
-import { IPostMealController } from "./controller/postMealController/IPostController";
-import { IPutMealController } from "./controller/putMealController/IPutController";
 import { MEAL_TYPES } from "./ioc/MealTypes";
 import getContainer from "./ioc/inversify.config";
 import { Config } from "../../config/Config";
+import { IMeal } from "./model/Meal";
+import { SuccessResponse } from "../../response/SuccessResponse";
+import { IMealService } from "./service/IMealService";
+import { mealPostSchema } from "./schema/post/postMeal";
+import { mealPutSchema } from "./schema/put/putMeal";
+import { IAuthenticator } from "../../core/auth/IAuthenticator";
+import { IValidator } from "../../core/validator/IValidator";
+import { BadRequestError } from "../../core/error/BadRequestError";
 
 const config: Config = new Config();
 const ENDPOINT: string = "meals";
@@ -26,15 +31,15 @@ export class MealController implements interfaces.Controller {
     TYPES.IDatabase
   );
 
-  private readonly postMealController: IPostMealController = this._container.get(
-    MEAL_TYPES.IPostMealController
-  );
-  private readonly getMealController: IGetMealController = this._container.get(
-    MEAL_TYPES.IGetMealController
-  );
-  private readonly updateMealController: IPutMealController = this._container.get(
-    MEAL_TYPES.IPutMealController
-  );
+  private readonly _mealService: IMealService = this._container.get<
+    IMealService
+  >(MEAL_TYPES.IMealService);
+
+  @inject(TYPES.IAuthenticator)
+  private readonly _authenticator: IAuthenticator;
+
+  @inject(TYPES.IValidator)
+  private readonly _validator: IValidator;
 
   constructor() {
     this._database.getConnection();
@@ -46,11 +51,35 @@ export class MealController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.getMealController.process.bind(this.getMealController)(
-      req,
-      res,
-      next
-    );
+    try {
+      const meals: IMeal[] = await this._mealService.getMeals();
+      return res.json(SuccessResponse.Ok(meals));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
+  }
+
+  @httpGet("/:mealId")
+  public async getMealById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    try {
+      const meal: IMeal = await this._mealService.getMealById(
+        req.params.mealId
+      );
+      if (!meal) {
+        throw new BadRequestError("Meal with given id does not exist");
+      }
+      return res.json(SuccessResponse.Ok(meal));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
   }
 
   @httpPost("/")
@@ -59,11 +88,16 @@ export class MealController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.postMealController.process.bind(this.postMealController)(
-      req,
-      res,
-      next
-    );
+    try {
+      this._authenticator.authenticate(req.headers.authorization);
+      this._validator.validate(req.body, mealPostSchema);
+      const meal: IMeal = await this._mealService.postMeal(req.body);
+      return res.json(SuccessResponse.Created(meal));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
   }
 
   @httpPut("/")
@@ -72,10 +106,18 @@ export class MealController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.updateMealController.process.bind(this.updateMealController)(
-      req,
-      res,
-      next
-    );
+    try {
+      this._authenticator.authenticate(req.headers.authorization);
+      this._validator.validate(req.body, mealPutSchema);
+      const updatedMeal: IMeal = await this._mealService.putMeal(
+        req.query.id,
+        req.body
+      );
+      return res.json(SuccessResponse.Ok(updatedMeal));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
   }
 }

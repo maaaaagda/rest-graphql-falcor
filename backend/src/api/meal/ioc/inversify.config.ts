@@ -11,12 +11,6 @@ import { Logger } from "../../../core/logger/Logger";
 import { IValidator } from "../../../core/validator/IValidator";
 import { Validator } from "../../../core/validator/Validator";
 import { TYPES } from "../../../ioc/types";
-import { GetMealController } from "../controller/getMealController/GetController";
-import { IGetMealController } from "../controller/getMealController/IGetController";
-import { IPostMealController } from "../controller/postMealController/IPostController";
-import { PostMealController } from "../controller/postMealController/PostController";
-import { IPutMealController } from "../controller/putMealController/IPutController";
-import { PutMealController } from "../controller/putMealController/PutController";
 import { MealRepository } from "../repository/MealRepository";
 import { IMealRepository } from "../repository/IMealRepository";
 import { MEAL_REPOSITORIES, MEAL_TYPES } from "./MealTypes";
@@ -50,21 +44,6 @@ const getContainer: () => Container = (): Container => {
   container
     .bind<IMealRepository>(MEAL_REPOSITORIES.IMealRepository)
     .to(MealRepository);
-
-  container
-    .bind<IPostMealController>(MEAL_TYPES.IPostMealController)
-    .to(PostMealController)
-    .inSingletonScope();
-
-  container
-    .bind<IGetMealController>(MEAL_TYPES.IGetMealController)
-    .to(GetMealController)
-    .inSingletonScope();
-
-  container
-    .bind<IPutMealController>(MEAL_TYPES.IPutMealController)
-    .to(PutMealController)
-    .inSingletonScope();
 
   container
     .bind<IAuthenticator>(TYPES.IAuthenticator)
