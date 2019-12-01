@@ -8,11 +8,12 @@ export const userReducer = (
   action: actions.ActionType
 ) => {
   switch (action.type) {
-    case actions.SET_LOGGED_IN_USER:
+    case actions.SET_LOGGED_IN_USER: {
       return {
         ...state,
         loggedInUser: action.payload,
       }
+    }
     default:
       return state
   }
