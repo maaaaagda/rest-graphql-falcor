@@ -1069,7 +1069,8 @@
           "type": "string",
           "enum": [
             "admin",
-            "user"
+            "user",
+            "dietitian"
           ]
         },
         "phone": {

@@ -28,7 +28,7 @@ export const userSchema: mongoose.Schema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: [UserRole.ADMIN, UserRole.USER],
+      enum: [...Object.values(UserRole)],
       default: UserRole.USER
     },
     verification: {
