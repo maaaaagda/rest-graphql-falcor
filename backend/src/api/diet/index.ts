@@ -7,7 +7,6 @@ import {
   httpPut,
   interfaces
 } from "inversify-express-utils";
-import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
 import { DIET_TYPES } from "./ioc/DietTypes";
 import getContainer from "./ioc/inversify.config";
@@ -19,6 +18,7 @@ import { dietPostSchema } from "./schema/post/postDiet";
 import { IAuthenticator } from "../../core/auth/IAuthenticator";
 import { IValidator } from "../../core/validator/IValidator";
 import { dietPutSchema } from "./schema/put/putDiet";
+import { KcalOptions } from "./constants/KcalOptions";
 
 const config: Config = new Config();
 const ENDPOINT: string = "diets";
@@ -45,6 +45,20 @@ export class DietController implements interfaces.Controller {
     try {
       const diets: IDiet[] = await this._dietService.getDiets();
       return res.json(SuccessResponse.Ok(diets));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
+  }
+  @httpGet("/kcal-options")
+  public async getDietKcalOptions(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    try {
+      return res.json(SuccessResponse.Ok(KcalOptions));
     } catch (error) {
       return new Promise(() => {
         next(error);
