@@ -9,7 +9,6 @@ import { IUser } from "../../user/model/User";
 
 @injectable()
 export class AuthService {
-
   @inject(USER_REPOSITORIES.IUserRepository)
   private readonly _userRepository: IUserRepository;
 
@@ -25,6 +24,8 @@ export class AuthService {
     if (!user) {
       throw new AuthenticationError("Wrong credentials sent");
     }
-    return Promise.resolve(this._authenticator.generateJWTToken(user.role as UserRole));
+    return Promise.resolve(
+      this._authenticator.generateJWTToken(user.role as UserRole, user._id)
+    );
   }
 }

@@ -18,6 +18,7 @@ import { IDietOrderService } from "./service/IDietOrderService";
 import { TYPES } from "../../ioc/types";
 import { IAuthenticator } from "../../core/auth/IAuthenticator";
 import { IValidator } from "../../core/validator/IValidator";
+import { UserRole } from "../user/model/UserRole";
 
 const config: Config = new Config();
 const ENDPOINT: string = "diet-orders";
@@ -43,8 +44,32 @@ export class DietOrderController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      this._authenticator.authenticate(req.headers.authorization);
-      const dietOrders: IDietOrder[] = await this._dietOrderService.getDietOrders();
+      const { userId } = this._authenticator.authenticate(
+        req.headers.authorization
+      );
+      const dietOrders: IDietOrder[] = await this._dietOrderService.getDietOrders(
+        userId
+      );
+      return res.json(SuccessResponse.Ok(dietOrders));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
+  }
+
+  @httpGet("/all")
+  public async getAllDietOrder(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    try {
+      this._authenticator.authenticate(
+        req.headers.authorization,
+        UserRole.ADMIN
+      );
+      const dietOrders: IDietOrder[] = await this._dietOrderService.getAllDietOrders();
       return res.json(SuccessResponse.Ok(dietOrders));
     } catch (error) {
       return new Promise(() => {
@@ -60,10 +85,13 @@ export class DietOrderController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      this._authenticator.authenticate(req.headers.authorization);
+      const { userId } = this._authenticator.authenticate(
+        req.headers.authorization
+      );
       this._validator.validate(req.body, dietOrderPostSchema);
       const dietOrder: IDietOrder = await this._dietOrderService.postDietOrder(
-        req.body
+        req.body,
+        userId
       );
       return res.json(SuccessResponse.Created(dietOrder));
     } catch (error) {

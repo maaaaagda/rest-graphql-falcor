@@ -16,6 +16,9 @@ import { DietOrderRepository } from "../repository/DietOrderRepository";
 import { IDietOrderRepository } from "../repository/IDietOrderRepository";
 import { DIET_ORDER_REPOSITORIES, DIET_ORDER_TYPES } from "./DietOrderTypes";
 import { DietOrderService } from "../service/DietOrderService";
+import { IDietRepository } from "../../diet/repository/IDietRepository";
+import { DIET_REPOSITORIES } from "../../diet/ioc/DietTypes";
+import { DietRepository } from "../../diet/repository/DietRepository";
 
 const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
@@ -58,6 +61,10 @@ const getContainer: () => Container = (): Container => {
     .bind<DietOrderService>(DIET_ORDER_TYPES.IDietOrderService)
     .to(DietOrderService)
     .inSingletonScope();
+
+  container
+    .bind<IDietRepository>(DIET_REPOSITORIES.IDietRepository)
+    .to(DietRepository);
 
   return container;
 };

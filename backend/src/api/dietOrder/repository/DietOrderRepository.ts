@@ -6,7 +6,13 @@ import { dietOrderSchema } from "../model/DietOrderSchema";
 import { IDietOrderRepository } from "./IDietOrderRepository";
 
 @injectable()
-export class DietOrderRepository extends BaseRepository<IDietOrder> implements IDietOrderRepository {
-    protected model: string = "DietOrder";
-    protected schema: Schema<IDietOrder> = dietOrderSchema;
+export class DietOrderRepository extends BaseRepository<IDietOrder>
+  implements IDietOrderRepository {
+  protected model: string = "DietOrder";
+  protected schema: Schema<IDietOrder> = dietOrderSchema;
+
+  public async getDietOrdersByCustomerId(customerId: string) {
+    const model = await this.getModel();
+    return model.find({ customerId });
+  }
 }
