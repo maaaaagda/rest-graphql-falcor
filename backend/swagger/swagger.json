@@ -21,6 +21,9 @@
     },
     {
       "name": "product"
+    },
+    {
+      "name": "daily-diet"
     }
   ],
   "schemes": [
@@ -92,6 +95,39 @@
       }
     },
     "/diets?dietId=1": {
+      "get": {
+        "tags": [
+          "diet"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dietId",
+            "description": "ID of diet",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getDietsById",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Diet"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "put": {
         "tags": [
           "diet"
@@ -412,7 +448,40 @@
         ]
       }
     },
-    "/meals?dietId=1": {
+    "/meals?mealId=1": {
+      "get": {
+        "tags": [
+          "meal"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "mealId",
+            "description": "ID of meal",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getMealById",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/Meal"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "put": {
         "tags": [
           "meal"
@@ -438,6 +507,162 @@
         "summary": "Update an existing meal",
         "description": "",
         "operationId": "updateMeal",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/daily-diets": {
+      "post": {
+        "tags": [
+          "daily-diet"
+        ],
+        "summary": "Add new daily diet",
+        "operationId": "addDailyDiet",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Daily diet object to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DailyDietPostPut"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "daily-diet"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "description": "Date of daily diet",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "dietId",
+            "description": "DietId of daily diet",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getDailyDiets",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DailyDiet"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/dailyDiets?dailyDietId=1": {
+      "get": {
+        "tags": [
+          "daily-diet"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dailyDietId",
+            "description": "ID of daily diet",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getDailyDietsById",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DailyDiet"
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "daily-diet"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "dailyDietId",
+            "description": "ID of daily diet",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Daily iet object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DailyDietPostPut"
+            }
+          }
+        ],
+        "summary": "Update an existing daily diet",
+        "description": "",
+        "operationId": "updateDailyDiet",
         "consumes": [
           "application/json"
         ],
@@ -742,6 +967,37 @@
         }
       }
     },
+    "DailyDiet": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "integer"
+        },
+        "dietId": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dailyMeals": {
+          "$ref": "#/definitions/DailyMeals"
+        }
+      }
+    },
+    "DailyDietPostPut": {
+      "type": "object",
+      "properties": {
+        "dietId": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "string"
+        },
+        "dailyMeals": {
+          "$ref": "#/definitions/DailyMealsPostPut"
+        }
+      }
+    },
     "Ingredient": {
       "type": "object",
       "properties": {
@@ -750,6 +1006,46 @@
         },
         "weight": {
           "type": "number"
+        }
+      }
+    },
+    "DailyMealsPostPut": {
+      "type": "object",
+      "properties": {
+        "breakfast": {
+          "type": "string"
+        },
+        "morningSnack": {
+          "type": "string"
+        },
+        "lunch": {
+          "type": "string"
+        },
+        "afternoonSnack": {
+          "type": "string"
+        },
+        "dinner": {
+          "type": "string"
+        }
+      }
+    },
+    "DailyMeals": {
+      "type": "object",
+      "properties": {
+        "breakfast": {
+          "$ref": "#/definitions/Meal"
+        },
+        "morningSnack": {
+          "$ref": "#/definitions/Meal"
+        },
+        "lunch": {
+          "$ref": "#/definitions/Meal"
+        },
+        "afternoonSnack": {
+          "$ref": "#/definitions/Meal"
+        },
+        "dinner": {
+          "$ref": "#/definitions/Meal"
         }
       }
     },

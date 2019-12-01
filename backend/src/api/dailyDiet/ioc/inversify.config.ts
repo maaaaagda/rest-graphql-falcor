@@ -11,13 +11,16 @@ import { Logger } from "../../../core/logger/Logger";
 import { IValidator } from "../../../core/validator/IValidator";
 import { Validator } from "../../../core/validator/Validator";
 import { TYPES } from "../../../ioc/types";
-import { MealRepository } from "../repository/MealRepository";
-import { IMealRepository } from "../repository/IMealRepository";
-import { MEAL_REPOSITORIES, MEAL_TYPES } from "./MealTypes";
-import { MealService } from "../service/MealService";
-import { IProductRepository } from "../../product/repository/IProductRepository";
-import { PRODUCT_REPOSITORIES } from "../../product/ioc/ProductTypes";
-import { ProductRepository } from "../../product/repository/ProductRepository";
+import { DailyDietRepository } from "../repository/DailyDietRepository";
+import { IDailyDietRepository } from "../repository/IDailyDietRepository";
+import { DAILY_DIET_REPOSITORIES, DAILY_DIET_TYPES } from "./DailyDietTypes";
+import { DailyDietService } from "../service/DailyDietService";
+import { IDietRepository } from "../../diet/repository/IDietRepository";
+import { DIET_REPOSITORIES } from "../../diet/ioc/DietTypes";
+import { DietRepository } from "../../diet/repository/DietRepository";
+import { IMealRepository } from "../../meal/repository/IMealRepository";
+import { MEAL_REPOSITORIES } from "../../meal/ioc/MealTypes";
+import { MealRepository } from "../../meal/repository/MealRepository";
 
 const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
@@ -42,8 +45,8 @@ const getContainer: () => Container = (): Container => {
     .inSingletonScope();
 
   container
-    .bind<IMealRepository>(MEAL_REPOSITORIES.IMealRepository)
-    .to(MealRepository);
+    .bind<IDailyDietRepository>(DAILY_DIET_REPOSITORIES.IDailyDietRepository)
+    .to(DailyDietRepository);
 
   container
     .bind<IAuthenticator>(TYPES.IAuthenticator)
@@ -51,13 +54,17 @@ const getContainer: () => Container = (): Container => {
     .inSingletonScope();
 
   container
-    .bind<MealService>(MEAL_TYPES.IMealService)
-    .to(MealService)
+    .bind<DailyDietService>(DAILY_DIET_TYPES.IDailyDietService)
+    .to(DailyDietService)
     .inSingletonScope();
 
   container
-    .bind<IProductRepository>(PRODUCT_REPOSITORIES.IProductRepository)
-    .to(ProductRepository);
+    .bind<IDietRepository>(DIET_REPOSITORIES.IDietRepository)
+    .to(DietRepository);
+
+  container
+    .bind<IMealRepository>(MEAL_REPOSITORIES.IMealRepository)
+    .to(MealRepository);
 
   return container;
 };

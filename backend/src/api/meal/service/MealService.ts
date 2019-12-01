@@ -53,6 +53,9 @@ export class MealService {
   public async getMeals(): Promise<IMeal[]> {
     return await this._mealRepository.getMany();
   }
+  public async getMealById(id: string): Promise<IMeal> {
+    return await this._mealRepository.getOneById(id);
+  }
 
   public async postMeal(mealParams: IMeal) {
     let { ingredients } = mealParams;

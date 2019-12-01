@@ -9,31 +9,30 @@ import {
 } from "inversify-express-utils";
 import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
-import { MEAL_TYPES } from "./ioc/MealTypes";
+import { DAILY_DIET_TYPES } from "./ioc/DailyDietTypes";
 import getContainer from "./ioc/inversify.config";
 import { Config } from "../../config/Config";
-import { IMeal } from "./model/Meal";
+import { IDailyDiet } from "./model/DailyDiet";
 import { SuccessResponse } from "../../response/SuccessResponse";
-import { IMealService } from "./service/IMealService";
-import { mealPostSchema } from "./schema/post/postMeal";
-import { mealPutSchema } from "./schema/put/putMeal";
+import { IDailyDietService } from "./service/IDailyDietService";
+import { dailyDietPostSchema } from "./schema/post/postDailyDiet";
 import { IAuthenticator } from "../../core/auth/IAuthenticator";
 import { IValidator } from "../../core/validator/IValidator";
+import { dailyDietPutSchema } from "./schema/put/putDailyDiet";
 import { BadRequestError } from "../../core/error/BadRequestError";
 
 const config: Config = new Config();
-const ENDPOINT: string = "meals";
+const ENDPOINT: string = "daily-diets";
 
 @controller(`${config.API_PATH}${ENDPOINT}`)
-export class MealController implements interfaces.Controller {
+export class DailyDietController implements interfaces.Controller {
   private readonly _container: Container = getContainer();
   private readonly _database: IDatabase = this._container.get<IDatabase>(
     TYPES.IDatabase
   );
-
-  private readonly _mealService: IMealService = this._container.get<
-    IMealService
-  >(MEAL_TYPES.IMealService);
+  private readonly _dailyDietService: IDailyDietService = this._container.get<
+    IDailyDietService
+  >(DAILY_DIET_TYPES.IDailyDietService);
 
   @inject(TYPES.IAuthenticator)
   private readonly _authenticator: IAuthenticator;
@@ -46,14 +45,17 @@ export class MealController implements interfaces.Controller {
   }
 
   @httpGet("/")
-  public async getMeal(
+  public async getDailyDiet(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
     try {
-      const meals: IMeal[] = await this._mealService.getMeals();
-      return res.json(SuccessResponse.Ok(meals));
+      const dailyDiets: IDailyDiet[] = await this._dailyDietService.getDailyDiets(
+        req.query.date,
+        req.query.dietId
+      );
+      return res.json(SuccessResponse.Ok(dailyDiets));
     } catch (error) {
       return new Promise(() => {
         next(error);
@@ -61,20 +63,20 @@ export class MealController implements interfaces.Controller {
     }
   }
 
-  @httpGet("/:mealId")
-  public async getMealById(
+  @httpGet("/:dailyDietId")
+  public async getDailyDietById(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
     try {
-      const meal: IMeal = await this._mealService.getMealById(
-        req.params.mealId
+      const dailyDiet: IDailyDiet = await this._dailyDietService.getDailyDietById(
+        req.params.dailyDietId
       );
-      if (!meal) {
-        throw new BadRequestError("Meal with given id does not exist");
+      if (dailyDiet) {
+        return res.json(SuccessResponse.Ok(dailyDiet));
       }
-      return res.json(SuccessResponse.Ok(meal));
+      throw new BadRequestError("Daily diet with given id does not exist");
     } catch (error) {
       return new Promise(() => {
         next(error);
@@ -83,16 +85,18 @@ export class MealController implements interfaces.Controller {
   }
 
   @httpPost("/")
-  public async postMeal(
+  public async postDailyDiet(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
     try {
       this._authenticator.authenticate(req.headers.authorization);
-      this._validator.validate(req.body, mealPostSchema);
-      const meal: IMeal = await this._mealService.postMeal(req.body);
-      return res.json(SuccessResponse.Created(meal));
+      this._validator.validate(req.body, dailyDietPostSchema);
+      const dailyDiet: IDailyDiet = await this._dailyDietService.postDailyDiet(
+        req.body
+      );
+      return res.json(SuccessResponse.Created(dailyDiet));
     } catch (error) {
       return new Promise(() => {
         next(error);
@@ -100,20 +104,20 @@ export class MealController implements interfaces.Controller {
     }
   }
 
-  @httpPut("/")
-  public async updateMeal(
+  @httpPut("/:dailyDietId")
+  public async updateDailyDiet(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
     try {
       this._authenticator.authenticate(req.headers.authorization);
-      this._validator.validate(req.body, mealPutSchema);
-      const updatedMeal: IMeal = await this._mealService.putMeal(
-        req.query.id,
+      this._validator.validate(req.body, dailyDietPutSchema);
+      const updatedDailyDiet: IDailyDiet = await this._dailyDietService.putDailyDiet(
+        req.params.dailyDietId,
         req.body
       );
-      return res.json(SuccessResponse.Ok(updatedMeal));
+      return res.json(SuccessResponse.Ok(updatedDailyDiet));
     } catch (error) {
       return new Promise(() => {
         next(error);
