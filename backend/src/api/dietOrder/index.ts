@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { Container } from "inversify";
+import { Container, inject } from "inversify";
 import {
   controller,
   httpGet,
@@ -7,14 +7,17 @@ import {
   httpPut,
   interfaces
 } from "inversify-express-utils";
-import { IDatabase } from "../../core/database/IDatabase";
-import { TYPES } from "../../ioc/types";
-import { IGetDietOrderController } from "./controller/getDietOrderController/IGetController";
-import { IPostDietOrderController } from "./controller/postDietOrderController/IPostController";
-import { IPutDietOrderController } from "./controller/putDietOrderController/IPutController";
 import { DIET_ORDER_TYPES } from "./ioc/DietOrderTypes";
 import getContainer from "./ioc/inversify.config";
 import { Config } from "../../config/Config";
+import { IDietOrder } from "./model/DietOrder";
+import { SuccessResponse } from "../../response/SuccessResponse";
+import { dietOrderPostSchema } from "./schema/post/postDietOrder";
+import { dietOrderPutSchema } from "./schema/put/putDietOrder";
+import { IDietOrderService } from "./service/IDietOrderService";
+import { TYPES } from "../../ioc/types";
+import { IAuthenticator } from "../../core/auth/IAuthenticator";
+import { IValidator } from "../../core/validator/IValidator";
 
 const config: Config = new Config();
 const ENDPOINT: string = "diet-orders";
@@ -23,15 +26,15 @@ const ENDPOINT: string = "diet-orders";
 export class DietOrderController implements interfaces.Controller {
   private readonly _container: Container = getContainer();
 
-  private readonly postDietOrderController: IPostDietOrderController = this._container.get(
-    DIET_ORDER_TYPES.IPostDietOrderController
-  );
-  private readonly getDietOrderController: IGetDietOrderController = this._container.get(
-    DIET_ORDER_TYPES.IGetDietOrderController
-  );
-  private readonly updateDietOrderController: IPutDietOrderController = this._container.get(
-    DIET_ORDER_TYPES.IPutDietOrderController
-  );
+  private readonly _dietOrderService: IDietOrderService = this._container.get<
+    IDietOrderService
+  >(DIET_ORDER_TYPES.IDietOrderService);
+
+  @inject(TYPES.IAuthenticator)
+  private readonly _authenticator: IAuthenticator;
+
+  @inject(TYPES.IValidator)
+  private readonly _validator: IValidator;
 
   @httpGet("/")
   public async getDietOrder(
@@ -39,9 +42,15 @@ export class DietOrderController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.getDietOrderController.process.bind(
-      this.getDietOrderController
-    )(req, res, next);
+    try {
+      this._authenticator.authenticate(req.headers.authorization);
+      const dietOrders: IDietOrder[] = await this._dietOrderService.getDietOrders();
+      return res.json(SuccessResponse.Ok(dietOrders));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
   }
 
   @httpPost("/")
@@ -50,9 +59,18 @@ export class DietOrderController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.postDietOrderController.process.bind(
-      this.postDietOrderController
-    )(req, res, next);
+    try {
+      this._authenticator.authenticate(req.headers.authorization);
+      this._validator.validate(req.body, dietOrderPostSchema);
+      const dietOrder: IDietOrder = await this._dietOrderService.postDietOrder(
+        req.body
+      );
+      return res.json(SuccessResponse.Created(dietOrder));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
   }
 
   @httpPut("/")
@@ -61,8 +79,18 @@ export class DietOrderController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.updateDietOrderController.process.bind(
-      this.updateDietOrderController
-    )(req, res, next);
+    try {
+      this._authenticator.authenticate(req.headers.authorization);
+      this._validator.validate(req.body, dietOrderPutSchema);
+      const updatedDietOrder: IDietOrder = await this._dietOrderService.putDietOrder(
+        req.query.id,
+        req.body
+      );
+      return res.json(SuccessResponse.Ok(updatedDietOrder));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
   }
 }
