@@ -26,9 +26,8 @@ export class DietService {
       _id: id
     });
     if (dietToModify) {
-      const { name, dailyCost } = dietParams;
       const updated: IDiet = await this._dietRepository.updateOneById(id, {
-        $set: { name, dailyCost }
+        $set: dietParams
       });
       return updated;
     }

@@ -786,6 +786,9 @@
         },
         "dailyCost": {
           "type": "integer"
+        },
+        "photoUrl": {
+          "type": "string"
         }
       }
     },
@@ -793,10 +796,13 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "integer"
+          "type": "string"
         },
         "dailyCost": {
           "type": "integer"
+        },
+        "photoUrl": {
+          "type": "string"
         }
       }
     },

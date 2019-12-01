@@ -13,5 +13,9 @@ export const dietSchema: mongoose.Schema = new mongoose.Schema({
   dailyCost: {
     type: Number,
     required: true
+  },
+  photoUrl: {
+    type: String,
+    required: true
   }
 });

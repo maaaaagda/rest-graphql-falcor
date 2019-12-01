@@ -5,4 +5,5 @@ export interface IDiet extends Document, Entity {
   _id: string;
   name: string;
   dailyCost: number;
+  photoUrl: string;
 }
