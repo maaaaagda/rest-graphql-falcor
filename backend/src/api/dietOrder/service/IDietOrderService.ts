@@ -5,4 +5,5 @@ export interface IDietOrderService {
   getAllDietOrders(): Promise<IDietOrder[]>;
   postDietOrder(dietParams: any, userId: string): Promise<IDietOrder>;
   putDietOrder(id: string, dietParams: any): Promise<IDietOrder>;
+  getDietOrderCost(nrOfDays: number, kcal: number, dietId: string): number;
 }

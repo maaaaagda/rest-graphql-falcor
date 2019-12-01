@@ -16,7 +16,7 @@ export class DietOrderService {
   @inject(DIET_REPOSITORIES.IDietRepository)
   private readonly _dietRepository: IDietRepository;
 
-  private async getDietOrderCost(
+  public async getDietOrderCost(
     nrOfDays: number,
     kcal: number,
     dietId: string

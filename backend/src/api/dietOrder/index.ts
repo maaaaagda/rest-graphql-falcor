@@ -19,6 +19,7 @@ import { TYPES } from "../../ioc/types";
 import { IAuthenticator } from "../../core/auth/IAuthenticator";
 import { IValidator } from "../../core/validator/IValidator";
 import { UserRole } from "../user/model/UserRole";
+import { dietOrderCostSchema } from "./schema/post/dietOrderCost";
 
 const config: Config = new Config();
 const ENDPOINT: string = "diet-orders";
@@ -59,7 +60,7 @@ export class DietOrderController implements interfaces.Controller {
   }
 
   @httpGet("/all")
-  public async getAllDietOrder(
+  public async getAllDietOrders(
     req: Request,
     res: Response,
     next: NextFunction
@@ -71,6 +72,28 @@ export class DietOrderController implements interfaces.Controller {
       );
       const dietOrders: IDietOrder[] = await this._dietOrderService.getAllDietOrders();
       return res.json(SuccessResponse.Ok(dietOrders));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
+  }
+
+  @httpPost("/cost")
+  public async getDietOrderCost(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    try {
+      this._authenticator.authenticate(req.headers.authorization);
+      this._validator.validate(req.body, dietOrderCostSchema);
+      const cost: number = await this._dietOrderService.getDietOrderCost(
+        req.body.dates.length,
+        req.body.kcal,
+        req.body.dietId
+      );
+      return res.json(SuccessResponse.Ok(cost));
     } catch (error) {
       return new Promise(() => {
         next(error);
