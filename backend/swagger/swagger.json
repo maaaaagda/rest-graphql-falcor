@@ -94,6 +94,35 @@
         ]
       }
     },
+    "/diets/kcal-options": {
+      "get": {
+        "tags": [
+          "diet"
+        ],
+        "summary": "",
+        "description": "",
+        "operationId": "getKcalOptions",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/KcalOption"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/diets?dietId=1": {
       "get": {
         "tags": [
@@ -211,7 +240,7 @@
           "diet-order"
         ],
         "summary": "",
-        "description": "",
+        "description": "Returns diet orders for logged in user",
         "operationId": "getDietOrders",
         "produces": [
           "application/json"
@@ -225,6 +254,71 @@
                 "$ref": "#/definitions/DietOrder"
               }
             }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/diet-orders/all": {
+      "get": {
+        "tags": [
+          "diet-order"
+        ],
+        "summary": "",
+        "description": "Returns diet orders forall users. Only for administators",
+        "operationId": "getAllDietOrders",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DietOrder"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/diet-orders/cost": {
+      "post": {
+        "tags": [
+          "diet-order"
+        ],
+        "summary": "Count cost of a diet-order",
+        "operationId": "getDietOrderCost",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Diet order params",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DietOrderCost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           }
         },
         "security": [
@@ -806,6 +900,17 @@
         }
       }
     },
+    "KcalOption": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "extraCost": {
+          "type": "number"
+        }
+      }
+    },
     "Product": {
       "type": "object",
       "properties": {
@@ -876,6 +981,12 @@
             "type": "string"
           }
         },
+        "kcal": {
+          "type": "number"
+        },
+        "cost": {
+          "type": "number"
+        },
         "status": {
           "$ref": "#/definitions/DietOrderStatus"
         }
@@ -893,8 +1004,28 @@
             "type": "string"
           }
         },
+        "kcal": {
+          "type": "number"
+        },
         "status": {
           "$ref": "#/definitions/DietOrderStatus"
+        }
+      }
+    },
+    "DietOrderCost": {
+      "type": "object",
+      "properties": {
+        "dietId": {
+          "type": "integer"
+        },
+        "dates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "kcal": {
+          "type": "number"
         }
       }
     },

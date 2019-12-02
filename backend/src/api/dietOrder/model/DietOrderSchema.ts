@@ -12,8 +12,21 @@ export const dietOrderSchema: mongoose.Schema = new mongoose.Schema({
     ref: "DietOrder",
     required: true
   },
+  customerId: {
+    type: String,
+    ref: "User",
+    required: true
+  },
   dates: {
     type: [{ type: Date }]
+  },
+  kcal: {
+    type: Number,
+    required: true
+  },
+  cost: {
+    type: Number,
+    required: true
   },
   status: {
     type: String,
