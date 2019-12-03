@@ -16,12 +16,16 @@ export class AuthService {
   private readonly _authenticator: IAuthenticator;
 
   public async login(email: string, password: string): Promise<string> {
-    const user: IUser = await this._userRepository.getOne({
-      email,
-      password
-    });
+    const user: IUser = await this._userRepository.getUserAuthData(email);
 
     if (!user) {
+      throw new AuthenticationError("Wrong credentials sent");
+    }
+    const isPasswordValid: boolean = await this._authenticator.isPasswordValid(
+      password,
+      user.password
+    );
+    if (!isPasswordValid) {
       throw new AuthenticationError("Wrong credentials sent");
     }
     return Promise.resolve(
