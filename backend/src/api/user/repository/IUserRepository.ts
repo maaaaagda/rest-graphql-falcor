@@ -1,4 +1,6 @@
 import { IBaseRepository } from "../../../core/repository/IBaseRepository";
 import { IUser } from "../model/User";
 
-export interface IUserRepository extends IBaseRepository<IUser> {}
+export interface IUserRepository extends IBaseRepository<IUser> {
+  getUserAuthData(email: string): Promise<IUser>;
+}

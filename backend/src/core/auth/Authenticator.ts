@@ -8,7 +8,7 @@ import { IAuthenticator } from "./IAuthenticator";
 import { strict } from "assert";
 import { ITokenData } from "./ITokenData";
 const TOKEN_REGEX: RegExp = /^Bearer (?<TOKEN>.+)$/;
-
+import bcrypt from "bcrypt";
 @injectable()
 export class Authenticator implements IAuthenticator {
   @inject(TYPES.IConfig)
@@ -46,5 +46,17 @@ export class Authenticator implements IAuthenticator {
       process.env.JWT_SECRET,
       { expiresIn: "8h", algorithm: "HS256" }
     );
+  }
+
+  public async encodePassword(password: string): Promise<string> {
+    const saltRounds: number = 10;
+    return bcrypt.hash(password, saltRounds);
+  }
+
+  public async isPasswordValid(
+    password: string,
+    hash: string
+  ): Promise<boolean> {
+    return bcrypt.compare(password, hash);
   }
 }
