@@ -47,7 +47,7 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
           ZAMÓW
         </Link>
         <span className="bp3-navbar-divider"></span>
-        <Link className={styles.headerLink} to="/logout">
+        <Link className={styles.headerLink} to={RouteBuilder.toLogout()}>
           WYLOGUJ
         </Link>
       </div>

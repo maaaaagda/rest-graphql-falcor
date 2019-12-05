@@ -3,7 +3,7 @@ import styles from './MealDetails.module.scss'
 import { Meal, createMeal } from 'src/models'
 import { Formik, Form } from 'formik'
 import { useUpdateMealMutation, useCreateMealMutation } from 'src/rest/mealMutation'
-import { FormGroup, InputGroup, Button } from '@blueprintjs/core'
+import { FormGroup, InputGroup, Button, IInputGroupProps } from '@blueprintjs/core'
 
 export type MealDetailsProps = {
     meal?: Meal
@@ -18,9 +18,8 @@ type SimpleInputProps = {
     errors: any,
     values: any,
     handleChange: any,
-    handleBlur: any,
-    type?: string
-}
+    handleBlur: any
+} & IInputGroupProps
 
 const SimpleInput = ({ label, name, placeholder, touched, errors, values, handleChange, handleBlur, type }: SimpleInputProps) => (
     <FormGroup
@@ -40,7 +39,7 @@ const SimpleInput = ({ label, name, placeholder, touched, errors, values, handle
     </FormGroup>
 )
 
-const MealDetails = ({ meal }: MealDetailsProps) => {
+const MealDetails = ({ meal, editable }: MealDetailsProps) => {
     const { mutate } = meal ? useUpdateMealMutation(meal._id) : useCreateMealMutation()
     let mealValues = meal || createMeal({})
     delete mealValues["_id"]
@@ -64,24 +63,24 @@ const MealDetails = ({ meal }: MealDetailsProps) => {
                     status
                 }) => (
                         <Form>
-                            <SimpleInput label="nazwa" name="name" placeholder="nazwa posiłku" touched={touched} errors={errors} values={values} handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="nazwa" name="name" placeholder="nazwa posiłku" disabled={!editable} touched={touched} errors={errors} values={values} handleChange={handleChange} handleBlur={handleBlur} />
                             <FormGroup
                                 label="składniki"
                                 labelFor="ingredients"
                                 helperText={touched.ingredients && errors.ingredients}
                                 intent={touched.ingredients && errors.ingredients ? 'danger' : 'none'}>
                             </FormGroup>
-                            <SimpleInput label="kcal" name="kcal" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
-                            <SimpleInput label="białko" name="protein" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
-                            <SimpleInput label="węglowodany" name="carbohydrate" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
-                            <SimpleInput label="tłuszcze" name="fat" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
-                            <SimpleInput label="błonnik" name="fibre" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
-                            <SimpleInput label="zdjęcie" name="photo" placeholder="http://..." touched={touched} errors={errors} values={values} handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="kcal" name="kcal" placeholder="" disabled={!editable} touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="białko" name="protein" placeholder="" disabled={!editable} touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="węglowodany" name="carbohydrate" placeholder="" disabled={!editable} touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="tłuszcze" name="fat" placeholder="" disabled={!editable} touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="błonnik" name="fibre" placeholder="" disabled={!editable} touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="zdjęcie" name="photo" placeholder="http://..." disabled={!editable} touched={touched} errors={errors} values={values} handleChange={handleChange} handleBlur={handleBlur} />
                             <Button
                                 intent="success"
                                 text={meal ? "Zaktualizuj" : "Dodaj"}
                                 type="submit"
-                                disabled={isSubmitting}
+                                disabled={isSubmitting || !editable}
                             />
                             {status && <p className="text-danger mt-2">{status}</p>}
                         </Form>
