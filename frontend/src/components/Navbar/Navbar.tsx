@@ -37,14 +37,18 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
         {loggedInUser && loggedInUser.role !== "user" && (
           <>
             <span className="bp3-navbar-divider"></span>
-            <Link to={RouteBuilder.toDieticianPanel()} className={classnames(styles.headerButton, styles.headerButton_success)}>
+            <Link to={RouteBuilder.toDieticianPanel()} className={classnames(styles.headerCTAButton, styles.headerCTAButton_success)}>
               PANEL DIETETYKA
             </Link>
           </>
         )}
         <span className="bp3-navbar-divider"></span>
-        <Link className={classnames(styles.headerButton, styles.headerButton_brand)} to="/">
+        <Link className={classnames(styles.headerCTAButton, styles.headerCTAButton_brand)} to="/">
           ZAMÓW
+        </Link>
+        <span className="bp3-navbar-divider"></span>
+        <Link className={styles.headerLink} to={RouteBuilder.toLogout()}>
+          WYLOGUJ
         </Link>
       </div>
     </div>

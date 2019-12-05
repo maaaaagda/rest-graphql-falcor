@@ -1,20 +1,21 @@
 import React from 'react'
 import { Meal } from 'src/models'
-import { MealCardProps } from 'src/components/MealCard'
 import classnames from "classnames"
 import style from './MealList.module.scss'
+import { MealCard, MealAddCard } from '../MealCard'
 
 type Props = {
   meals: Meal[]
   isLoading?: boolean
-  MealCard: (props: MealCardProps) => JSX.Element
+  editable?: boolean
 }
 
-const MealList = ({ meals, isLoading, MealCard }: Props) => (
+const MealList = ({ meals, isLoading, editable }: Props) => (
   <div className={style.mealContainer}>
     {meals.map(meal => (
-      <MealCard data={meal} key={meal._id} className={classnames(style.mealCard, isLoading && "bp3-skeleton")} />
+      <MealCard data={meal} key={meal._id} className={classnames(style.mealCard, isLoading && "bp3-skeleton")} editable={editable} />
     ))}
+    {editable && <MealAddCard className={style.mealCardAdd} />}
   </div>
 )
 

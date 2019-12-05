@@ -5,11 +5,13 @@ import { Route } from 'react-router-dom'
 import { DietListView } from './DietListView'
 import { DietView } from './DietView'
 import { AdminPanelView } from './AdminPanelView'
+import { LogoutView } from './LogoutView'
 
 const DashboardView = () => (
   <>
     <MainNavbar />
     <Route path="/panel" exact={true} component={HomePage} />
+    <Route path="/panel/logout" exact={true} component={LogoutView} />
     <Route path="/panel/admin" component={AdminPanelView} />
     <Route path="/panel/diets" exact={true} component={DietListView} />
     <Route path="/panel/diets/:dietId" exact={true} component={DietView} />
