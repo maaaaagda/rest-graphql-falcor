@@ -1,17 +1,94 @@
 import React from 'react'
 import styles from './MealDetails.module.scss'
-import { Meal } from 'src/models'
+import { Meal, createMeal } from 'src/models'
+import { Formik, Form } from 'formik'
+import { useUpdateMealMutation, useCreateMealMutation } from 'src/rest/mealMutation'
+import { FormGroup, InputGroup, Button } from '@blueprintjs/core'
 
 export type MealDetailsProps = {
-    meal: Meal
+    meal?: Meal
     editable?: boolean
-    loading: boolean
 }
 
-const MealDetails = ({ meal }: MealDetailsProps) => (
-    <div className={styles.container}>
-        <h1>{meal.name}</h1>
-    </div>
+type SimpleInputProps = {
+    label: string,
+    name: string,
+    placeholder: string,
+    touched: any,
+    errors: any,
+    values: any,
+    handleChange: any,
+    handleBlur: any,
+    type?: string
+}
+
+const SimpleInput = ({ label, name, placeholder, touched, errors, values, handleChange, handleBlur, type }: SimpleInputProps) => (
+    <FormGroup
+        label={label}
+        labelFor={name}
+        helperText={touched[name] && errors[name]}
+        intent={touched[name] && errors[name] ? 'danger' : 'none'}>
+        <InputGroup
+            name={name}
+            placeholder={placeholder}
+            intent={touched[name] && errors[name] ? 'danger' : 'none'}
+            value={values[name]}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            type={type}
+        />
+    </FormGroup>
 )
+
+const MealDetails = ({ meal }: MealDetailsProps) => {
+    const { mutate } = meal ? useUpdateMealMutation(meal._id) : useCreateMealMutation()
+    let mealValues = meal || createMeal({})
+    delete mealValues["_id"]
+
+    return (
+        <div className={styles.container}>
+            <Formik
+                initialValues={mealValues}
+                onSubmit={(values, actions) => {
+                    return mutate(values).catch(err => {
+                        actions.setStatus(err.data ? err.data.message : err.message)
+                    })
+                }}>
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleBlur,
+                    handleChange,
+                    isSubmitting,
+                    status
+                }) => (
+                        <Form>
+                            <SimpleInput label="nazwa" name="name" placeholder="nazwa posiłku" touched={touched} errors={errors} values={values} handleChange={handleChange} handleBlur={handleBlur} />
+                            <FormGroup
+                                label="składniki"
+                                labelFor="ingredients"
+                                helperText={touched.ingredients && errors.ingredients}
+                                intent={touched.ingredients && errors.ingredients ? 'danger' : 'none'}>
+                            </FormGroup>
+                            <SimpleInput label="kcal" name="kcal" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="białko" name="protein" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="węglowodany" name="carbohydrate" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="tłuszcze" name="fat" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="błonnik" name="fibre" placeholder="" touched={touched} errors={errors} values={values} type="number" handleChange={handleChange} handleBlur={handleBlur} />
+                            <SimpleInput label="zdjęcie" name="photo" placeholder="http://..." touched={touched} errors={errors} values={values} handleChange={handleChange} handleBlur={handleBlur} />
+                            <Button
+                                intent="success"
+                                text={meal ? "Zaktualizuj" : "Dodaj"}
+                                type="submit"
+                                disabled={isSubmitting}
+                            />
+                            {status && <p className="text-danger mt-2">{status}</p>}
+                        </Form>
+                    )}
+            </Formik>
+        </div>
+    )
+}
 
 export { MealDetails }

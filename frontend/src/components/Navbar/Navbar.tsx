@@ -46,6 +46,10 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
         <Link className={classnames(styles.headerCTAButton, styles.headerCTAButton_brand)} to="/">
           ZAMÓW
         </Link>
+        <span className="bp3-navbar-divider"></span>
+        <Link className={styles.headerLink} to="/logout">
+          WYLOGUJ
+        </Link>
       </div>
     </div>
   </Navbar>

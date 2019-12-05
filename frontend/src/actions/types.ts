@@ -3,7 +3,7 @@ import { User } from 'src/models'
 
 export type SetLoggedInUser = {
   type: constants.SET_LOGGED_IN_USER
-  payload: User
+  payload: Nullable<User>
 }
 
 export type ActionType = SetLoggedInUser
