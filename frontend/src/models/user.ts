@@ -1,4 +1,4 @@
-import { UserRole } from '../../../backend/src/api/user/model/UserRole'
+export type UserRole = "user" | "admin" | "dietitian"
 
 export type User = {
   id: string
