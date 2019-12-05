@@ -1,9 +1,17 @@
 .mealContainer {
     width: 100%;
     text-align: left;
+    vertical-align: top;
 }
 
 .mealCard {
     display: inline-block;
     margin: 5px;
+}
+
+.mealCardAdd {
+    @extend .mealCard;
+
+    display: inline-block;
+    height: 100px;
 }

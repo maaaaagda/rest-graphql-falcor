@@ -12,4 +12,5 @@ export const RouteBuilder = {
   toDietAdmin: (dietId: string) => `${RouteBuilder.toDietListAdmin()}/${dietId}`,
   toMeal: (dietId: string) => `${RouteBuilder.toMealList()}/${dietId}`,
   toMealAdmin: (dietId: string) => `${RouteBuilder.toMealListAdmin()}/${dietId}`,
+  toNewMealAdmin: () => `${RouteBuilder.toMealListAdmin()}/new`,
 }
