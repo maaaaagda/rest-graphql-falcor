@@ -1,4 +1,7 @@
 import { IBaseRepository } from "../../../core/repository/IBaseRepository";
 import { IMeal } from "../model/Meal";
 
-export interface IMealRepository extends IBaseRepository<IMeal> {}
+export interface IMealRepository extends IBaseRepository<IMeal> {
+  getMeals();
+  getMeal(id: string);
+}
