@@ -6,7 +6,7 @@ export interface IMeal extends Document, Entity {
   _id: string;
   name: string;
   ingredients: [Ingredient];
-  receipe: string;
+  recipe: string;
   rating: number;
   authorId: string;
   kcal: number;

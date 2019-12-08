@@ -3,8 +3,10 @@ import { Ingredient } from "../ingredient";
 
 export const mealPostSchema: Joi.Schema = Joi.object().keys({
   name: Joi.string().required(),
-  ingredients: Joi.array().items(Ingredient),
-  receipe: Joi.string(),
+  ingredients: Joi.array()
+    .items(Ingredient)
+    .required(),
+  recipe: Joi.string(),
   authorId: Joi.string(),
   photo: Joi.string()
 });

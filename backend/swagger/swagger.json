@@ -1061,6 +1061,9 @@
             "$ref": "#/definitions/Ingredient"
           }
         },
+        "recipe": {
+          "type": "string"
+        },
         "kcal": {
           "type": "number"
         },
@@ -1093,7 +1096,7 @@
             "$ref": "#/definitions/Ingredient"
           }
         },
-        "receipe": {
+        "recipe": {
           "type": "string"
         },
         "authorId": {

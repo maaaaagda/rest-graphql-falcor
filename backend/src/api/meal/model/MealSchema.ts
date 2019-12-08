@@ -15,7 +15,7 @@ export const mealSchema: mongoose.Schema = new mongoose.Schema({
     type: [Ingredient],
     default: []
   },
-  receipe: {
+  recipe: {
     type: String
   },
   rating: {

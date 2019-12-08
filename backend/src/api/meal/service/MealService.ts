@@ -25,29 +25,36 @@ export class MealService {
       _.meanBy(
         ingredients,
         ingredient => ingredient.weight * ingredient[nutritionName]
-      ) / _.sumBy(ingredients, "weight")
+      ) / _.sumBy(ingredients, "weight") || 0
     );
   }
 
   private getNutritionValueForMeal(
     ingredients: Ingredient[],
     products: IProduct[]
-  ): NutritionValues {
-    const parsedIngredients: (Ingredient & IProduct)[] = ingredients.map(
-      (ingredient, id) =>
-        Object.assign({}, ingredient, JSON.parse(JSON.stringify(products[id])))
-    );
+  ): NutritionValues | {} {
+    if (ingredients.length && products.length) {
+      const parsedIngredients: (Ingredient & IProduct)[] = ingredients.map(
+        (ingredient, id) =>
+          Object.assign(
+            {},
+            ingredient,
+            JSON.parse(JSON.stringify(products[id]))
+          )
+      );
 
-    return {
-      kcal: this.countNutritionValueForMeal(parsedIngredients, "kcal"),
-      protein: this.countNutritionValueForMeal(parsedIngredients, "protein"),
-      carbohydrate: this.countNutritionValueForMeal(
-        parsedIngredients,
-        "carbohydrate"
-      ),
-      fat: this.countNutritionValueForMeal(parsedIngredients, "fat"),
-      fibre: this.countNutritionValueForMeal(parsedIngredients, "fibre")
-    };
+      return {
+        kcal: this.countNutritionValueForMeal(parsedIngredients, "kcal"),
+        protein: this.countNutritionValueForMeal(parsedIngredients, "protein"),
+        carbohydrate: this.countNutritionValueForMeal(
+          parsedIngredients,
+          "carbohydrate"
+        ),
+        fat: this.countNutritionValueForMeal(parsedIngredients, "fat"),
+        fibre: this.countNutritionValueForMeal(parsedIngredients, "fibre")
+      };
+    }
+    return {};
   }
 
   public async getMeals(): Promise<IMeal[]> {
@@ -69,10 +76,9 @@ export class MealService {
       );
     }
 
-    const mealNutritionValues: NutritionValues = this.getNutritionValueForMeal(
-      ingredients,
-      products
-    );
+    const mealNutritionValues:
+      | NutritionValues
+      | {} = this.getNutritionValueForMeal(ingredients, products);
 
     return await this._mealRepository.insertOne(
       Object.assign({}, mealParams, mealNutritionValues)
@@ -84,7 +90,7 @@ export class MealService {
       _id: id
     });
     if (mealToModify) {
-      const { ingredients } = mealParams;
+      const ingredients = mealParams.ingredients || ([] as Ingredient[]);
       const productIds = Array.from(
         new Set(ingredients.map(ingredient => ingredient.productId))
       );
@@ -95,10 +101,9 @@ export class MealService {
         );
       }
 
-      const mealNutritionValues: NutritionValues = this.getNutritionValueForMeal(
-        ingredients,
-        products
-      );
+      const mealNutritionValues:
+        | NutritionValues
+        | {} = this.getNutritionValueForMeal(ingredients, products);
 
       const toUpdate = Object.assign(
         {},
