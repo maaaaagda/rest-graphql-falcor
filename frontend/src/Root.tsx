@@ -12,13 +12,13 @@ const { persistor, store } = newStoreConfig()
 
 const Root = () => (
   <Provider store={store}>
-    <RestfulProvider base={process.env.REACT_APP_API_ENDPOINT as string}>
-      <BrowserRouter>
-        <PersistGate loading={null} persistor={persistor}>
+    <PersistGate loading={null} persistor={persistor}>
+      <RestfulProvider base={process.env.REACT_APP_API_ENDPOINT as string}>
+        <BrowserRouter>
           <App />
-        </PersistGate>
-      </BrowserRouter>
-    </RestfulProvider>
+        </BrowserRouter>
+      </RestfulProvider>
+    </PersistGate>
   </Provider>
 )
 

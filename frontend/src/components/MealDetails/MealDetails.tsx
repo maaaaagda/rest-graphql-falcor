@@ -6,16 +6,12 @@ import {
   useUpdateMealMutation,
   useCreateMealMutation,
 } from 'src/rest/mealMutation'
-import {
-  FormGroup,
-  InputGroup,
-  Button,
-  IInputGroupProps,
-} from '@blueprintjs/core'
+import { Button, TextArea } from '@blueprintjs/core'
 import { AppState } from 'src/store/types'
 import { Row, Col } from 'react-bootstrap'
 import { IngredientList } from './IngredientList'
 import { connect } from 'react-redux'
+import { SimpleInput } from './SimpleInput'
 
 const mapStateToProps = (state: AppState) => ({
   loggedInUser: state.user.loggedInUser,
@@ -25,45 +21,6 @@ export type MealDetailsProps = {
   meal: Meal
   editable?: boolean
 } & ReturnType<typeof mapStateToProps>
-
-type SimpleInputProps = {
-  label: string
-  name: string
-  placeholder: string
-  touched: any
-  errors: any
-  values: any
-  handleChange: any
-  handleBlur: any
-} & IInputGroupProps
-
-const SimpleInput = ({
-  label,
-  name,
-  placeholder,
-  touched,
-  errors,
-  values,
-  handleChange,
-  handleBlur,
-  type,
-}: SimpleInputProps) => (
-  <FormGroup
-    label={label}
-    labelFor={name}
-    helperText={touched[name] && errors[name]}
-    intent={touched[name] && errors[name] ? 'danger' : 'none'}>
-    <InputGroup
-      name={name}
-      placeholder={placeholder}
-      intent={touched[name] && errors[name] ? 'danger' : 'none'}
-      value={values[name]}
-      onChange={handleChange}
-      onBlur={handleBlur}
-      type={type}
-    />
-  </FormGroup>
-)
 
 const MealDetailsComponent = ({
   meal,
@@ -77,32 +34,32 @@ const MealDetailsComponent = ({
   const mealValues = {
     name: meal.name,
     ingredients: meal.ingredients,
-    receipe: '',
+    receipe: 'test',
     authorId: loggedInUser ? loggedInUser.id : '',
     photo: meal.photo,
   }
 
   return (
-    <div className={styles.container}>
-      <Formik
-        initialValues={mealValues}
-        onSubmit={(values, actions) => {
-          return mutate(values).catch(err => {
-            actions.setStatus(err.data ? err.data.message : err.message)
-          })
-        }}>
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          isSubmitting,
-          status,
-          setFieldValue,
-        }) => (
-          <Form>
-            <Row>
+    <Formik
+      initialValues={mealValues}
+      onSubmit={(values, actions) => {
+        return mutate(values).catch(err => {
+          actions.setStatus(err.data ? err.data.message : err.message)
+        })
+      }}>
+      {({
+        values,
+        errors,
+        touched,
+        handleBlur,
+        handleChange,
+        isSubmitting,
+        status,
+        setFieldValue,
+      }) => (
+        <Form className={styles.container}>
+          <Row className="mx-0">
+            <Col md={6}>
               <SimpleInput
                 label="nazwa"
                 name="name"
@@ -114,6 +71,8 @@ const MealDetailsComponent = ({
                 handleChange={handleChange}
                 handleBlur={handleBlur}
               />
+            </Col>
+            <Col md={6}>
               <SimpleInput
                 label="kcal na 100g"
                 name="kcal"
@@ -126,27 +85,32 @@ const MealDetailsComponent = ({
                 handleChange={handleChange}
                 handleBlur={handleBlur}
               />
-              <Row>
-                <Col md={4} className="px-0">
-                  <h1>Składniki:</h1>
-                  <IngredientList
-                    ingredients={values.ingredients}
-                    disabled={!editable}
-                    setIngredients={v => setFieldValue('ingredients', v)}
-                  />
-                </Col>
-                <Col md={8} className="px-0">
-                  <h1>Przepis:</h1>
-                  <input
-                    type="text"
-                    name="recepie"
-                    placeholder="przepis..."
-                    value={values.receipe}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </Col>
-              </Row>
+            </Col>
+          </Row>
+          <Row className="mx-0">
+            <Col md={4} className="px-0">
+              <h1>Składniki:</h1>
+              <IngredientList
+                ingredients={values.ingredients}
+                disabled={!editable}
+                setIngredients={v => setFieldValue('ingredients', v)}
+                className={styles.ingredientList}
+              />
+            </Col>
+            <Col md={8} className="px-0">
+              <h1>Przepis:</h1>
+              <TextArea
+                name="receipe"
+                growVertically={true}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.receipe}
+                className={styles.recipe}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col md={8}>
               <SimpleInput
                 label="zdjęcie"
                 name="photo"
@@ -158,18 +122,24 @@ const MealDetailsComponent = ({
                 handleChange={handleChange}
                 handleBlur={handleBlur}
               />
-              <Button
-                intent="success"
-                text={meal ? 'Zaktualizuj' : 'Dodaj'}
-                type="submit"
-                disabled={isSubmitting || !editable}
-              />
-              {status && <p className="text-danger mt-2">{status}</p>}
-            </Row>
-          </Form>
-        )}
-      </Formik>
-    </div>
+            </Col>
+            <Col md={4}>
+              <div className={styles.photo}>
+                <img src={values.photo} />
+              </div>
+            </Col>
+          </Row>
+          <Button
+            intent="success"
+            text={meal ? 'Zaktualizuj' : 'Dodaj'}
+            type="submit"
+            disabled={isSubmitting || !editable}
+            className="d-block"
+          />
+          {status && <p className="text-danger mt-2">{status}</p>}
+        </Form>
+      )}
+    </Formik>
   )
 }
 
