@@ -8,15 +8,15 @@ export const useMealListQuery = (query: MealsQuery = {}) =>
   useGet<Meal[]>({
     path: `/meals`,
     queryParams: buildQueryParams(query),
-    resolve: resolveData<Meal[]>()
+    resolve: resolveData<Meal[]>(),
   })
 
-type MealParams = {
-    _id: string
+type MealQuery = {
+  _id: string
 }
 
-export const useMealQuery = (params: MealParams) =>
+export const useMealQuery = (query: MealQuery) =>
   useGet<Meal>({
-    path: `/meals/${params._id}`,
-    resolve: resolveData<Meal>()
+    path: `/meals/${query._id}`,
+    resolve: resolveData<Meal>(),
   })

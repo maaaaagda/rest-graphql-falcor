@@ -1,19 +1,28 @@
 import { useMutate } from 'restful-react'
-import { Meal } from 'src/models'
+import { ID } from 'src/models'
 
-type UpdateMealMutation = Omit<Meal, "_id">
+type Ingredient = {
+  productId: ID
+  weight: number
+}
+
+type MealMutation = {
+  name: string
+  ingredients: Ingredient[]
+  receipe: string
+  authorId: ID
+  photo: string
+}
 
 export const useUpdateMealMutation = (mealId: string) =>
-    useMutate<any, any, any, UpdateMealMutation>({
-        verb: "PUT",
-        path: `/meals`,
-        queryParams: { mealId }
-    })
-
-type CreateMealMutation = Omit<Meal, "_id">
+  useMutate<any, any, any, MealMutation>({
+    verb: 'PUT',
+    path: `/meals`,
+    queryParams: { mealId },
+  })
 
 export const useCreateMealMutation = () =>
-    useMutate<any, any, any, CreateMealMutation>({
-        verb: "POST",
-        path: `/meals`
-    })
+  useMutate<any, any, any, MealMutation>({
+    verb: 'POST',
+    path: `/meals`,
+  })
