@@ -64,8 +64,9 @@ export class MealService {
     return await this._mealRepository.getOneById(id);
   }
 
-  public async postMeal(mealParams: IMeal) {
+  public async postMeal(mealParams: IMeal, authorId: string) {
     let { ingredients } = mealParams;
+    mealParams.authorId = authorId;
     const productIds = Array.from(
       new Set(ingredients.map(ingredient => ingredient.productId))
     );

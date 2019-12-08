@@ -7,6 +7,5 @@ export const mealPostSchema: Joi.Schema = Joi.object().keys({
     .items(Ingredient)
     .required(),
   recipe: Joi.string(),
-  authorId: Joi.string(),
   photo: Joi.string()
 });

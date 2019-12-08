@@ -7,7 +7,6 @@ import {
   httpPut,
   interfaces
 } from "inversify-express-utils";
-import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
 import { MEAL_TYPES } from "./ioc/MealTypes";
 import getContainer from "./ioc/inversify.config";
@@ -20,6 +19,7 @@ import { mealPutSchema } from "./schema/put/putMeal";
 import { IAuthenticator } from "../../core/auth/IAuthenticator";
 import { IValidator } from "../../core/validator/IValidator";
 import { BadRequestError } from "../../core/error/BadRequestError";
+import { UserRole } from "../user/model/UserRole";
 
 const config: Config = new Config();
 const ENDPOINT: string = "meals";
@@ -82,9 +82,12 @@ export class MealController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      this._authenticator.authenticate(req.headers.authorization);
+      const { userId } = this._authenticator.authenticate(
+        req.headers.authorization,
+        UserRole.DIETITIAN
+      );
       this._validator.validate(req.body, mealPostSchema);
-      const meal: IMeal = await this._mealService.postMeal(req.body);
+      const meal: IMeal = await this._mealService.postMeal(req.body, userId);
       return res.json(SuccessResponse.Created(meal));
     } catch (error) {
       return new Promise(() => {
@@ -100,7 +103,10 @@ export class MealController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      this._authenticator.authenticate(req.headers.authorization);
+      this._authenticator.authenticate(
+        req.headers.authorization,
+        UserRole.DIETITIAN
+      );
       this._validator.validate(req.body, mealPutSchema);
       const updatedMeal: IMeal = await this._mealService.putMeal(
         req.query.id,

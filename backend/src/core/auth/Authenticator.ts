@@ -5,10 +5,11 @@ import { IConfig } from "../../config/IConfig";
 import { TYPES } from "../../ioc/types";
 import { AuthenticationError } from "../error/AuthenticationError";
 import { IAuthenticator } from "./IAuthenticator";
-import { strict } from "assert";
 import { ITokenData } from "./ITokenData";
-const TOKEN_REGEX: RegExp = /^Bearer (?<TOKEN>.+)$/;
 import bcrypt from "bcrypt";
+
+const TOKEN_REGEX: RegExp = /^Bearer (?<TOKEN>.+)$/;
+
 @injectable()
 export class Authenticator implements IAuthenticator {
   @inject(TYPES.IConfig)
@@ -26,7 +27,11 @@ export class Authenticator implements IAuthenticator {
         tokenRegexMatch.groups.TOKEN,
         this._config.JWT_SECRET
       );
-      if (role && decoded.data.role !== role) {
+      if (
+        role &&
+        decoded.data.role !== UserRole.ADMIN &&
+        decoded.data.role !== role
+      ) {
         throw new AuthenticationError("Missing required permissions");
       }
       return { role: decoded.data.role, userId: decoded.data.userId };
