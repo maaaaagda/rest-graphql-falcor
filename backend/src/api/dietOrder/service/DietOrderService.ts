@@ -54,11 +54,10 @@ export class DietOrderService {
       }
     );
     if (dietOrderToModify) {
-      const { status } = dietOrderParams;
       const updated: IDietOrder = await this._dietOrderRepository.updateOneById(
         id,
         {
-          $set: { status }
+          $set: dietOrderParams
         }
       );
       return updated;

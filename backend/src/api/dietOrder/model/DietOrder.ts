@@ -9,5 +9,7 @@ export interface IDietOrder extends Document, Entity {
   dates: string[];
   kcal: number;
   cost: number;
+  deliveryAddress: string;
+  deliveryTime: string;
   status: OrderStatus;
 }

@@ -20,6 +20,12 @@ export const dietOrderSchema: mongoose.Schema = new mongoose.Schema({
   dates: {
     type: [{ type: Date }]
   },
+  deliveryAddress: {
+    type: String
+  },
+  deliveryTime: {
+    type: String
+  },
   kcal: {
     type: Number,
     required: true
