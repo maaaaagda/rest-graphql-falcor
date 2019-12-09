@@ -6,8 +6,23 @@
 
 .product {
     padding: 10px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.productText {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    flex: 1;
+}
+
+.productDelete {
+    flex: 0;
 }
 
 .addProductBtn {
-    width: 100%;
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
 }

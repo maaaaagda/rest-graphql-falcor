@@ -2,10 +2,7 @@ import React from 'react'
 import styles from './MealDetails.module.scss'
 import { Meal } from 'src/models'
 import { Formik, Form } from 'formik'
-import {
-  useUpdateMealMutation,
-  useCreateMealMutation,
-} from 'src/rest/mealMutation'
+import { useUpdateMealMutation, useCreateMealMutation } from 'src/rest'
 import { Button, TextArea } from '@blueprintjs/core'
 import { AppState } from 'src/store/types'
 import { Row, Col } from 'react-bootstrap'
@@ -34,7 +31,7 @@ const MealDetailsComponent = ({
   const mealValues = {
     name: meal.name,
     ingredients: meal.ingredients,
-    receipe: 'test',
+    recipe: '',
     authorId: loggedInUser ? loggedInUser.id : '',
     photo: meal.photo,
   }
@@ -88,7 +85,7 @@ const MealDetailsComponent = ({
             </Col>
           </Row>
           <Row className="mx-0">
-            <Col md={4} className="px-0">
+            <Col md={5}>
               <h1>Składniki:</h1>
               <IngredientList
                 ingredients={values.ingredients}
@@ -97,19 +94,19 @@ const MealDetailsComponent = ({
                 className={styles.ingredientList}
               />
             </Col>
-            <Col md={8} className="px-0">
+            <Col md={7}>
               <h1>Przepis:</h1>
               <TextArea
-                name="receipe"
+                name="recipe"
                 growVertically={true}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                value={values.receipe}
+                value={values.recipe}
                 className={styles.recipe}
               />
             </Col>
           </Row>
-          <Row>
+          <Row className="mt-4">
             <Col md={8}>
               <SimpleInput
                 label="zdjęcie"
