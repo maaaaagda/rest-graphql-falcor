@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { RouteBuilder } from 'src/views/routes'
 import { AppState } from 'src/store/types'
 import { connect } from 'react-redux'
-import classnames from "classnames"
+import classnames from 'classnames'
 
 const mapStateToProps = (state: AppState) => ({
   loggedInUser: state.user.loggedInUser,
@@ -19,7 +19,7 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
     <div className={styles.navbarContent}>
       <div className="bp3-navbar-group bp3-align-left">
         <Link to={RouteBuilder.toDashboard()}>
-        <img className={styles.navbarLogo} src={logo} alt="logo" />
+          <img className={styles.navbarLogo} src={logo} alt="logo" />
         </Link>
       </div>
       <div className="bp3-navbar-group bp3-align-right">
@@ -30,20 +30,26 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
         <Link className={styles.headerButton} to="/">
           MENU
         </Link>
-        <span className="bp3-navbar-divider"></span>
-        <Link className={styles.headerLink} to="/">
-          GDZIE DOWOZIMY
-        </Link>
-        {loggedInUser && loggedInUser.role !== "user" && (
+        {loggedInUser && loggedInUser.role !== 'user' && (
           <>
             <span className="bp3-navbar-divider"></span>
-            <Link to={RouteBuilder.toDieticianPanel()} className={classnames(styles.headerCTAButton, styles.headerCTAButton_success)}>
+            <Link
+              to={RouteBuilder.toDieticianPanel()}
+              className={classnames(
+                styles.headerCTAButton,
+                styles.headerCTAButton_success
+              )}>
               PANEL DIETETYKA
             </Link>
           </>
         )}
         <span className="bp3-navbar-divider"></span>
-        <Link className={classnames(styles.headerCTAButton, styles.headerCTAButton_brand)} to="/">
+        <Link
+          className={classnames(
+            styles.headerCTAButton,
+            styles.headerCTAButton_brand
+          )}
+          to="/">
           ZAMÓW
         </Link>
         <span className="bp3-navbar-divider"></span>

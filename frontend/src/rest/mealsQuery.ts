@@ -1,6 +1,6 @@
 import { useGet } from 'restful-react'
 import { Query, buildQueryParams, resolveData } from './query'
-import { Meal } from 'src/models'
+import { Meal, MealProduct } from 'src/models'
 
 interface MealsQuery extends Query {}
 
@@ -8,15 +8,26 @@ export const useMealListQuery = (query: MealsQuery = {}) =>
   useGet<Meal[]>({
     path: `/meals`,
     queryParams: buildQueryParams(query),
-    resolve: resolveData<Meal[]>()
+    resolve: resolveData<Meal[]>(),
   })
 
-type MealParams = {
-    _id: string
+type MealQuery = {
+  _id: string
 }
 
-export const useMealQuery = (params: MealParams) =>
+export const useMealQuery = (query: MealQuery) =>
   useGet<Meal>({
-    path: `/meals/${params._id}`,
-    resolve: resolveData<Meal>()
+    path: `/meals/${query._id}`,
+    resolve: resolveData<Meal>(),
+  })
+
+type SearchMealQuery = {
+  name: string
+}
+
+export const useSearchMealQuery = (query: SearchMealQuery) =>
+  useGet<MealProduct[]>({
+    path: `/meals/dynamic`,
+    resolve: resolveData<MealProduct[]>(),
+    queryParams: { name: query.name },
   })
