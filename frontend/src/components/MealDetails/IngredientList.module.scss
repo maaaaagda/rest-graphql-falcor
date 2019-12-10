@@ -19,10 +19,18 @@
 
 .productDelete {
     flex: 0;
+    margin-left: 5px;
 }
 
 .addProductBtn {
     display: flex;
     justify-content: stretch;
     align-items: stretch;
+}
+
+.weight {
+    flex: 0;
+    > *:first-child {
+        width: 50px;
+    }
 }

@@ -3,8 +3,9 @@ import { MealProduct } from 'src/models'
 import styles from './IngredientList.module.scss'
 import { Select, ItemRenderer } from '@blueprintjs/select'
 import classnames from 'classnames'
-import { MenuItem, Button } from '@blueprintjs/core'
+import { MenuItem, Button, NumericInput } from '@blueprintjs/core'
 import { useSearchProductQuery } from 'src/rest'
+import { Product } from 'src/models/product'
 
 type IngredientListProps = {
   ingredients: MealProduct[]
@@ -12,7 +13,7 @@ type IngredientListProps = {
   setIngredients: (ingredients: MealProduct[]) => void
 } & React.HTMLAttributes<HTMLUListElement>
 
-const renderIngredient: ItemRenderer<MealProduct> = (
+const renderIngredient: ItemRenderer<Product> = (
   ingredient,
   { handleClick, modifiers }
 ) => {
@@ -22,14 +23,15 @@ const renderIngredient: ItemRenderer<MealProduct> = (
   return (
     <MenuItem
       active={modifiers.active}
-      key={ingredient.productId}
+      key={ingredient.name}
       onClick={handleClick}
-      label={ingredient.productId}
+      text={ingredient.name}
+      label={`${Math.round(ingredient.kcal)} kcal/100g`}
     />
   )
 }
 
-const IngredientSelect = Select.ofType<MealProduct>()
+const IngredientSelect = Select.ofType<Product>()
 
 type IngredientSelectQueryingProps = {
   addIngredient: (product: MealProduct) => void
@@ -45,10 +47,12 @@ const IngredientSelectQuerying = ({
 
   return (
     <IngredientSelect
-      items={(data as Nullable<MealProduct[]>) || []}
+      items={data || []}
       itemRenderer={renderIngredient}
       noResults={<MenuItem disabled={true} text="Brak wyników." />}
-      onItemSelect={item => addIngredient(item)}
+      onItemSelect={item =>
+        addIngredient({ productId: item._id, weight: 1, name: item.name })
+      }
       query={query}
       onQueryChange={setQuery}>
       <Button text="Dodaj produkt" rightIcon="double-caret-vertical" />
@@ -71,13 +75,28 @@ const IngredientList = ({
     setIngredients([...ingredients, product])
   }
 
+  const setIngredientWeight = (weight: number, idx: number) => {
+    const ingredientsCopy = [...ingredients]
+    ingredientsCopy[idx].weight = weight
+    setIngredients(ingredientsCopy)
+  }
+
   const [query, setQuery] = useState('')
 
   return (
     <ul className={classnames(styles.productList, className)} {...rest}>
-      {ingredients.map(p => (
+      {ingredients.map((p, idx) => (
         <li className={styles.product}>
-          <span className={styles.productText}>{p.productId}</span>
+          <span className={styles.productText}>{p.name}</span>
+          <NumericInput
+            placeholder="waga (g)"
+            onValueChange={v => setIngredientWeight(v, idx)}
+            value={p.weight}
+            className={styles.weight}
+            min={1}
+            buttonPosition="none"
+          />{' '}
+          gram
           <Button
             icon="delete"
             intent="danger"
