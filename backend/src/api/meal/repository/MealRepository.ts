@@ -34,24 +34,29 @@ const productNameAggregation = [
       from: "products",
       localField: "ingredients.productId",
       foreignField: "_id",
-      as: "ingredients.productName"
+      as: "products"
     }
   },
-  { $unwind: "$ingredients.productName" },
+  { $unwind: "$products" },
   {
-    $project: {
-      "ingredients.productName": "$ingredients.productName.name",
-      "ingredients.productId": 1,
-      "ingredients.weight": 1,
-      name: 1,
-      recipe: 1,
-      kcal: 1,
-      protein: 1,
-      carbohydrate: 1,
-      fat: 1,
-      fibre: 1,
-      photo: 1,
-      authorId: 1
+    $group: {
+      _id: "$_id",
+      name: { $first: "$name" },
+      recipe: { $first: "$recipe" },
+      kcal: { $first: "$kcal" },
+      protein: { $first: "$protein" },
+      carbohydrate: { $first: "$carbohydrate" },
+      fat: { $first: "$fat" },
+      fibre: { $first: "$fibre" },
+      photo: { $first: "$photo" },
+      authorId: { $first: "$authorId" },
+      ingredients: {
+        $push: {
+          _id: "$ingredients.productId",
+          productName: "$products.name",
+          weight: "$ingredients.weight"
+        }
+      }
     }
   }
 ];

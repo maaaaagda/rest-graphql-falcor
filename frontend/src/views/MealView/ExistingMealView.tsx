@@ -1,6 +1,7 @@
 import React from 'react'
 import { useMealQuery } from 'src/rest'
 import { MealForm } from 'src/components/MealForm'
+import { useParams } from 'react-router-dom'
 
 type Props = {
   mealId: string
@@ -8,7 +9,8 @@ type Props = {
 }
 
 const ExistingMealView = (props: Props) => {
-  const { data, loading } = useMealQuery({ _id: props.mealId })
+  const { mealId } = useParams()
+  const { data, loading } = useMealQuery({ _id: mealId || '' })
 
   return <MealForm data={data} loading={loading} editable={props.editable} />
 }

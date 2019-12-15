@@ -61,9 +61,9 @@ export class MealController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      const meal: IMeal = await this._mealService.getMealById(
+      const meal: IMeal = (await this._mealService.getMealById(
         req.params.mealId
-      );
+      ))[0];
       if (!meal) {
         throw new BadRequestError("Meal with given id does not exist");
       }
