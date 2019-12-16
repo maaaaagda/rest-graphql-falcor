@@ -4,7 +4,6 @@ import { MealForm } from 'src/components/MealForm'
 import { useParams } from 'react-router-dom'
 
 type Props = {
-  mealId: string
   editable?: boolean
 }
 

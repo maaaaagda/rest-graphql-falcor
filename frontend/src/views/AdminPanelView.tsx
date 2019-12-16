@@ -57,7 +57,7 @@ const AdminPanelView = () => {
               path={`${url}/meals/:mealId`}
               exact={true}
               component={(props: { mealId: string }) => (
-                <ExistingMealView mealId={props.mealId} editable />
+                <ExistingMealView editable />
               )}
             />
           </Switch>
