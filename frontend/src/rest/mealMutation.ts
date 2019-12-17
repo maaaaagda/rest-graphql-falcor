@@ -10,7 +10,6 @@ type MealMutation = {
   name: string
   ingredients: Ingredient[]
   recipe: string
-  authorId: ID
   photo: string
 }
 
@@ -18,7 +17,7 @@ export const useUpdateMealMutation = (mealId: string) =>
   useMutate<any, any, any, MealMutation>({
     verb: 'PUT',
     path: `/meals`,
-    queryParams: { id: mealId },
+    queryParams: { mealId },
   })
 
 export const useCreateMealMutation = () =>
