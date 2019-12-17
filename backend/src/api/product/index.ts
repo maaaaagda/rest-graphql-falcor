@@ -45,7 +45,9 @@ export class ProductController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      const products: IProduct[] = await this._productService.getProducts();
+      const products: IProduct[] = await this._productService.getProducts(
+        req.query.name
+      );
       return res.json(SuccessResponse.Ok(products));
     } catch (error) {
       return new Promise(() => {
@@ -64,7 +66,9 @@ export class ProductController implements interfaces.Controller {
       if (!req.query.name) {
         throw new BadRequestError("Please provide 'name' parameter");
       }
-      const products: IExternalProviderProduct[] = await this._productService.searchForProduct(req.query.name);
+      const products: IExternalProviderProduct[] = await this._productService.searchForProduct(
+        req.query.name
+      );
       return res.json(SuccessResponse.Ok(products));
     } catch (error) {
       return new Promise(() => {
