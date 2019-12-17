@@ -18,28 +18,30 @@ const DietCard = ({
   editable,
   ...rest
 }: Props) => (
-    <Card
-      elevation={Elevation.TWO}
-      className={`${style.dietCard} ${className || ''}`}
-      {...rest}>
-      <h5 className={style.name}>{name}</h5>
-      <span className={style.cost}>{dailyCost}zł / dzień</span>
-      <div className={style.navigation}>
-        {editable ? (
-          <Link
-            to={RouteBuilder.toDietAdmin(_id)}
-            className="bp3-button bp3-intent-success">
-            Edytuj
-      </Link>
-        ) : (
-            <Link
-              to={RouteBuilder.toDiet(_id)}
-              className="bp3-button bp3-intent-success">
-              Pokaż
-      </Link>
-          )}
-      </div>
-    </Card>
-  )
+  <Card
+    elevation={Elevation.TWO}
+    className={`${style.dietCard} ${className || ''}`}
+    {...rest}>
+    <h5 className={style.name}>{name}</h5>
+    <span id="diet-daily-cost" className={style.cost}>
+      {dailyCost}zł / dzień
+    </span>
+    <div className={style.navigation}>
+      {editable ? (
+        <Link
+          to={RouteBuilder.toDietAdmin(_id)}
+          className="bp3-button bp3-intent-success">
+          Edytuj
+        </Link>
+      ) : (
+        <Link
+          to={RouteBuilder.toDiet(_id)}
+          className="bp3-button bp3-intent-success">
+          Pokaż
+        </Link>
+      )}
+    </div>
+  </Card>
+)
 
 export { DietCard }

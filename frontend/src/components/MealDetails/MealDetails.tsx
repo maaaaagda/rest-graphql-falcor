@@ -88,7 +88,7 @@ const MealDetailsComponent = ({
             <Col md={5}>
               <h1>Składniki:</h1>
               <IngredientList
-                ingredients={values.ingredients}
+                ingredients={values.ingredients || []}
                 disabled={!editable}
                 setIngredients={v => setFieldValue('ingredients', v)}
                 className={styles.ingredientList}

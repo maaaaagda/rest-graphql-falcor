@@ -18,16 +18,19 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
   <Navbar className={styles.appHeader} fixedToTop>
     <div className={styles.navbarContent}>
       <div className="bp3-navbar-group bp3-align-left">
-        <Link to={RouteBuilder.toDashboard()}>
+        <Link to={RouteBuilder.toDashboard()} id="navbar-dashboard">
           <img className={styles.navbarLogo} src={logo} alt="logo" />
         </Link>
       </div>
       <div className="bp3-navbar-group bp3-align-right">
-        <Link to={RouteBuilder.toDietList()} className={styles.headerLink}>
+        <Link
+          to={RouteBuilder.toDietList()}
+          className={styles.headerLink}
+          id="navbar-diets">
           DIETY
         </Link>
         <span className="bp3-navbar-divider"></span>
-        <Link className={styles.headerButton} to="/">
+        <Link className={styles.headerButton} to="/" id="navbar-menu">
           MENU
         </Link>
         {loggedInUser && loggedInUser.role !== 'user' && (
@@ -35,6 +38,7 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
             <span className="bp3-navbar-divider"></span>
             <Link
               to={RouteBuilder.toDieticianPanel()}
+              id={'navbar-dietitian-panel'}
               className={classnames(
                 styles.headerCTAButton,
                 styles.headerCTAButton_success
@@ -45,6 +49,7 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
         )}
         <span className="bp3-navbar-divider"></span>
         <Link
+          id="navbar-order"
           className={classnames(
             styles.headerCTAButton,
             styles.headerCTAButton_brand
@@ -53,7 +58,10 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
           ZAMÓW
         </Link>
         <span className="bp3-navbar-divider"></span>
-        <Link className={styles.headerLink} to={RouteBuilder.toLogout()}>
+        <Link
+          className={styles.headerLink}
+          id="navbar-logout"
+          to={RouteBuilder.toLogout()}>
           WYLOGUJ
         </Link>
       </div>

@@ -60,7 +60,7 @@ export class MealService {
   public async getMeals(): Promise<IMeal[]> {
     return await this._mealRepository.getMeals();
   }
-  public async getMealById(id: string): Promise<IMeal> {
+  public async getMealById(id: string): Promise<IMeal[]> {
     return await this._mealRepository.getMeal(id);
   }
 
