@@ -61,9 +61,14 @@ export class MealController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      const meal: IMeal = (await this._mealService.getMealById(
-        req.params.mealId
-      ))[0];
+      if (!req.params.mealId) {
+        throw new BadRequestError(
+          "Please provide valid mealId query parameter"
+        );
+      }
+      const meal: IMeal = (
+        await this._mealService.getMealById(req.params.mealId)
+      )[0];
       if (!meal) {
         throw new BadRequestError("Meal with given id does not exist");
       }
@@ -96,7 +101,7 @@ export class MealController implements interfaces.Controller {
     }
   }
 
-  @httpPut("/")
+  @httpPut("?:mealId")
   public async updateMeal(
     req: Request,
     res: Response,
@@ -107,9 +112,14 @@ export class MealController implements interfaces.Controller {
         req.headers.authorization,
         UserRole.DIETITIAN
       );
+      if (!req.query.mealId) {
+        throw new BadRequestError(
+          "Please provide valid mealId query parameter"
+        );
+      }
       this._validator.validate(req.body, mealPutSchema);
       const updatedMeal: IMeal = await this._mealService.putMeal(
-        req.query.id,
+        req.query.mealId,
         req.body
       );
       return res.json(SuccessResponse.Ok(updatedMeal));

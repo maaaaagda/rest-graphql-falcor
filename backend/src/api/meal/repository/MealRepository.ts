@@ -28,7 +28,7 @@ export class MealRepository extends BaseRepository<IMeal>
 }
 
 const productNameAggregation = [
-  { $unwind: "$ingredients" },
+  { $unwind: { path: "$ingredients", preserveNullAndEmptyArrays: true } },
   {
     $lookup: {
       from: "products",
@@ -37,7 +37,7 @@ const productNameAggregation = [
       as: "products"
     }
   },
-  { $unwind: "$products" },
+  { $unwind: { path: "$products", preserveNullAndEmptyArrays: true } },
   {
     $group: {
       _id: "$_id",
@@ -55,6 +55,29 @@ const productNameAggregation = [
           _id: "$ingredients.productId",
           productName: "$products.name",
           weight: "$ingredients.weight"
+        }
+      }
+    }
+  },
+  {
+    $project: {
+      _id: 1,
+      name: 1,
+      recipe: 1,
+      kcal: 1,
+      protein: 1,
+      carbohydrate: 1,
+      fat: 1,
+      fibre: 1,
+      photo: 1,
+      authorId: 1,
+      ingredients: {
+        $cond: {
+          if: {
+            $and: [{ $eq: ["$ingredients", [{}]] }]
+          },
+          then: [],
+          else: "$ingredients"
         }
       }
     }
