@@ -19,8 +19,8 @@ export class ProductService {
   @inject(TYPES.IConfig)
   private readonly _config: IConfig;
 
-  public async getProducts(): Promise<IProduct[]> {
-    return await this._productRepository.getMany();
+  public async getProducts(name?: string): Promise<IProduct[]> {
+    return await this._productRepository.getProducts(name);
   }
 
   public async postProduct(productParams: IProduct): Promise<IProduct> {
@@ -85,14 +85,17 @@ export class ProductService {
     return await this._productRepository.insertMany(productsToSave);
   }
 
-  public async searchForProduct(productName: string): Promise<IExternalProviderProduct[]> {  
+  public async searchForProduct(
+    productName: string
+  ): Promise<IExternalProviderProduct[]> {
     // inject httpRequester in real world, handle exceptions
-    const { data: { message } } = await Axios.get(
-      this._config.PRODUCT_INTEGRATIONS_URL,
-      { params: { name: productName }},
-    );
+    const {
+      data: { message }
+    } = await Axios.get(this._config.PRODUCT_INTEGRATIONS_URL, {
+      params: { name: productName }
+    });
     const responses: IExternalProviderProduct[] = message;
-    
+
     for (const response of responses) {
       if (!this._productRepository.getOneByName(response.name)) {
         await this._productRepository.insertOne({
@@ -102,7 +105,7 @@ export class ProductService {
           protein: response.protein,
           carbohydrate: response.carbohydrate,
           fat: response.fat,
-          fibre: response.fibre,
+          fibre: response.fibre
         } as any);
       }
     }

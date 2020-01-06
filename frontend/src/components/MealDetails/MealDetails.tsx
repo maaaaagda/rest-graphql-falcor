@@ -24,15 +24,15 @@ const MealDetailsComponent = ({
   editable,
   loggedInUser,
 }: MealDetailsProps) => {
-  const updateMeal = useUpdateMealMutation(meal && meal._id)
+  const mealId = meal && meal._id
+  const updateMeal = useUpdateMealMutation(mealId)
   const createMeal = useCreateMealMutation()
-  const { mutate } = meal ? updateMeal : createMeal
+  const { mutate } = mealId ? updateMeal : createMeal
 
   const mealValues = {
     name: meal.name,
     ingredients: meal.ingredients,
     recipe: '',
-    authorId: loggedInUser ? loggedInUser.id : '',
     photo: meal.photo,
   }
 
@@ -58,27 +58,13 @@ const MealDetailsComponent = ({
           <Row className="mx-0">
             <Col md={6}>
               <SimpleInput
-                label="nazwa"
+                label="Nazwa"
                 name="name"
                 placeholder="nazwa posiłku"
                 disabled={!editable}
                 touched={touched}
                 errors={errors}
                 values={values}
-                handleChange={handleChange}
-                handleBlur={handleBlur}
-              />
-            </Col>
-            <Col md={6}>
-              <SimpleInput
-                label="kcal na 100g"
-                name="kcal"
-                placeholder=""
-                disabled={!editable}
-                touched={touched}
-                errors={errors}
-                values={values}
-                type="number"
                 handleChange={handleChange}
                 handleBlur={handleBlur}
               />
@@ -128,7 +114,7 @@ const MealDetailsComponent = ({
           </Row>
           <Button
             intent="success"
-            text={meal ? 'Zaktualizuj' : 'Dodaj'}
+            text={mealId ? 'Zaktualizuj' : 'Dodaj'}
             type="submit"
             disabled={isSubmitting || !editable}
             className="d-block"

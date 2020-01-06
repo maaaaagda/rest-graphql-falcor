@@ -18,3 +18,14 @@ Logging into application should work properly
     Submit Credentials
     Dashboard Page Should Be Open
     [Teardown]    Close Browser
+
+
+Logging into application as dietitian should work properly
+    [Documentation]    Checks possibility of logging in as dietitian
+    [Tags]    Loginpage Smoke ReadOnly
+    Open Browser To Login Page
+    Input Username                   ${VALID_DIETITIAN_LOGIN}
+    Input Password                   ${VALID_DIETITIAN_PASSWORD}
+    Submit Credentials
+    Dashboard Page Should Be Open
+    [Teardown]    Close Browser

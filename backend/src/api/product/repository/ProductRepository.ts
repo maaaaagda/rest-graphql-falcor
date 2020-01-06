@@ -10,4 +10,13 @@ export class ProductRepository extends BaseRepository<IProduct>
   implements IProductRepository {
   protected model: string = "Product";
   protected schema: Schema<IProduct> = productSchema;
+
+  public async getProducts(name?: string) {
+    const model = await this.getModel();
+    const params: { name?: RegExp } = {};
+    if (name) {
+      params.name = new RegExp("^" + name, "i");
+    }
+    return model.find(params);
+  }
 }
