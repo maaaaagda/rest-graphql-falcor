@@ -33,6 +33,9 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
         <Link className={styles.headerButton} to="/" id="navbar-menu">
           MENU
         </Link>
+        <Link className={styles.headerButton} to={RouteBuilder.toDietOrders()} id="navbar-menu">
+          MOJE ZAMÓWIENIA
+        </Link>
         {loggedInUser && loggedInUser.role !== 'user' && (
           <>
             <span className="bp3-navbar-divider"></span>
@@ -54,7 +57,7 @@ const MainNavbarComponent = ({ loggedInUser }: Props) => (
             styles.headerCTAButton,
             styles.headerCTAButton_brand
           )}
-          to={RouteBuilder.toDietOrder()}>
+          to={RouteBuilder.toDietOrders()}>
           ZAMÓW
         </Link>
         <span className="bp3-navbar-divider"></span>
