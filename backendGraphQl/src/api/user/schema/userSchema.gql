@@ -1,0 +1,16 @@
+type User {
+    _id: String!
+    name: String!
+    email: String!
+    password: String!
+    role: String!
+    verification: String
+    verified: Boolean
+    phone: String
+    city: String
+    country: String
+    urlTwitter: String
+    urlGitHub: String
+    loginAttempts: Int
+    blockExpires: String
+  }
