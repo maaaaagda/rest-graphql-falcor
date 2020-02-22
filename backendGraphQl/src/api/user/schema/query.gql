@@ -1,4 +1,0 @@
-#import User from 'userSchema.gql'
-type Query {
-    users: [User]
-}

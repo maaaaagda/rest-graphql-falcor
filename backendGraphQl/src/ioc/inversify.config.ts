@@ -17,14 +17,6 @@ import { IValidator } from "../core/validator/IValidator";
 import { Validator } from "../core/validator/Validator";
 import { TYPES } from "./types";
 
-import "../api/auth/";
-import "../api/dailyDiet/";
-import "../api/diet/";
-import "../api/dietOrder/";
-import "../api/meal/";
-import "../api/product/";
-import "../api/user/";
-
 const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
   container

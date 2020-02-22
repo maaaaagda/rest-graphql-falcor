@@ -13,7 +13,7 @@ import { GraphQLSchema } from "graphql";
 import { ApolloServer } from "apollo-server-express";
 import depthLimit from "graphql-depth-limit";
 import { createServer, Server } from "http";
-import createGraphQLSchema from "./schema/schema";
+import createGraphQLSchema from "./graphql/schema";
 import { Application } from "express";
 
 const app: Application = express();

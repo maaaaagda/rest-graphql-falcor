@@ -1,8 +1,8 @@
+import { UserResolvers } from "../api/user/graphql/resolver";
 import { IResolvers } from "graphql-tools";
-import { UserResolver } from "../api/user/schema/resolver";
 const resolverMap: IResolvers = {
   Query: {
-    users: new UserResolver().users
+    ...UserResolvers
   },
 };
 export default resolverMap;
