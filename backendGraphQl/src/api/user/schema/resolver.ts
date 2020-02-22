@@ -4,7 +4,7 @@ import { TYPES } from "../../../ioc/types";
 import { IUser } from "../model/User";
 import { IUserService } from "../service/IUserService";
 import { USER_TYPES } from "../ioc/UserTypes";
-import { IGetUserController } from '../controller/getUserController/IGetController';
+import { IGetUserController } from "../controller/getUserController/IGetController";
 import getContainer from "../ioc/inversify.config";
 
 @injectable()
@@ -22,7 +22,7 @@ export class UserResolver implements IGetUserController {
 
     public readonly users = async (_: void, args: void): Promise<IUser[]> => {
         const users: IUser[] = await this._userService.getUsers();
-        return users
+        return users;
     }
 }
-
+

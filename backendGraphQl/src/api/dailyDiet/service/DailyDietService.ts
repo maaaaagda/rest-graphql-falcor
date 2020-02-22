@@ -63,8 +63,8 @@ export class DailyDietService {
     }
     const allMealsExist: boolean =
       (await this._mealRepository.getCountByIds(
-        (<any>Object).values(dailyMeals)
-      )) == (<any>Object).keys(dailyMeals).length;
+        (Object as any).values(dailyMeals)
+      )) == (Object as any).keys(dailyMeals).length;
 
     if (!allMealsExist) {
       throw new BadRequestError("Provided wrong or duplicated meals ids ");
