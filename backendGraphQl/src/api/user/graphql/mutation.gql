@@ -1,0 +1,4 @@
+# import { AddUser, User } from 'type.gql'
+type Mutation {
+  addUser(user: AddUser!): User
+} 

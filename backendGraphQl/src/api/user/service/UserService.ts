@@ -18,7 +18,7 @@ export class UserService {
     return await this._userRepository.getMany();
   }
 
-  public async postUser(dietParams: IUser) {
+  public async addUser(dietParams: IUser) {
     const encodedPassword = await this._authenticator.encodePassword(
       dietParams.password
     );
@@ -28,7 +28,7 @@ export class UserService {
     } as IUser);
   }
 
-  public async putUser(id: string, dietParams: IUser) {
+  public async updateUser(id: string, dietParams: IUser) {
     const dietToModify: IUser = await this._userRepository.getOne({
       _id: id
     });

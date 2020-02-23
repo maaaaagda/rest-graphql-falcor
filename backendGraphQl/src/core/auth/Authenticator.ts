@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { UserRole } from "../../api/user/model/UserRole";
 import { IConfig } from "../../config/IConfig";
 import { TYPES } from "../../ioc/types";
-import { AuthenticationError } from "../error/AuthenticationError";
+import { AuthenticationError } from "apollo-server-express";
 import { IAuthenticator } from "./IAuthenticator";
 import { ITokenData } from "./ITokenData";
 import bcrypt from "bcrypt";

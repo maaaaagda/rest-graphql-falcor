@@ -30,6 +30,10 @@ async function bootstrap(): Promise<void> {
   const server: ApolloServer = new ApolloServer({
     schema,
     validationRules: [depthLimit(7)],
+    context: ({ req }) => {
+      const token = req.headers.authentication || "";
+      return { token };
+    }
   });
   const port: number = config.PORT || 3001;
   app.use(helmet());
