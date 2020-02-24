@@ -134,9 +134,9 @@ export class ProductService {
     }
     s = s.toLowerCase();
     return s.charAt(0).toUpperCase() + s.slice(1);
-  };
+  }
 
   private sleep(sleepingTime: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, sleepingTime));
+    return new Promise((resolve) => setTimeout(resolve, sleepingTime));
   }
 }

@@ -22,7 +22,7 @@ export class DietOrderService {
     dietId: string
   ) {
     const diet: IDiet = await this._dietRepository.getOneById(dietId);
-    const kcalOption = KcalOptions.find(kcalObj => kcalObj.value == kcal);
+    const kcalOption = KcalOptions.find((kcalObj) => kcalObj.value == kcal);
     if (!kcalOption) {
       throw new BadRequestError("Wrong kcal value provided");
     }

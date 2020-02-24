@@ -1,15 +1,18 @@
+import { IUser } from "./model/User";
+import { userPostSchema } from "./schema/post/postUser";
+import { SuccessResponse } from "./../../response/SuccessResponse";
+import { IAuthenticator } from "./../../core/auth/IAuthenticator";
+import { IValidator } from "./../../core/validator/IValidator";
+import { IUserService } from "./service/IUserService";
 import { NextFunction, Request, Response } from "express";
-import { Container } from "inversify";
+import { Container, inject } from "inversify";
 import {
   controller,
   httpGet,
   httpPost,
   interfaces
 } from "inversify-express-utils";
-import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
-import { IGetUserController } from "./controller/getUserController/IGetController";
-import { IPostUserController } from "./controller/postUserController/IPostController";
 import { USER_TYPES } from "./ioc/UserTypes";
 import getContainer from "./ioc/inversify.config";
 import { Config } from "../../config/Config";
@@ -20,13 +23,13 @@ const ENDPOINT: string = "users";
 @controller(`${config.API_PATH}${ENDPOINT}`)
 export class UserController implements interfaces.Controller {
   private readonly _container: Container = getContainer();
+  private readonly _userService: IUserService = this._container.get<IUserService>(USER_TYPES.IUserService);
 
-  private readonly postUserController: IPostUserController = this._container.get(
-    USER_TYPES.IPostUserController
-  );
-  private readonly getUserController: IGetUserController = this._container.get(
-    USER_TYPES.IGetUserController
-  );
+  @inject(TYPES.IAuthenticator)
+  private readonly _authenticator: IAuthenticator;
+
+  @inject(TYPES.IValidator)
+  private readonly _validator: IValidator;
 
   @httpGet("/")
   public async getUser(
@@ -34,11 +37,10 @@ export class UserController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.getUserController.process.bind(this.getUserController)(
-      req,
-      res,
-      next
-    );
+    this._authenticator.authenticate(req.headers.authorization);
+    const users: IUser[] = await this._userService.getUsers();
+
+    return res.json(SuccessResponse.Ok(users));
   }
 
   @httpPost("/")
@@ -47,10 +49,9 @@ export class UserController implements interfaces.Controller {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    return this.postUserController.process.bind(this.postUserController)(
-      req,
-      res,
-      next
-    );
+      this._validator.validate(req.body, userPostSchema);
+      const user: IUser = await this._userService.postUser(req.body);
+  
+      return res.json(SuccessResponse.Created(user));
   }
 }
