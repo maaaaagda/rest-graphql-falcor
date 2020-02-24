@@ -28,13 +28,13 @@ export class UserController {
     private readonly _validator: IValidator = this._container.get(TYPES.IValidator);
 
     public readonly getUsers = async (parent, args, ctx: Context, info): Promise<IUser[]> => {
-        this._authenticator.authenticate(ctx.token)
+        this._authenticator.authenticate(ctx.token);
         const users: IUser[] = await this._userService.getUsers();
         return users;
     }
 
     public readonly addUserr = async (parent, args: { user: IUser }, ctx: Context, info): Promise<IUser[]> => {
-        this._authenticator.authenticate(ctx.token)
+        this._authenticator.authenticate(ctx.token);
         this._validator.validate(args.user, userAddSchema);
         const user: IUser = await this._userService.addUser(args.user);
         return;

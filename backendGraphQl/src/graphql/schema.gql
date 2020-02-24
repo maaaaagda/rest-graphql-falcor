@@ -1,1 +1,2 @@
 #import * from "../api/user/graphql/schema.gql"
+#import * from "../api/auth/graphql/schema.gql"

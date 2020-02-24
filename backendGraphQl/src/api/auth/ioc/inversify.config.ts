@@ -15,8 +15,6 @@ import { TYPES } from "../../../ioc/types";
 import { USER_REPOSITORIES } from "../../user/ioc/UserTypes";
 import { IUserRepository } from "../../user/repository/IUserRepository";
 import { UserRepository } from "../../user/repository/UserRepository";
-import { ILoginController } from "../controller/loginController/ILoginController";
-import { LoginController } from "../controller/loginController/LoginController";
 import { AUTH_TYPES } from "./AuthTypes";
 import { AuthService } from "../service/AuthService";
 
@@ -50,11 +48,6 @@ const getContainer: () => Container = (): Container => {
   container
     .bind<IUserRepository>(USER_REPOSITORIES.IUserRepository)
     .to(UserRepository);
-
-  container
-    .bind<ILoginController>(AUTH_TYPES.ILoginController)
-    .to(LoginController)
-    .inSingletonScope();
 
   container.bind<IAuthenticator>(TYPES.IAuthenticator)
     .to(Authenticator)

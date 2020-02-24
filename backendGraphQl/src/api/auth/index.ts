@@ -1,34 +1,26 @@
+import { loginSchema } from "./schema/post/login";
+import { IAuthService } from "./service/IAuthService";
+import { IValidator } from "../../core/validator/IValidator";
+import { AUTH_TYPES } from "./ioc/AuthTypes";
 import { NextFunction, Request, Response } from "express";
-import { Container } from "inversify";
+import { Container, inject } from "inversify";
 import { controller, httpPost, interfaces } from "inversify-express-utils";
-import { IDatabase } from "../../core/database/IDatabase";
 import { TYPES } from "../../ioc/types";
 import getContainer from "./ioc/inversify.config";
-import { Config } from "../../config/Config";
-import { ILoginController } from "./controller/loginController/ILoginController";
-import { AUTH_TYPES } from "./ioc/AuthTypes";
+import { Context } from "vm";
 
-const config: Config = new Config();
-const ENDPOINT: string = "auth";
-
-@controller(`${config.API_PATH}${ENDPOINT}`)
 export class AuthController implements interfaces.Controller {
+
+  @inject(TYPES.IValidator)
+  protected readonly _validator: IValidator;
   private readonly _container: Container = getContainer();
 
-  private readonly loginController: ILoginController = this._container.get(
-    AUTH_TYPES.ILoginController
-  );
+  @inject(AUTH_TYPES.IAuthService)
+  private readonly _authService: IAuthService;
 
-  @httpPost("/login")
-  public async login(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response> {
-    return this.loginController.process.bind(this.loginController)(
-      req,
-      res,
-      next
-    );
+  public readonly login = async (parent, args, ctx: Context, info): Promise<string> => {
+    this._validator.validate({ email: args.email, password: args.password }, loginSchema);
+    const token = await this._authService.login(args.email, args.password);
+    return token;
   }
 }
