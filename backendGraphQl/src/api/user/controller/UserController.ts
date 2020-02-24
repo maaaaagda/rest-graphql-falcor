@@ -34,7 +34,7 @@ export class UserController {
     }
 
     public readonly addUserr = async (parent, args: { user: IUser }, ctx: Context, info): Promise<IUser[]> => {
-        // this._authenticator.authenticate(ctx.token)
+        this._authenticator.authenticate(ctx.token)
         this._validator.validate(args.user, userAddSchema);
         const user: IUser = await this._userService.addUser(args.user);
         return;
