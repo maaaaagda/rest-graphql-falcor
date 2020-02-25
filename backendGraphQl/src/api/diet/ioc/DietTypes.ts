@@ -1,7 +1,4 @@
 export const DIET_TYPES: any = {
-  IPostDietController: Symbol.for("IPostDietController"),
-  IGetDietController: Symbol.for("IGetDietController"),
-  IPutDietController: Symbol.for("IPutDietController"),
   IDietService: Symbol.for("IDietService")
 };
 

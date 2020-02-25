@@ -31,7 +31,7 @@ async function bootstrap(): Promise<void> {
     schema,
     validationRules: [depthLimit(7)],
     context: ({ req }) => {
-      const token = req.headers.authentication || "";
+      const token = req.headers.authorization || "";
       return { token };
     }
   });

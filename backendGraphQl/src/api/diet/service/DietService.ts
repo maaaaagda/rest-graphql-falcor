@@ -17,11 +17,11 @@ export class DietService {
     return await this._dietRepository.getOneById(id);
   }
 
-  public async postDiet(dietParams: IDiet) {
+  public async addDiet(dietParams: IDiet) {
     return await this._dietRepository.insertOne(dietParams);
   }
 
-  public async putDiet(id: string, dietParams: IDiet) {
+  public async updateDiet(id: string, dietParams: IDiet) {
     const dietToModify: IDiet = await this._dietRepository.getOne({
       _id: id
     });

@@ -1,0 +1,6 @@
+# import Diet, KcalOption from 'type.gql'
+type Query {
+    diets: [Diet]!
+    diet(id: String!): Diet
+    kcalOptions: [KcalOption!]!
+}
