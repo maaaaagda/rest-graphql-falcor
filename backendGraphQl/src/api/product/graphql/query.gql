@@ -1,0 +1,4 @@
+# import Product from 'type.gql'
+type Query {
+    products(name: String): [Product]
+}

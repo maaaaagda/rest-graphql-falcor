@@ -1,6 +1,6 @@
 import Joi from "@hapi/joi";
 
-export const productPostSchema: Joi.Schema = Joi.object().keys({
+export const productUpdateSchema: Joi.Schema = Joi.object().keys({
   name: Joi.string().required(),
   kcal: Joi.number()
     .min(0)
