@@ -1,0 +1,5 @@
+# import Meal from 'type.gql'
+type Query {
+    meals: [Meal]!
+    meal(id: String!): Meal
+}

@@ -1,0 +1,35 @@
+# import NutritionValues from "../../product/graphql/type.gql"
+
+type Meal implements NutritionValues {
+  _id: ID!
+  name: String!
+  ingredients: [Ingredient!]!
+  recipe: String
+  rating: Float
+  authorId: String
+  kcal: Float
+  protein: Float
+  carbohydrate: Float
+  fat: Float
+  fibre: Float
+  photo: String
+}
+
+input ModifyMeal {
+  name: String!
+  photo: String!
+  ingredients: [ModifyIngredient!]!
+  recipe: String
+  rating: Float
+}
+
+type Ingredient {
+  _id: String!
+  productName: String!
+  weight: Float!
+}
+
+input ModifyIngredient {
+  productId: String!
+  weight: Float!
+}
