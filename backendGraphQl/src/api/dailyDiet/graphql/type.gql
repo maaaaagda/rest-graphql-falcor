@@ -1,0 +1,30 @@
+# import Meal from "../../meal/graphql/type.gql"
+
+type DailyDiet {
+  _id: ID!
+  date: String
+  dietId: ID!
+  dailyMeals: DailyMeals
+}
+
+input ModifyDailyDiet {
+  date: String
+  dietId: ID!
+  dailyMeals: DailyMealsInput
+}
+
+type DailyMeals {
+  breakfast: Meal
+  morningSnack: Meal
+  lunch: Meal
+  afternoonSnack: Meal
+  dinner: Meal
+}
+
+input DailyMealsInput {
+  breakfast: ID
+  morningSnack: ID
+  lunch: ID
+  afternoonSnack: ID
+  dinner: ID
+}

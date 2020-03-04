@@ -1,6 +1,6 @@
 import Joi from "@hapi/joi";
 
-export const dailyDietPutSchema: Joi.Schema = Joi.object().keys({
+export const dailyDietUpdateSchema: Joi.Schema = Joi.object().keys({
   dietId: Joi.string().required(),
   date: Joi.date().required(),
   dailyMeals: Joi.object().keys({

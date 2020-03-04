@@ -30,12 +30,12 @@ export class DailyDietService {
     return (await this._dailyDietRepository.getDailyDietById(id))[0];
   }
 
-  public async postDailyDiet(dailyDietParams: IDailyDiet) {
+  public async addDailyDiet(dailyDietParams: IDailyDiet) {
     await this.checkDailyDietParams(dailyDietParams);
     return await this._dailyDietRepository.insertOne(dailyDietParams);
   }
 
-  public async putDailyDiet(id: string, dailyDietParams: IDailyDiet) {
+  public async updateDailyDiet(id: string, dailyDietParams: IDailyDiet) {
     const dailyDietToModify: IDailyDiet = await this._dailyDietRepository.getOne(
       {
         _id: id

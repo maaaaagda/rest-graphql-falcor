@@ -29,6 +29,7 @@ async function bootstrap(): Promise<void> {
   const schema: GraphQLSchema =  await createGraphQLSchema();
   const server: ApolloServer = new ApolloServer({
     schema,
+    playground: true,
     validationRules: [depthLimit(7)],
     context: ({ req }) => {
       const token = req.headers.authorization || "";
