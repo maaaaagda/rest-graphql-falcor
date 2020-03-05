@@ -1,8 +1,8 @@
+import { UserInputError } from "apollo-server-express";
 import { inject, injectable } from "inversify";
 import { DIET_ORDER_REPOSITORIES } from "../ioc/DietOrderTypes";
 import { IDietOrderRepository } from "../repository/IDietOrderRepository";
 import { IDietOrder } from "../model/DietOrder";
-import { BadRequestError } from "../../../core/error/BadRequestError";
 import { DIET_REPOSITORIES } from "../../diet/ioc/DietTypes";
 import { IDietRepository } from "../../diet/repository/IDietRepository";
 import { IDiet } from "../../diet/model/Diet";
@@ -24,7 +24,7 @@ export class DietOrderService {
     const diet: IDiet = await this._dietRepository.getOneById(dietId);
     const kcalOption = KcalOptions.find((kcalObj) => kcalObj.value == kcal);
     if (!kcalOption) {
-      throw new BadRequestError("Wrong kcal value provided");
+      throw new UserInputError("Wrong kcal value provided");
     }
     return nrOfDays * (diet.dailyCost + kcalOption.extraCost);
   }
@@ -37,7 +37,7 @@ export class DietOrderService {
     return await this._dietOrderRepository.getMany();
   }
 
-  public async postDietOrder(dietOrderParams: IDietOrder, userId: string) {
+  public async addDietOrder(dietOrderParams: IDietOrder, userId: string) {
     dietOrderParams.cost = await this.getDietOrderCost(
       dietOrderParams.dates.length,
       dietOrderParams.kcal,
@@ -47,7 +47,7 @@ export class DietOrderService {
     return await this._dietOrderRepository.insertOne(dietOrderParams);
   }
 
-  public async putDietOrder(id: string, dietOrderParams: IDietOrder) {
+  public async updateDietOrder(id: string, dietOrderParams: IDietOrder) {
     const dietOrderToModify: IDietOrder = await this._dietOrderRepository.getOne(
       {
         _id: id
@@ -62,6 +62,6 @@ export class DietOrderService {
       );
       return updated;
     }
-    throw new BadRequestError();
+    throw new UserInputError("Wrong diet order id");
   }
 }

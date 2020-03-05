@@ -1,0 +1,6 @@
+# import DietOrder from 'type.gql'
+type Query {
+    dietOrders: [DietOrder!]!
+    allDietOrders: [DietOrder!]!
+    dietOrderCost(dietId: String!, dates: [String!]!, kcal: Int!): Int!
+}

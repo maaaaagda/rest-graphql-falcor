@@ -7,8 +7,8 @@ export interface IDietOrder extends Document, Entity {
   dietId: string;
   customerId: string;
   dates: string[];
+  cost?: number;
   kcal: number;
-  cost: number;
   deliveryAddress: string;
   deliveryTime: string;
   status: OrderStatus;

@@ -4,3 +4,4 @@
 # import * from "../api/product/graphql/schema.gql"
 # import * from "../api/meal/graphql/schema.gql"
 # import * from "../api/dailyDiet/graphql/schema.gql"
+# import * from "../api/dietOrder/graphql/schema.gql"

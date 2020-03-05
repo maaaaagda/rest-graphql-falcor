@@ -1,0 +1,28 @@
+type DietOrder {
+  _id: ID!
+  dietId: ID!
+  customerId: ID
+  kcal: Int!
+  dates: [String!]
+  deliveryAddress: String
+  deliveryTime: String
+  status: OrderStatus
+  cost: Float!
+}
+
+input DietOrderInput {
+  dietId: ID!
+  customerId: ID
+  kcal: Int!
+  dates: [String!]
+  deliveryAddress: String
+  deliveryTime: String
+  status: OrderStatus
+}
+
+enum OrderStatus {
+  paid
+  in_realisation
+  cancelled
+  waiting_for_payment
+}

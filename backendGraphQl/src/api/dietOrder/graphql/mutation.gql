@@ -1,0 +1,5 @@
+# import DietOrder, DietOrderInput from 'type.gql'
+type Mutation {
+  addDietOrder(diet: DietOrderInput!): DietOrder
+  updateDietOrder(id: String!, dietOrder: DietOrderInput!): DietOrder
+} 

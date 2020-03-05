@@ -1,4 +1,4 @@
-import { Query } from "./../../../frontend/src/rest/query";
+import { DietOrderResolvers } from "./../api/dietOrder/graphql/resolver";
 import { UserResolvers } from "../api/user/graphql/resolver";
 import { AuthResolvers } from "../api/auth/graphql/resolver";
 import { IResolvers } from "graphql-tools";
@@ -14,7 +14,8 @@ const resolverMap: IResolvers = {
     ...DietResolvers.Query,
     ...ProductResolvers.Query,
     ...MealResolvers.Query,
-    ...DailyDietResolvers.Query
+    ...DailyDietResolvers.Query,
+    ...DietOrderResolvers.Query
   },
   Mutation: {
     ...UserResolvers.Mutation,
@@ -22,7 +23,8 @@ const resolverMap: IResolvers = {
     ...DietResolvers.Mutation,
     ...ProductResolvers.Mutation,
     ...MealResolvers.Mutation,
-    ...DailyDietResolvers.Mutation
+    ...DailyDietResolvers.Mutation,
+    ...DietOrderResolvers.Mutation
   }
 };
 export default resolverMap;
