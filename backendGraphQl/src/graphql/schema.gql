@@ -1,0 +1,7 @@
+# import * from "../api/user/graphql/schema.gql"
+# import * from "../api/auth/graphql/schema.gql"
+# import * from "../api/diet/graphql/schema.gql"
+# import * from "../api/product/graphql/schema.gql"
+# import * from "../api/meal/graphql/schema.gql"
+# import * from "../api/dailyDiet/graphql/schema.gql"
+# import * from "../api/dietOrder/graphql/schema.gql"

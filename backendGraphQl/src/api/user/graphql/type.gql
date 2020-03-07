@@ -1,0 +1,37 @@
+type User {
+    _id: ID!
+    name: String!
+    email: String!
+    role: UserRole!
+    verification: String
+    verified: Boolean
+    phone: String
+    city: String
+    country: String
+    urlTwitter: String
+    urlGitHub: String
+    loginAttempts: Int
+    blockExpires: String
+  }
+
+input AddUser {
+    name: String!
+    email: String!
+    role: UserRole!
+    password: String!
+    verification: String
+    verified: Boolean
+    phone: String
+    city: String
+    country: String
+    urlTwitter: String
+    urlGitHub: String
+    loginAttempts: Int
+    blockExpires: String
+}
+
+enum UserRole {
+  user
+  admin
+  dietitian
+}

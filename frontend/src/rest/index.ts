@@ -1,6 +1,0 @@
-export * from './dietsQuery'
-export * from './mealsQuery'
-export * from './loginMutation'
-export * from './mealMutation'
-export * from './productsQuery'
-export * from './dietOderMutation'

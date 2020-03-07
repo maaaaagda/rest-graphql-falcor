@@ -1,6 +1,4 @@
 export const USER_TYPES: any = {
-    IPostUserController: Symbol.for("IPostUserController"),
-    IGetUserController: Symbol.for("IGetUserController"),
     IUserService: Symbol.for("IUserService")
 };
 

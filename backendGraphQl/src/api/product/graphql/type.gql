@@ -1,0 +1,28 @@
+type Product implements NutritionValues {
+  _id: ID!
+  name: String!
+  photo: String
+  kcal: Float
+  protein: Float
+  carbohydrate: Float
+  fat: Float
+  fibre: Float
+}
+
+input ModifyProduct {
+  name: String!
+  photo: String!
+  kcal: Float
+  protein: Float
+  carbohydrate: Float
+  fat: Float
+  fibre: Float
+}
+
+interface NutritionValues {
+  kcal: Float
+  protein: Float
+  carbohydrate: Float
+  fat: Float
+  fibre: Float
+}

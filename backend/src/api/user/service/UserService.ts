@@ -1,3 +1,4 @@
+import { IUserService } from "./IUserService";
 import { inject, injectable } from "inversify";
 import { USER_REPOSITORIES } from "../ioc/UserTypes";
 import { IUserRepository } from "../repository/IUserRepository";
@@ -7,7 +8,7 @@ import { TYPES } from "../../../ioc/types";
 import { IAuthenticator } from "../../../core/auth/IAuthenticator";
 
 @injectable()
-export class UserService {
+export class UserService implements IUserService {
   @inject(USER_REPOSITORIES.IUserRepository)
   private readonly _userRepository: IUserRepository;
 

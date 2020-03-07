@@ -1,0 +1,5 @@
+# import Meal, ModifyMeal from 'type.gql'
+type Mutation {
+  addMeal(meal: ModifyMeal!): Meal
+  updateMeal(id: String!, meal: ModifyMeal!): Meal
+} 

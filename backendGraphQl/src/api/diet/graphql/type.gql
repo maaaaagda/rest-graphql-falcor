@@ -1,0 +1,17 @@
+type Diet {
+  _id: ID!
+  name: String!
+  dailyCost: Float!
+  photoUrl: String
+}
+
+input ModifyDiet {
+  name: String!
+  dailyCost: Float!
+  photoUrl: String
+}
+
+type KcalOption {
+  value: Float!
+  extraCost: Float!
+}

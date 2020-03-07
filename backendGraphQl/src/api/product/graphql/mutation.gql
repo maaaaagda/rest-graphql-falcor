@@ -1,0 +1,5 @@
+# import Product, ModifyProduct from 'type.gql'
+type Mutation {
+  addProduct(product: ModifyProduct!): Product
+  updateProduct(id: String!, product: ModifyProduct!): Product
+} 

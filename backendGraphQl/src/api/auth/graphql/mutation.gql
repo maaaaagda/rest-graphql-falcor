@@ -1,0 +1,4 @@
+# import { LoginPayload } from 'type.gql'
+type Mutation {
+  login(email: String!, password: String!): LoginPayload!
+} 

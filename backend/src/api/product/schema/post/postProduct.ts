@@ -18,4 +18,4 @@ export const productPostSchema: Joi.Schema = Joi.object().keys({
     .min(0)
     .required(),
   photo: Joi.string()
-})
+});
