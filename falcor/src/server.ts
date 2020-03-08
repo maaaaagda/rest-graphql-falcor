@@ -13,6 +13,7 @@ import { createServer, Server } from "http";
 import { Application } from "express";
 import falcorExpress from "falcor-express";
 import Router from "falcor-router";
+import { routes } from "./falcor/routes"
 
 const app: Application = express();
 async function bootstrap(): Promise<void> {
@@ -31,15 +32,7 @@ async function bootstrap(): Promise<void> {
   app.use(bodyParser.urlencoded());
   app.use(errorHandler.handle());
   app.use("/model.json", falcorExpress.dataSourceRoute(function(req, res) {
-    return new Router([
-      {
-        route: "greeting[\"name\", \"age\"]",
-        get(pathSet) {
-          return pathSet[1].map(function(key) {
-                      return { path: ["greeting", key], value: {name: "falcor_user", age: 2}[key] };
-                  });
-                }
-      }]);
+    return new Router(routes);
     }));
 
   process

@@ -23,6 +23,7 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "falcor": "^2.2.0",
     "falcor-express": "^0.1.4",
     "falcor-router": "^0.8.3",
     "helmet": "^3.21.2",

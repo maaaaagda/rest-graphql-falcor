@@ -27,9 +27,9 @@ export class UserController {
     @inject(TYPES.IValidator)
     private readonly _validator: IValidator = this._container.get(TYPES.IValidator);
 
-    public readonly getUsers = async (parent, args, ctx: Context, info): Promise<IUser[]> => {
-        this._authenticator.authenticate(ctx.token);
-        const users: IUser[] = await this._userService.getUsers();
+    public readonly getUsers = async (): Promise<IUser[]> => {
+      //this._authenticator.authenticate(ctx.token);  
+      const users: IUser[] = await this._userService.getUsers();
         return users;
     }
 
