@@ -1,4 +1,4 @@
-import { AuthenticationError } from './../error/AuthenticationError';
+import { AuthenticationError } from "./../error/AuthenticationError";
 import { inject, injectable } from "inversify";
 import jwt from "jsonwebtoken";
 import { UserRole } from "../../api/user/model/UserRole";

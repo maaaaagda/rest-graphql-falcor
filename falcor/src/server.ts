@@ -11,8 +11,8 @@ import getContainer from "./ioc/inversify.config";
 import { TYPES } from "./ioc/types";
 import { createServer, Server } from "http";
 import { Application } from "express";
-import falcorExpress from 'falcor-express';
-import Router from 'falcor-router';
+import falcorExpress from "falcor-express";
+import Router from "falcor-router";
 
 const app: Application = express();
 async function bootstrap(): Promise<void> {
@@ -30,16 +30,16 @@ async function bootstrap(): Promise<void> {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded());
   app.use(errorHandler.handle());
-  app.use('/model.json', falcorExpress.dataSourceRoute(function (req, res) {
+  app.use("/model.json", falcorExpress.dataSourceRoute(function(req, res) {
     return new Router([
       {
-        route: 'greeting["name", "age"]',
-        get: function(pathSet) {
+        route: "greeting[\"name\", \"age\"]",
+        get(pathSet) {
           return pathSet[1].map(function(key) {
-                      return { path: ["greeting", key], value: {"name": "falcor_user", "age": 2}[key] };
+                      return { path: ["greeting", key], value: {name: "falcor_user", age: 2}[key] };
                   });
                 }
-      }])
+      }]);
     }));
 
   process

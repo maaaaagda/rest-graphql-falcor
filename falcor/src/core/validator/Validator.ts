@@ -1,4 +1,4 @@
-import { BadRequestError } from './../error/BadRequestError';
+import { BadRequestError } from "./../error/BadRequestError";
 import { injectable } from "inversify";
 import Joi, { ValidationResult } from "@hapi/joi";
 import { IValidator } from "./IValidator";
