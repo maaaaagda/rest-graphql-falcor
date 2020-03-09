@@ -13,7 +13,7 @@ import { createServer, Server } from "http";
 import { Application } from "express";
 import falcorExpress from "falcor-express";
 import Router from "falcor-router";
-import { routes } from "./falcor/routes"
+import { routes } from "./falcor/routes";
 
 const app: Application = express();
 async function bootstrap(): Promise<void> {
