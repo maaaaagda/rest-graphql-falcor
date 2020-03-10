@@ -6,16 +6,30 @@ export const userRoutes = [
   {
     route: "users[{keys:ids}][\"name\", \"email\", \"role\"]",
     get: async (pathSet) => {
-      const allUsers = await userController.getUsers();
-      const users = {};
+      const users = await userController.getUsers();
+      const usersRoute = {};
       pathSet.ids.forEach((id) => {
-        const user = allUsers.find((user) => user._id == id);
-        users[id] = {};
+        const user = users.find((user) => user._id == id);
+        usersRoute[id] = {};
         pathSet[2].forEach((key) => {
-          users[id][key] = user[key];
+          usersRoute[id][key] = user[key];
         });
       });
-      return { jsonGraph: {users} };    
+      return { jsonGraph: {users: usersRoute} };    
+    }
+  },
+  {
+    route: "users[{ranges:indexRanges}][\"name\", \"email\", \"role\"]",
+    get: async (pathSet) => {
+      const users = (await userController.getUsers()).slice(0, pathSet.indexRanges[0].to + 1);
+      const usersRoute = {};
+      users.forEach((user, i) => {
+        usersRoute[i] = {};
+        pathSet[2].forEach((key) => {
+          usersRoute[i][key] = user[key];
+        });
+      });
+      return { jsonGraph: {users: usersRoute} };
     }
   },
   {
@@ -28,4 +42,3 @@ export const userRoutes = [
             }
   }
 ];
-
