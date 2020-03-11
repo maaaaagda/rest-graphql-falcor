@@ -1,15 +1,16 @@
+import { IUser } from "./../model/User";
 import { UserController } from "../controller/UserController";
 
 const userController = new UserController();
 
-export const userRoutes = [
+export const userRoutes: any = [
   {
     route: "users[{keys:ids}][\"name\", \"email\", \"role\"]",
     get: async (pathSet) => {
-      const users = await userController.getUsers();
-      const usersRoute = {};
+      const users: IUser[] = await userController.getUsers();
+      const usersRoute: object = {};
       pathSet.ids.forEach((id) => {
-        const user = users.find((user) => user._id == id);
+        const user: IUser = users.find((user) => user._id == id);
         usersRoute[id] = {};
         pathSet[2].forEach((key) => {
           usersRoute[id][key] = user[key];
@@ -35,10 +36,19 @@ export const userRoutes = [
   {
     route: "user[\"name\", \"email\", \"role\"]",
     get: async (pathSet) => {
-      const user = (await userController.getUsers())[0];
-      return pathSet[1].map(function(key) {
-                  return { path: ["user", key], value: user[key]};
-              });
-            }
+      const user: IUser = (await userController.getUsers())[0];
+      return pathSet[1].map((key) => {
+            return { path: ["user", key], value: user[key]};
+        });
+      }
+  },
+  {
+    route: "user.add",
+    call: async (callPath, args, pathSet, paths) => {
+      const user: IUser = await userController.addUser(args[0]);
+      return pathSet.map((key) => {
+            return { path: ["user", key], value: user[key]};
+        });
+      }
   }
 ];

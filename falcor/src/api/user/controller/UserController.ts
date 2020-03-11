@@ -33,10 +33,10 @@ export class UserController {
       return users;
     }
 
-    public readonly addUserr = async (parent, args: { user: IUser }, ctx: Context, info): Promise<IUser[]> => {
-        this._authenticator.authenticate(ctx.token);
-        this._validator.validate(args.user, userAddSchema);
-        const user: IUser = await this._userService.addUser(args.user);
-        return;
+    public readonly addUser = async (userData: IUser): Promise<IUser> => {
+        // this._authenticator.authenticate(ctx.token);
+        this._validator.validate(userData, userAddSchema);
+        const user: IUser = await this._userService.addUser(userData);
+        return user;
     }
 }
