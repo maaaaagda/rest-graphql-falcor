@@ -22,8 +22,8 @@ export const userRoutes: any = [
   {
     route: "users[{ranges:indexRanges}][\"name\", \"email\", \"role\"]",
     get: async (pathSet) => {
-      const users = (await userController.getUsers()).slice(0, pathSet.indexRanges[0].to + 1);
-      const usersRoute = {};
+      const users: IUser[] = (await userController.getUsers()).slice(0, pathSet.indexRanges[0].to + 1);
+      const usersRoute: object = {};
       users.forEach((user, i) => {
         usersRoute[i] = {};
         pathSet[2].forEach((key) => {
