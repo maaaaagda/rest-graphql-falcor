@@ -17,12 +17,24 @@ export const productRoutes: any = [
         return pathsToReturn;
         }
   }, {
-    route: "product.add",
-    call: async (callPath, args, pathSet, paths) => {
-      const product: IProduct = await productController.addProduct(args);
-      return pathSet.map((key) => {
-            return { path: ["product", key], value: product[key]};
-        });
-      }
-  }
+        route: "product.add",
+        call: async (callPath, args, pathSet, paths) => {
+        const product: IProduct = await productController.addProduct(args);
+        return pathSet.map((key) => {
+                return { path: ["product", key], value: product[key]};
+            });
+        }
+    },
+    {
+        route: "productsById[{keys:ids}][{keys:fields}]",
+        set: async (jsonGraph) => {
+            const productIdToUpdate: string = Object.keys(jsonGraph.productsById)[0];
+            const productToUpdate: IProduct = jsonGraph.productsById[productIdToUpdate];
+            productController.updateProduct(productIdToUpdate, productToUpdate);
+
+            return Object.keys((productToUpdate)).map((key) => {
+                return { path: ["productsById", productIdToUpdate, key], value: productToUpdate[key]};
+            });
+        }
+    }
 ];
