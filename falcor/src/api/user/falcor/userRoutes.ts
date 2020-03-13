@@ -45,7 +45,7 @@ export const userRoutes: any = [
   {
     route: "user.add",
     call: async (callPath, args, pathSet, paths) => {
-      const user: IUser = await userController.addUser(args[0]);
+      const user: IUser = await userController.addUser(args);
       return pathSet.map((key) => {
             return { path: ["user", key], value: user[key]};
         });

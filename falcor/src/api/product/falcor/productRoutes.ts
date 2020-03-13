@@ -15,5 +15,14 @@ export const productRoutes: any = [
             });
         });
         return pathsToReturn;
-    }
-}];
+        }
+  }, {
+    route: "product.add",
+    call: async (callPath, args, pathSet, paths) => {
+      const product: IProduct = await productController.addProduct(args);
+      return pathSet.map((key) => {
+            return { path: ["product", key], value: product[key]};
+        });
+      }
+  }
+];
