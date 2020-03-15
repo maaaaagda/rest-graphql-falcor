@@ -16,7 +16,7 @@ export const productRoutes: any = [
         });
         return pathsToReturn;
         }
-  }, {
+    }, {
         route: "product.add",
         call: async (callPath, args, pathSet, paths) => {
         const product: IProduct = await productController.addProduct(args);
@@ -26,14 +26,24 @@ export const productRoutes: any = [
         }
     },
     {
+        route: "product.update",
+        call: async (callPath, args, pathSet, paths) => {
+        const {id, ...product} = args;
+        const updatedProduct: IProduct = await productController.updateProduct(id, product);
+        return pathSet.map((key) => {
+                return { path: ["product", key], value: updatedProduct[key]};
+            });
+        }
+    },
+    {
         route: "productsById[{keys:ids}][{keys:fields}]",
         set: async (jsonGraph) => {
             const productIdToUpdate: string = Object.keys(jsonGraph.productsById)[0];
             const productToUpdate: IProduct = jsonGraph.productsById[productIdToUpdate];
-            productController.updateProduct(productIdToUpdate, productToUpdate);
+            const updatedProduct: IProduct = await productController.updateProduct(productIdToUpdate, productToUpdate);
 
             return Object.keys((productToUpdate)).map((key) => {
-                return { path: ["productsById", productIdToUpdate, key], value: productToUpdate[key]};
+                return { path: ["productsById", productIdToUpdate, key], value: updatedProduct[key]};
             });
         }
     }
