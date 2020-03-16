@@ -12,7 +12,7 @@ import { TYPES } from "./ioc/types";
 import { createServer, Server } from "http";
 import { Application } from "express";
 import falcorExpress from "falcor-express";
-import CustomisedRouter from "./falcor/CustomisedRouter"
+import CustomisedRouter from "./falcor/CustomisedRouter";
 
 const app: Application = express();
 async function bootstrap(): Promise<void> {

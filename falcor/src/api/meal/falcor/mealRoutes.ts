@@ -45,15 +45,15 @@ export const mealRoutes: any = [
           return { jsonGraph: { meals: mealRoute } };    
         }
       },
-    // {
-    //     route: "meal.add",
-    //     call: async (callPath, args, pathSet, paths) => {
-    //     const meal: IMeal = await mealController.addMeal(args);
-    //     return pathSet.map((key) => {
-    //             return { path: ["meal", key], value: meal[key]};
-    //         });
-    //     }
-    // },
+    {
+        route: "meal.add",
+        async call(callPath, args, pathSet, paths) {
+        const meal: IMeal = await mealController.addMeal(args, this.token);
+        return pathSet.map((key) => {
+                return { path: ["meal", key], value: meal[key]};
+            });
+        }
+    },
     {
         route: "meal.update",
         call: async (callPath, args, pathSet, paths) => {

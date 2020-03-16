@@ -37,12 +37,12 @@ export class MealController {
     return meal;
   }
   
-  // public readonly addMeal = async ( meal: IMeal ): Promise<IMeal> => {
-  //   const { userId } = this._authenticator.authenticate(ctx.token, UserRole.DIETITIAN);
-  //   this._validator.validate(meal, mealAddSchema);
-  //   const meal: IMeal = await this._mealService.addMeal(args.meal, userId);
-  //   return meal;
-  // }
+  public readonly addMeal = async ( mealData: IMeal, authToken: string ): Promise<IMeal> => {
+    const { userId } = this._authenticator.authenticate(authToken, UserRole.DIETITIAN);
+    this._validator.validate(mealData, mealAddSchema);
+    const meal: IMeal = await this._mealService.addMeal(mealData, userId);
+    return meal;
+  }
 
   public readonly updateMeal = async ( id: string, meal: IMeal ): Promise<IMeal> => {
     // this._authenticator.authenticate(
