@@ -12,8 +12,7 @@ import { TYPES } from "./ioc/types";
 import { createServer, Server } from "http";
 import { Application } from "express";
 import falcorExpress from "falcor-express";
-import Router from "falcor-router";
-import { routes } from "./falcor/routes";
+import CustomisedRouter from "./falcor/CustomisedRouter"
 
 const app: Application = express();
 async function bootstrap(): Promise<void> {
@@ -31,8 +30,8 @@ async function bootstrap(): Promise<void> {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded());
   app.use(errorHandler.handle());
-  app.use("/model.json", falcorExpress.dataSourceRoute(function(req, res) {
-    return new Router(routes);
+  app.use("/model.json", falcorExpress.dataSourceRoute((req, res) => {
+    return new CustomisedRouter(req.headers.authorization);
     }));
 
   process
