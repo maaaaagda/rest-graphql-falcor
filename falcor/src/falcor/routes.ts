@@ -4,6 +4,7 @@ import { mealRoutes } from "../api/meal/falcor/mealRoutes";
 import { authRoutes } from "./../api/auth/falcor/authRoutes";
 import { dietRoutes } from "../api/diet/falcor/dietRoutes";
 import { dailyDietRoutes } from "../api/dailyDiet/falcor/dailyDietRoutes";
+import { dietOrderRoutes } from "../api/dietOrder/falcor/dietOrderRoutes";
 
 export const routes: object[] = [
     ...userRoutes,
@@ -11,5 +12,6 @@ export const routes: object[] = [
     ...mealRoutes,
     ...authRoutes,
     ...dietRoutes,
-    ...dailyDietRoutes
+    ...dailyDietRoutes,
+    ...dietOrderRoutes
 ];
