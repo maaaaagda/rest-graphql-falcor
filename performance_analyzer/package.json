@@ -3,19 +3,16 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "start": "ts-node ./seed_database/rest/seed.ts",
+        "start": "ts-node ./seed_database/seed.ts",
         "lint": "tslint -c ./tslint.json --project ./tsconfig.json",
         "lint:fix": "tslint -c ./tslint.json --project ./tsconfig.json --fix"
     },
     "dependencies": {
-        "axios": "^0.19.0",
         "faker": "^4.1.0",
+        "got": "^10.6.0",
         "ts-node": "^8.4.1",
         "tslib": "^1.9.3",
         "tslint": "^5.20.0",
         "typescript": "^3.6.4"
-    },
-    "devDependencies": {
-        "@types/axios": "^0.14.0"
     }
 }
