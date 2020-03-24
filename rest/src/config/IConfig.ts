@@ -6,4 +6,5 @@ export interface IConfig {
     PRODUCT_INTEGRATIONS_URL: string;
 
     loadConfiguration(): void;
+    isDev(): boolean;
 }

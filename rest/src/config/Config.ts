@@ -10,6 +10,7 @@ export class Config implements IConfig {
   public API_PREFIX: string;
   public API_PATH: string;
   public PRODUCT_INTEGRATIONS_URL: string;
+  public NODE_DEV: string;
 
   private readonly requiredEnvs: string[];
 
@@ -37,5 +38,10 @@ export class Config implements IConfig {
     this.API_PREFIX = "api";
     this.API_PATH = `/${this.API_PREFIX}/`;
     this.PRODUCT_INTEGRATIONS_URL = process.env.PRODUCT_INTEGRATIONS_URL || "http://localhost:9001/api/products";
+    this.NODE_DEV = process.env.NODE_DEV || "dev";
+  }
+
+  public isDev(): boolean {
+    return this.NODE_DEV === "dev";
   }
 }
