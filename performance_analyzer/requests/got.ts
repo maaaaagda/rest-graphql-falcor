@@ -1,5 +1,5 @@
 
-const got = require('got');
+const got = require("got");
 
 export default got.extend({
     headers: {
