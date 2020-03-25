@@ -3,7 +3,10 @@ export interface IConfig {
     DB_URL: string;
     JWT_SECRET: string;
     API_PREFIX: string;
-    PRODUCT_INTEGRATIONS_URL: string;
+    PRODUCT_INTEGRATION_DATA: {
+        appId: string,
+        appKey: string
+      };
 
     loadConfiguration(): void;
     isDev(): boolean;

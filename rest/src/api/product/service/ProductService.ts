@@ -4,8 +4,6 @@ import { IProductRepository } from "../repository/IProductRepository";
 import { IProduct } from "../model/Product";
 import { BadRequestError } from "../../../core/error/BadRequestError";
 import _ from "lodash";
-import { IExternalProviderProduct } from "../model/IExternalProviderProduct";
-import Axios from "axios";
 import { TYPES } from "../../../ioc/types";
 import { IConfig } from "../../../config/IConfig";
 
@@ -46,14 +44,12 @@ export class ProductService {
     throw new BadRequestError();
   }
 
-  public async seedProducts(
-    appId: string,
-    appKey: string
-  ): Promise<IProduct[]> {
+  public async seedProducts(nrOfProducts: number): Promise<IProduct[]> {
     let products: IProduct[] = [];
+    const nrOfProductsToSeed: number = nrOfProducts || NR_OF_PRODUCTS_TO_SEED;
     const offset: number = 40;
     let nrOfProductsFetched: number = 0;
-    while (nrOfProductsFetched < NR_OF_PRODUCTS_TO_SEED) {
+    while (nrOfProductsFetched < nrOfProductsToSeed) {
       const requestParams: any = {
         uri: "https://api.edamam.com/api/food-database/parser",
         qs: {
@@ -61,8 +57,8 @@ export class ProductService {
           ingr: "*",
           category: "generic-foods",
           categoryLabel: "food",
-          app_id: appId,
-          app_key: appKey
+          app_id: this._config.PRODUCT_INTEGRATION_DATA.appId,
+          app_key: this._config.PRODUCT_INTEGRATION_DATA.appKey
         },
         json: true
       };
@@ -83,34 +79,6 @@ export class ProductService {
       _.uniq(products, "label")
     );
     return await this._productRepository.insertMany(productsToSave);
-  }
-
-  public async searchForProduct(
-    productName: string
-  ): Promise<IExternalProviderProduct[]> {
-    // inject httpRequester in real world, handle exceptions
-    const {
-      data: { message }
-    } = await Axios.get(this._config.PRODUCT_INTEGRATIONS_URL, {
-      params: { name: productName }
-    });
-    const responses: IExternalProviderProduct[] = message;
-
-    for (const response of responses) {
-      if (!this._productRepository.getOneByName(response.name)) {
-        await this._productRepository.insertOne({
-          name: response.name,
-          photo: response.photo,
-          kcal: response.kcal,
-          protein: response.protein,
-          carbohydrate: response.carbohydrate,
-          fat: response.fat,
-          fibre: response.fibre
-        } as any);
-      }
-    }
-
-    return responses;
   }
 
   private getProductsInDBSchape(products: any): IProduct[] {
