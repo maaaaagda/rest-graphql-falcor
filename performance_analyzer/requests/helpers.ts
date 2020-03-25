@@ -12,7 +12,7 @@ export const initialMetricsResponse: MetricsResponse = {
     data: null
 };
 
-export const recalculateMetrics = (metrics, res) => {
+export const recalculateMetrics = (metrics, res, withResponseData = false) => {
     const { size, timings } = metrics;
     return {
         timings: {
@@ -23,6 +23,6 @@ export const recalculateMetrics = (metrics, res) => {
             total: timings.total + res.timings.phases.total
         },
         size: size + res.body.length,
-        data: null
+        data: withResponseData ? JSON.parse(res.body).message : null
     };
 };
