@@ -22,18 +22,9 @@ export const addDiets = async (nrOfDiets = 10): Promise<MetricsResponse> => {
     return metrics;
 };
 
-export const getAllDiets = async (token: string): Promise<MetricsResponse> => {
+export const getAllDiets = async (): Promise<MetricsResponse> => {
     const options = {
-        url: API_URL + "diets",
-        headers: {
-        ...got.defaults.options.headers,
-        authorization: `Bearer ${token}`
-        }
+        url: API_URL + "diets"
     };
-    const res = await got(options);
-    return {
-        timings: res.timings.phases,
-        size: res.body.length,
-        data: JSON.parse(res.body)
-    };
+    return recalculateMetrics(initialMetricsResponse, await got(options), true);
 };

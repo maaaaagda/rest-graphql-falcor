@@ -1,4 +1,4 @@
-import { getProducts } from './products';
+import { getProducts } from "./products";
 import { generateRandomMeal } from "./../../generate_data/meals";
 import { initialMetricsResponse, recalculateMetrics } from "./../helpers";
 import { API_URL } from "../../common";
@@ -23,7 +23,8 @@ export const addMeals = async (nrOfMeals = 10): Promise<MetricsResponse> => {
     return metrics;
 };
 
-export const getMealById = async (id: string = "461e7160-6ece-11ea-b427-41db59987f93") => {
+export const getMealById = async (id: string = "461e7160-6ece-11ea-b427-41db59987f93")
+: Promise<MetricsResponse> => {
     const options = {
         url: `${API_URL}meals/${id}`
     };
@@ -31,4 +32,11 @@ export const getMealById = async (id: string = "461e7160-6ece-11ea-b427-41db5998
     metrics = recalculateMetrics(metrics, await got(options), true);
   
     return metrics;
+};
+
+export const getMeals = async (): Promise<MetricsResponse> => {
+    const options = {
+        url: `${API_URL}meals`
+    };
+    return recalculateMetrics(initialMetricsResponse, await got(options), true);
 };
