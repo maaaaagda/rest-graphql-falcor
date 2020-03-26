@@ -31,6 +31,15 @@ export const addDailyDiets = async (nrOfDietDays: number) => {
     return metrics;
 };
 
+export const getDailyDiet = async (date: string, dietId: string) => {
+    const options = {
+        url: `${API_URL}daily-diets?date=${date}&dietId=${dietId}`
+    };
+    let metrics = initialMetricsResponse;
+    metrics = recalculateMetrics(metrics, await got(options), true);
+    return metrics;
+};
+
 function *nextDateGenerator() {
     let currentDateMs = new Date().getTime();
     while (true) {
