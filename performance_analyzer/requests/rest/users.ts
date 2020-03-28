@@ -3,6 +3,7 @@ import { API_URL } from "../../common";
 import got from "../got";
 import { generateRandomUser, generateTestUser } from "../../generate_data/users";
 import { MetricsResponse } from "../../types/Response";
+import { Options } from "got";
 
 export const addUsers = async ({ nrOfUsers = 10, nrOfAdmins = 1, nrOfDietitians = 1, insertTestUser = false} = {})
 : Promise<MetricsResponse> => {
@@ -39,18 +40,15 @@ export const addUsers = async ({ nrOfUsers = 10, nrOfAdmins = 1, nrOfDietitians 
     return metrics;
 };
 
-export const getAllUsers = async (token: string): Promise<MetricsResponse> => {
-    const options = {
-        url: API_URL + "users",
-        headers: {
+export const getAllUsers = async (token?: string): Promise<MetricsResponse> => {
+    const options: Options = {
+        url: API_URL + "users"
+    };
+    if (token) {
+        options.headers = {
         ...got.defaults.options.headers,
         authorization: `Bearer ${token}`
-        }
-    };
-    const res = await got(options);
-    return {
-        timings: res.timings.phases,
-        size: res.body.length,
-        data: JSON.parse(res.body)
-    };
+        };
+    }
+    return recalculateMetrics(initialMetricsResponse, await got(options), true);
 };

@@ -28,3 +28,10 @@ export const getAllDiets = async (): Promise<MetricsResponse> => {
     };
     return recalculateMetrics(initialMetricsResponse, await got(options), true);
 };
+
+export const getKcalOptions = async () => {
+    const options = {
+        url: API_URL + "diets/kcal-options"
+    };
+    return recalculateMetrics(initialMetricsResponse, await got(options), true);
+};

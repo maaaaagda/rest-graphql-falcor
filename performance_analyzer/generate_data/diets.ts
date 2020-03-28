@@ -11,6 +11,6 @@ export const generateRandomDiet = () => {
     };
 };
 
-function getRandomDietPrice() {
+const getRandomDietPrice = () => {
     return (Math.random() * (MIN_DIET_COST - MAX_DIET_COST) + MAX_DIET_COST).toPrecision(4);
-}
+};
