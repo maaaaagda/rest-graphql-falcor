@@ -1,3 +1,4 @@
+import { MetricsResponse } from './../../types/Response';
 import { generateRandomDietOrder } from "./../../generate_data/dietOrder";
 import { getAllUsers } from "./users";
 import { getKcalOptions, getAllDiets } from "./diets";
@@ -28,4 +29,22 @@ export const addDietOrders = async () => {
     }
   
     return metrics;
+};
+
+export const getAllDietOrders = async (): Promise<MetricsResponse> => {
+    const options = {
+        url: API_URL + "diet-orders/all"
+    };
+    return recalculateMetrics(initialMetricsResponse, await got(options), true);
+};
+
+export const getDietOrders = async (token: string): Promise<MetricsResponse> => {
+    const options = {
+        url: API_URL + "diet-orders",
+        headers: {
+            ...got.defaults.options.headers,
+            authorization: `Bearer ${token}`
+        }
+    };
+    return recalculateMetrics(initialMetricsResponse, await got(options), true);
 };
