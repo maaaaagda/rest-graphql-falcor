@@ -56,27 +56,6 @@ export class ProductController implements interfaces.Controller {
     }
   }
 
-  @httpGet("/dynamic")
-  public async searchForProduct(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<Response> {
-    try {
-      if (!req.query.name) {
-        throw new BadRequestError("Please provide 'name' parameter");
-      }
-      const products: IExternalProviderProduct[] = await this._productService.searchForProduct(
-        req.query.name
-      );
-      return res.json(SuccessResponse.Ok(products));
-    } catch (error) {
-      return new Promise(() => {
-        next(error);
-      });
-    }
-  }
-
   @httpPost("/seed")
   public async seedProducts(
     req: Request,
@@ -85,7 +64,7 @@ export class ProductController implements interfaces.Controller {
   ): Promise<Response> {
     this._authenticator.authenticate(req.headers.authorization);
     req.setTimeout(300000);
-    await this._productService.seedProducts(req.query.appId, req.query.appKey);
+    await this._productService.seedProducts(req.query.nrOfProducts);
     return res.json(SuccessResponse.Created("Seeding completed"));
   }
 

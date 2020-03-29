@@ -2,6 +2,7 @@ import Joi from "@hapi/joi";
 import { OrderStatus } from "../../model/OrderStatus";
 
 export const dietOrderPostSchema: Joi.Schema = Joi.object().keys({
+  userId: Joi.string(),
   dietId: Joi.string().required(),
   dates: Joi.array().items(Joi.string()),
   deliveryAddress: Joi.string().required(),
