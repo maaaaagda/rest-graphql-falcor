@@ -1,4 +1,4 @@
-export interface MetricsResponse {
+export interface IMetricsResponse {
     timings: {
         wait: number,
         dns: number,

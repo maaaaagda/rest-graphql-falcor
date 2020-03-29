@@ -1,18 +1,18 @@
-import { addDietOrders } from "./../requests/rest/dietOrders";
-import { addDailyDiets } from "./../requests/rest/dailyDiets";
-import { addMeals } from "./../requests/rest/meals";
-import { addProducts } from "./../requests/rest/products";
-import { addDiets } from "./../requests/rest/diets";
-import { addUsers } from "../requests/rest/users";
+import { DietOrderRequests } from "./../requests/rest/DietOrderRequests";
+import { DailyDietRequests } from "./../requests/rest/DailyDietRequests";
+import { MealRequests } from "./../requests/rest/MealRequests";
+import { ProductRequests } from "./../requests/rest/ProductRequests";
+import { DietRequests } from "./../requests/rest/DietRequests";
+import { UserRequests } from "./../requests/rest/UserRequests";
 
 async function seed() {
     try {
-        await addUsers({nrOfUsers: 100, nrOfAdmins: 3, nrOfDietitians: 10, insertTestUser: true});
-        await addDiets(20);
-        await addProducts();
-        await addMeals(1000);
-        await addDailyDiets(30);
-        await addDietOrders();
+        await new UserRequests().addUsers({nrOfUsers: 100, nrOfAdmins: 3, nrOfDietitians: 10, insertTestUser: true});
+        await new DietRequests().addDiets(20);
+        await new ProductRequests().addProducts();
+        await new MealRequests().addMeals(1000);
+        await new DailyDietRequests().addDailyDiets(30);
+        await new DietOrderRequests().addDietOrders();
     } catch (err) {
         console.log(err);
         console.log(err?.response?.body);

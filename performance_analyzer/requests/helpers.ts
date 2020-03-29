@@ -1,6 +1,6 @@
-import { MetricsResponse } from "./../types/Response";
+import { IMetricsResponse } from "./../types/Response";
 
-export const initialMetricsResponse: MetricsResponse = {
+export const initialIMetricsResponse: IMetricsResponse = {
     size: 0,
     timings: {
         wait: 0,
