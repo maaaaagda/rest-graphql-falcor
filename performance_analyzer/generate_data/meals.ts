@@ -8,7 +8,7 @@ const MAX_NR_OF_INGREDIENTS = 10;
 
 export const generateRandomMeal = (productIds) => {
 
-    const ingredients = _.uniq(generateIngredients(productIds), "productId");
+    const ingredients = _.uniqBy(generateIngredients(productIds), "productId");
     return {
         name: capitalize(faker.lorem.words()),
         ingredients,

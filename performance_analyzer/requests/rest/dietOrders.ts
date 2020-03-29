@@ -6,7 +6,7 @@ import { initialMetricsResponse, recalculateMetrics } from "../helpers";
 import { API_URL } from "../../common";
 import got from "../got";
 
-const MAX_NR_OF_ORDERS_PER_PERSON = 3;
+const MAX_NR_OF_ORDERS_PER_PERSON = 5;
 
 export const addDietOrders = async () => {
     const options = {

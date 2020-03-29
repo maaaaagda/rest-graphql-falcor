@@ -76,7 +76,7 @@ export class ProductService {
       }
     }
     const productsToSave: IProduct[] = this.getProductsInDBSchape(
-      _.uniq(products, "label")
+      _.uniqBy(products, (product) => product.food.label)
     );
     return await this._productRepository.insertMany(productsToSave);
   }
