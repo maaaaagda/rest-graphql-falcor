@@ -29,6 +29,13 @@ export const getAllDiets = async (): Promise<MetricsResponse> => {
     return recalculateMetrics(initialMetricsResponse, await got(options), true);
 };
 
+export const getDietById = async (id: string): Promise<MetricsResponse> => {
+    const options = {
+        url: `${API_URL}diets/${id}`
+    };
+    return recalculateMetrics(initialMetricsResponse, await got(options), true);
+};
+
 export const getKcalOptions = async () => {
     const options = {
         url: API_URL + "diets/kcal-options"
