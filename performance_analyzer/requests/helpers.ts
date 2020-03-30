@@ -23,6 +23,6 @@ export const recalculateMetrics = (metrics, res, withResponseData = false) => {
             total: timings.total + res.timings.phases.total
         },
         size: size + res.body.length,
-        data: withResponseData ? JSON.parse(res.body).message : null
+        data: withResponseData ? JSON.parse(res.body) : null
     };
 };
