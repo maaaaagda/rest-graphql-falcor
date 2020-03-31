@@ -1,4 +1,4 @@
-import { IMetricsResponse } from "./../types/Response";
+import { IMetricsResponse } from "../types/IMetricsResponsee";
 
 export const initialIMetricsResponse: IMetricsResponse = {
     size: 0,

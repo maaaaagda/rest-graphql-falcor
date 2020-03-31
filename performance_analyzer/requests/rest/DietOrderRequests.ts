@@ -1,7 +1,7 @@
 import { UserRequests } from "./UserRequests";
 import { DietRequests } from "./DietRequests";
 import { IDietOrderRequests } from "../IDietOrderRequests";
-import { IMetricsResponse } from "../../types/Response";
+import { IMetricsResponse } from "../../types/IMetricsResponsee";
 import { generateRandomDietOrder } from "../../generate_data/dietOrder";
 import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
 import { API_URL } from "../../common";

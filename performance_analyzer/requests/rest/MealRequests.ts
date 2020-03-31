@@ -4,7 +4,7 @@ import { generateRandomMeal } from "../../generate_data/meals";
 import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
 import { API_URL } from "../../common";
 import got from "../got";
-import { IMetricsResponse } from "../../types/Response";
+import { IMetricsResponse } from "../../types/IMetricsResponsee";
 
 export class MealRequests implements IMealRequests {
     public addMeals = async (nrOfMeals = 10): Promise<IMetricsResponse> => {

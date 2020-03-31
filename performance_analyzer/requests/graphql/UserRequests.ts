@@ -1,11 +1,11 @@
 import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
 import { API_URL } from "../../common";
 import got from "../got";
-import { IMetricsResponse } from "../../types/Response";
+import { IMetricsResponse } from "../../types/IMetricsResponsee";
 import { Options } from "got";
 import { IUserRequests } from "../IUserRequests";
 
-export class UserRequests implements IUserRequests {
+export class GraphQLUserRequests implements IUserRequests {
 
     public getAllUsers = async (token?: string): Promise<IMetricsResponse> => {
         const query = `

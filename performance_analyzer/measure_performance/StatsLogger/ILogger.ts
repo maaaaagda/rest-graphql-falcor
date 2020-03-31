@@ -1,4 +1,4 @@
 export interface ILogger {
-    log(tool: string, collection: string, operation: string,
+    log(dbSize: string, tool: string, collection: string, operation: string,
         operationDetails: string, size: number, TTFB: number): void;
 }

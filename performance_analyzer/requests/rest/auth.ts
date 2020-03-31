@@ -1,5 +1,5 @@
 import { IAuthRequests } from "../IAuthRequests";
-import { IMetricsResponse } from "../../types/Response";
+import { IMetricsResponse } from "../../types/IMetricsResponsee";
 import { TEST_USER } from "../../common";
 import { API_URL } from "../../common";
 import got from "../got";

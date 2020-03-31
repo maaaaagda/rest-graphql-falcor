@@ -2,11 +2,11 @@ import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
 import { API_URL } from "../../common";
 import got from "../got";
 import { generateRandomUser, generateTestUser } from "../../generate_data/users";
-import { IMetricsResponse } from "../../types/Response";
+import { IMetricsResponse } from "../../types/IMetricsResponsee";
 import { Options } from "got";
 import { IUserRequests } from "../IUserRequests";
 
-export class UserRequests implements IUserRequests {
+export class RESTUserRequests implements IUserRequests {
     public addUsers = async ({ nrOfUsers = 10, nrOfAdmins = 1, nrOfDietitians = 1, insertTestUser = false} = {})
     : Promise<IMetricsResponse> => {
         let i: number = 0;

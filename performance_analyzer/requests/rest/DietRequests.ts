@@ -3,7 +3,7 @@ import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
 import { generateRandomDiet } from "../../generate_data/diets";
 import { API_URL } from "../../common";
 import got from "../got";
-import { IMetricsResponse } from "../../types/Response";
+import { IMetricsResponse } from "../../types/IMetricsResponsee";
 
 export class DietRequests implements IDietRequests {
     public addDiets = async (nrOfDiets = 10): Promise<IMetricsResponse> => {
