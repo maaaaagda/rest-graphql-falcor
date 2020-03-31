@@ -3,7 +3,7 @@ import { MealRequests } from "./MealRequests";
 import { IDailyDietRequests } from "../IDailyDietRequests";
 import { generateDailyDiet } from "../../generate_data/dailyDiets";
 import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
-import { API_URL } from "../../common"; ``;
+import { API_URL } from "../../common";
 import got from "../got";
 
 const NR_OF_MS_IN_A_DAY: number = 86400000;

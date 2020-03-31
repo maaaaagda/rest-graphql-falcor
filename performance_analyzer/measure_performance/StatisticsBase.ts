@@ -12,17 +12,17 @@ export abstract class StatisticsBase {
         this.dbSize = dbSize;
     }
     
-    public getStatistics(): void {
-        this.getRESTStatistics();
-        this.getGraphQLStatistics();
-        this.getFalcorStatistics();
+    public async getStatistics(): Promise<void> {
+       await this.getRESTStatistics();
+       await this.getGraphQLStatistics();
+       await this.getFalcorStatistics();
     }
 
-    protected abstract getRESTStatistics(): void;
-    protected abstract getGraphQLStatistics(): void;
-    protected abstract getFalcorStatistics(): void;
-    protected writeStatistics(tool: string, operation: string,
-                              operationDetails: string, statistics: IMetricsResponse) {
+    protected async abstract getRESTStatistics(): Promise<void>;
+    protected async abstract getGraphQLStatistics(): Promise<void>;
+    protected async abstract getFalcorStatistics(): Promise<void>;
+    protected async writeStatistics(tool: string, operation: string,
+                                    operationDetails: string, statistics: IMetricsResponse) {
         this.logger.log(
             this.dbSize, tool, "users", operation, operationDetails, statistics.size, statistics.timings.firstByte);
     }
