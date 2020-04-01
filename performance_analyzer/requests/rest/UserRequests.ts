@@ -1,18 +1,18 @@
 import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
-import { API_URL } from "../../common";
 import got from "../got";
 import { generateRandomUser, generateTestUser } from "../../generate_data/users";
 import { IMetricsResponse } from "../../types/IMetricsResponsee";
-import { Options } from "got";
+import { Options, Response } from "got";
 import { IUserRequests } from "../IUserRequests";
+import { RESTRequestsBase } from "./RESTRequestsBase";
 
-export class RESTUserRequests implements IUserRequests {
+export class RESTUserRequests extends RESTRequestsBase implements IUserRequests {
     public addUsers = async ({ nrOfUsers = 10, nrOfAdmins = 1, nrOfDietitians = 1, insertTestUser = false} = {})
     : Promise<IMetricsResponse> => {
         let i: number = 0;
         let metrics = initialIMetricsResponse;
         const options = {
-            url: API_URL + "users",
+            url: this.apiUrl + "users",
             method: "POST",
             body: ""
         };
@@ -42,16 +42,11 @@ export class RESTUserRequests implements IUserRequests {
         return metrics;
     }
 
-    public getAllUsers = async (token?: string): Promise<IMetricsResponse> => {
+    public getAllUsers = async (): Promise<Response<string>> => {
         const options: Options = {
-            url: API_URL + "users"
+            url: this.apiUrl + "users"
         };
-        if (token) {
-            options.headers = {
-            ...got.defaults.options.headers,
-            authorization: `Bearer ${token}`
-            };
-        }
-        return recalculateMetrics(initialIMetricsResponse, await got(options), true);
+        
+        return got(options);
     }
 }

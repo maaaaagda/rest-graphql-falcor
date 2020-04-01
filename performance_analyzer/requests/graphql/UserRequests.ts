@@ -1,13 +1,11 @@
-import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
-import { API_URL } from "../../common";
 import got from "../got";
-import { IMetricsResponse } from "../../types/IMetricsResponsee";
-import { Options } from "got";
+import { Options, Response } from "got";
 import { IUserRequests } from "../IUserRequests";
+import { GraphQLRequestsBase } from "./GraphQLRequestsBase";
 
-export class GraphQLUserRequests implements IUserRequests {
+export class GraphQLUserRequests extends GraphQLRequestsBase implements IUserRequests {
 
-    public getAllUsers = async (token?: string): Promise<IMetricsResponse> => {
+    public getAllUsers = async (): Promise<Response<string>> => {
         const query = `
             query {
                 users {
@@ -17,17 +15,11 @@ export class GraphQLUserRequests implements IUserRequests {
             }
         `;
         const options: Options = {
-            url: API_URL,
+            url: this.apiUrl,
             body: JSON.stringify({query}),
             method: "POST"
         };
-        if (token) {
-            options.headers = {
-            ...got.defaults.options.headers,
-            authorization: `Bearer ${token}`
-            };
-        }
 
-        return recalculateMetrics(initialIMetricsResponse, await got(options), true);
+        return got(options);
     }
 }

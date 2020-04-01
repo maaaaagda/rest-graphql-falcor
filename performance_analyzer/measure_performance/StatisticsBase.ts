@@ -1,4 +1,6 @@
-import { IMetricsResponse } from "../types/IMetricsResponsee";
+import { Operation, OperationDetails } from "./../types/OperationTypes";
+import { Tool } from "./../types/ToolTypes";
+import { IStatistics } from "./../types/IStatistics";
 import { ILogger } from "./StatsLogger/ILogger";
 
 export abstract class StatisticsBase {
@@ -21,9 +23,9 @@ export abstract class StatisticsBase {
     protected async abstract getRESTStatistics(): Promise<void>;
     protected async abstract getGraphQLStatistics(): Promise<void>;
     protected async abstract getFalcorStatistics(): Promise<void>;
-    protected async writeStatistics(tool: string, operation: string,
-                                    operationDetails: string, statistics: IMetricsResponse) {
+    protected async writeStatistics(collection: string, tool: Tool, operation: Operation, 
+                                    operationDetails: OperationDetails, statistics: IStatistics) {
         this.logger.log(
-            this.dbSize, tool, "users", operation, operationDetails, statistics.size, statistics.timings.firstByte);
+            this.dbSize, tool, collection, operation, operationDetails, statistics.size, statistics.firstByte);
     }
 }
