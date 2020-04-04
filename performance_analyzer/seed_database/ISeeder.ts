@@ -1,5 +1,5 @@
 export interface ISeeder {
-    addUsers();
+    addUsers(addUserParams: {nrOfUsers: number, nrOfAdmins: number, nrOfDietitians: number, insertTestUser: boolean});
     addDiets(nrOfDiets: number);
     addProducts();
     addMeals(nrOfMeals: number);
