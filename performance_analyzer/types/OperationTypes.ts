@@ -7,5 +7,6 @@ export enum Operation {
 
 export enum OperationDetails {
     GET_ALL = "GET_ALL",
-    GET_BY_ID = "GET_BY_ID"
+    GET_BY_ID = "GET_BY_ID",
+    NONE = "NONE"
 }

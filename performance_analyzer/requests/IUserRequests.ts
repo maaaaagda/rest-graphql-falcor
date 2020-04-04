@@ -3,5 +3,5 @@ import { Response } from "got";
 
 export interface IUserRequests {
     getAllUsers(): Promise<Response<string>>;
-    // addUser(): Promise<IMetricsResponse>;
+    addUser(user): Promise<Response<string>>;
 }

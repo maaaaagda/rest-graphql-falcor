@@ -1,4 +1,5 @@
-import { UserRequests } from "./UserRequests";
+import { Response } from "got";
+import { RESTUserRequests } from "./UserRequests";
 import { DietRequests } from "./DietRequests";
 import { IDietOrderRequests } from "../IDietOrderRequests";
 import { IMetricsResponse } from "../../types/IMetricsResponsee";
@@ -18,7 +19,8 @@ export class DietOrderRequests implements IDietOrderRequests {
         };
         let metrics = initialIMetricsResponse;
         const kcalOptions = (await new DietRequests().getKcalOptions()).data.map((kcalOption) => kcalOption.value);
-        const userIds = (await new UserRequests().getAllUsers()).data.map((user) => user._id);
+        const res: Response<string> = (await new RESTUserRequests().getAllUsers());
+        const userIds: string[] = JSON.parse(res.body).message.map((user) => user._id);
         const dietIds = (await new DietRequests().getAllDiets()).data.map((diet) => diet._id);    
         for (const userId of userIds) {
             const nrOfOrders = Math.ceil(Math.random() * MAX_NR_OF_ORDERS_PER_PERSON);

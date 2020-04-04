@@ -1,3 +1,5 @@
+import { IGenerator } from "./../generate_data/IGenerator";
+import { IUserGenerator } from "./../generate_data/Users/IUserGenerator";
 import { Operation, OperationDetails } from "./../types/OperationTypes";
 import { Tool } from "./../types/ToolTypes";
 import { IStatistics } from "./../types/IStatistics";
@@ -7,11 +9,13 @@ export abstract class StatisticsBase {
     protected numberOfRepetitions: number;
     protected logger: ILogger;
     protected dbSize: string;
+    protected dataGenerator: IGenerator;
 
-    constructor(logger: ILogger, nrOfRepetition: number, dbSize: string) {
+    constructor(logger: ILogger, nrOfRepetition: number, dbSize: string, dataGenerator: IGenerator) {
         this.logger = logger;
         this.numberOfRepetitions = nrOfRepetition;
         this.dbSize = dbSize;
+        this.dataGenerator = dataGenerator;
     }
     
     public async getStatistics(): Promise<void> {

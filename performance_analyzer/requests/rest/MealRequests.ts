@@ -1,5 +1,5 @@
 import { IMealRequests } from "../IMealRequests";
-import { getProducts } from "./ProductRequests";
+import { ProductRequests } from "./ProductRequests";
 import { generateRandomMeal } from "../../generate_data/meals";
 import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
 import { API_URL } from "../../common";
@@ -15,7 +15,7 @@ export class MealRequests implements IMealRequests {
         };
         let i: number = 0;
         let metrics = initialIMetricsResponse;
-        const productIds =  (await getProducts()).data.map((product) => product._id);
+        const productIds =  (await new ProductRequests().getProducts()).data.map((product) => product._id);
         while (i < nrOfMeals) {
             options.body = JSON.stringify(generateRandomMeal(productIds));
             metrics = recalculateMetrics(metrics, await got(options));
