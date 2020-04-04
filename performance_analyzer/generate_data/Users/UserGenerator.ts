@@ -1,7 +1,7 @@
+import { faker } from "faker";
 import { IUser } from "./IUser";
 import { IUserGenerator } from "./IUserGenerator";
-import { TEST_USER } from "./../../common";
-import faker from "faker";
+import { TEST_USER } from "../../common";
 
 export class UserGenerator implements IUserGenerator {
     public generateRandomUser(role = "user"): IUser {

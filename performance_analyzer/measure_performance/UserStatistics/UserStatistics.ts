@@ -1,6 +1,6 @@
-import { IUser } from "./../../generate_data/Users/IUser";
-import { IUserGenerator } from "./../../generate_data/Users/IUserGenerator";
-import { UserGenerator } from "./../../generate_data/Users/UserGenerator";
+import { IUser } from "../../generate_data/users/IUser";
+import { IUserGenerator } from "../../generate_data/users/IUserGenerator";
+import { UserGenerator } from "../../generate_data/users/UserGenerator";
 import { Operation, OperationDetails } from "./../../types/OperationTypes";
 import { StatisticsCalculator } from "./../statistics/StatisticsCalculator";
 import { Tool } from "./../../types/ToolTypes";

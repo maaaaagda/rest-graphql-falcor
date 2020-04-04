@@ -1,5 +1,5 @@
 import { IGenerator } from "./../generate_data/IGenerator";
-import { IUserGenerator } from "./../generate_data/Users/IUserGenerator";
+import { IUserGenerator } from "../generate_data/users/IUserGenerator";
 import { Operation, OperationDetails } from "./../types/OperationTypes";
 import { Tool } from "./../types/ToolTypes";
 import { IStatistics } from "./../types/IStatistics";

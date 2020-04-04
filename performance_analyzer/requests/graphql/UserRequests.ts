@@ -1,4 +1,4 @@
-import { IUser } from "./../../generate_data/Users/IUser";
+import { IUser } from "../../generate_data/users/IUser";
 import got from "../got";
 import { Options, Response } from "got";
 import { IUserRequests } from "../IUserRequests";

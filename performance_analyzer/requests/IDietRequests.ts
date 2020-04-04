@@ -1,5 +1,6 @@
 import { IMetricsResponse } from "../types/IMetricsResponsee";
+import { Response } from "got/dist/source";
 export interface IDietRequests {
-    getAllDiets(): Promise<IMetricsResponse>;
-    getDietById(id: string): Promise<IMetricsResponse>;
+    getAllDiets(): Promise<Response<string>>;
+    getDietById(id: string): Promise<Response>;
 }
