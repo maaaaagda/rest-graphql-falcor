@@ -43,7 +43,7 @@ async function bootstrap(): Promise<void> {
   app.use(bodyParser.urlencoded());
   app.use(errorHandler.handle());
 
-  server.applyMiddleware({ app, path: "/graphql" });
+  server.applyMiddleware({ app, path: "/" });
 
   process
     .on("unhandledRejection", (reason: any, p: any) => {

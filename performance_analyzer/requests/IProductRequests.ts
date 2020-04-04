@@ -1,4 +1,4 @@
-import { IMetricsResponse } from "./../types/Response";
+import { Response } from "got";
 export interface IProductRequests {
-    getProducts(name?: string): Promise<IMetricsResponse>;
+    getProducts(name?: string): Promise<Response<any>>;
 }

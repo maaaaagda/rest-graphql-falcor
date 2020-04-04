@@ -1,37 +1,10 @@
-import { UserRequests } from "./UserRequests";
-import { DietRequests } from "./DietRequests";
 import { IDietOrderRequests } from "../IDietOrderRequests";
-import { IMetricsResponse } from "../../types/Response";
-import { generateRandomDietOrder } from "../../generate_data/dietOrder";
+import { IMetricsResponse } from "../../types/IMetricsResponsee";
 import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
 import { API_URL } from "../../common";
 import got from "../got";
 
-const MAX_NR_OF_ORDERS_PER_PERSON = 5;
-
 export class DietOrderRequests implements IDietOrderRequests {
-    public addDietOrders = async () => {
-        const options = {
-            url: API_URL + "diet-orders",
-            method: "POST",
-            body: ""
-        };
-        let metrics = initialIMetricsResponse;
-        const kcalOptions = (await new DietRequests().getKcalOptions()).data.map((kcalOption) => kcalOption.value);
-        const userIds = (await new UserRequests().getAllUsers()).data.map((user) => user._id);
-        const dietIds = (await new DietRequests().getAllDiets()).data.map((diet) => diet._id);    
-        for (const userId of userIds) {
-            const nrOfOrders = Math.ceil(Math.random() * MAX_NR_OF_ORDERS_PER_PERSON);
-            let i = 0;
-            while (i < nrOfOrders) {
-                options.body = JSON.stringify(generateRandomDietOrder(dietIds, kcalOptions, userId));
-                metrics = recalculateMetrics(metrics, await got(options));
-                i += 1;
-            }
-        }
-      
-        return metrics;
-    }
     
     public getAllDietOrders = async (): Promise<IMetricsResponse> => {
         const options = {

@@ -9,8 +9,7 @@ export const dailyDietSchema: mongoose.Schema = new mongoose.Schema({
   },
   date: {
     type: Date,
-    required: true,
-    unique: true
+    required: true
   },
   dietId: {
     type: String,

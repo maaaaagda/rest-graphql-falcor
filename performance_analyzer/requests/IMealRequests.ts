@@ -1,5 +1,5 @@
-import { IMetricsResponse } from "./../types/Response";
+import { Response } from "got";
 export interface IMealRequests {
-    getMeals(): Promise<IMetricsResponse>;
-    getMealById(id: string): Promise<IMetricsResponse>;
+    getMeals(): Promise<Response<string>>;
+    getMealById(id: string): Promise<Response<string>>;
 }

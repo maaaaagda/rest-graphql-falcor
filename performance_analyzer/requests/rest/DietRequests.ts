@@ -1,47 +1,30 @@
 import { IDietRequests } from "../IDietRequests";
 import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
-import { generateRandomDiet } from "../../generate_data/diets";
 import { API_URL } from "../../common";
 import got from "../got";
-import { IMetricsResponse } from "../../types/Response";
+import { IMetricsResponse } from "../../types/IMetricsResponsee";
+import { Response } from "got/dist/source";
 
 export class DietRequests implements IDietRequests {
-    public addDiets = async (nrOfDiets = 10): Promise<IMetricsResponse> => {
-        const options = {
-            url: API_URL + "diets",
-            method: "POST",
-            body: ""
-        };
-        let i: number = 0;
-        let metrics = initialIMetricsResponse;
     
-        while (i < nrOfDiets) {
-            options.body = JSON.stringify(generateRandomDiet());
-            metrics = recalculateMetrics(metrics, await got(options));
-            i = i + 1;
-        }
-      
-        return metrics;
-    }
-    
-    public getAllDiets = async (): Promise<IMetricsResponse> => {
+    public getAllDiets = async (): Promise<Response<string>> => {
         const options = {
             url: API_URL + "diets"
         };
-        return recalculateMetrics(initialIMetricsResponse, await got(options), true);
+        return got(options);
     }
     
-    public getDietById = async (id: string): Promise<IMetricsResponse> => {
+    public getDietById = async (id: string): Promise<Response> => {
         const options = {
             url: `${API_URL}diets/${id}`
         };
-        return recalculateMetrics(initialIMetricsResponse, await got(options), true);
+        return got(options);
     }
     
     public getKcalOptions = async () => {
         const options = {
             url: API_URL + "diets/kcal-options"
         };
-        return recalculateMetrics(initialIMetricsResponse, await got(options), true);
+        return await got(options);
     }
 }

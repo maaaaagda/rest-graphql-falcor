@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "start": "ts-node ./seed_database/seed.ts",
+        "seed": "ts-node ./seed_database/seed.ts",
+        "test": "ts-node ./measure_performance/test.ts",
+        "stats": "ts-node ./measure_performance/get_performance_data.ts",
         "lint": "tslint -c ./tslint.json --project ./tsconfig.json",
         "lint:fix": "tslint -c ./tslint.json --project ./tsconfig.json --fix"
     },

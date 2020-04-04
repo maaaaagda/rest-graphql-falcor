@@ -17,9 +17,7 @@ export const userSchema: mongoose.Schema = new mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
-      required: true,
-      index: true
+      required: true
     },
     password: {
       type: String,
