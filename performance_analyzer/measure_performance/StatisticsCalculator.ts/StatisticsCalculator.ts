@@ -1,4 +1,4 @@
-import { IStatistics } from "./../../types/IStatistics";
+import { IStatistics } from "../../types/IStatistics";
 import { Response } from "got";
 export class StatisticsCalculator {
 

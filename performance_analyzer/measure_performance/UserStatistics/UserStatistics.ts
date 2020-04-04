@@ -1,8 +1,9 @@
+import { FalcorUserRequests } from "./../../requests/falcor/UserRequests";
 import { IUser } from "../../generate_data/users/IUser";
 import { IUserGenerator } from "../../generate_data/users/IUserGenerator";
 import { UserGenerator } from "../../generate_data/users/UserGenerator";
 import { Operation, OperationDetails } from "./../../types/OperationTypes";
-import { StatisticsCalculator } from "./../statistics/StatisticsCalculator";
+import { StatisticsCalculator } from "../StatisticsCalculator.ts/StatisticsCalculator";
 import { Tool } from "./../../types/ToolTypes";
 import { GraphQLUserRequests } from "./../../requests/graphql/UserRequests";
 import { RESTUserRequests } from "./../../requests/rest/UserRequests";
@@ -32,8 +33,9 @@ export class UserStatistics extends StatisticsBase {
 
     }
     protected async getFalcorStatistics(): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
+        const userRequests: IUserRequests = await new FalcorUserRequests();
+        this.getAllUsersMetrics(userRequests, Tool.Falcor);
+        this.addUsersMetrics(userRequests, Tool.Falcor, (res: Response<string>) => "");    }
 
     private async getAllUsersMetrics(userRequests: IUserRequests, tool: Tool): Promise<void> {
         let i = 0;
