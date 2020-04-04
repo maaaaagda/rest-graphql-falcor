@@ -1,4 +1,4 @@
-import { Seeder } from './Seeder';
+import { Seeder } from "./Seeder";
 import { ISeeder } from "./ISeeder";
 
 async function seed() {

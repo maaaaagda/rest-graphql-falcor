@@ -30,6 +30,7 @@ export abstract class StatisticsBase {
     protected async writeStatistics(collection: string, tool: Tool, operation: Operation, 
                                     operationDetails: OperationDetails, statistics: IStatistics) {
         this.logger.log(
-            this.dbSize, tool, collection, operation, operationDetails, statistics.size, statistics.firstByte);
+            this.dbSize, tool, collection, operation, operationDetails, statistics.size,
+            statistics.wait, statistics.firstByte, statistics.download, statistics.total);
     }
 }

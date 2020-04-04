@@ -65,7 +65,7 @@ export class UserStatistics extends StatisticsBase {
         const users: IUser[] = [];
         let i = 0;
         while (i < this.numberOfRepetitions) {
-            const user: IUser = this.dataGenerator.generateRandomUser();
+            const user: IUser = (this.dataGenerator as IUserGenerator).generateRandomUser();
             users.push(user);
             i += 1;
         }

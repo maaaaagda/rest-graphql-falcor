@@ -1,4 +1,4 @@
-import { faker } from "faker";
+import faker from "faker";
 import { IUser } from "./IUser";
 import { IUserGenerator } from "./IUserGenerator";
 import { TEST_USER } from "../../common";
