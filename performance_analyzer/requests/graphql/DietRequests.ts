@@ -26,7 +26,7 @@ export class GraphQLDietRequests extends GraphQLRequestsBase implements IDietReq
         return got(options);
     }
     
-    public getDietById = async (id: string): Promise<Response> => {
+    public getDietById = async (id: string): Promise<Response<string>> => {
         const query = `
             query ($id: String!) {
                     diet(id: $id) { 
@@ -74,6 +74,28 @@ export class GraphQLDietRequests extends GraphQLRequestsBase implements IDietReq
         `;
         const variables = {
             diet
+        };
+        
+        const options: Options = {
+            url: this.apiUrl,
+            body: JSON.stringify({query, variables}),
+            method: "POST"
+        };
+
+        return got(options);
+    }
+
+    public updateDiet(id: string, diet: IDiet): Promise<Response<string>> {
+        const query = `
+            mutation ($id: String, $diet: ModifyDiet!) {
+                updateDiet(id: $id, diet: $diet) { 
+                    _id
+                }
+            }
+        `;
+        const variables = {
+            diet,
+            id
         };
         
         const options: Options = {

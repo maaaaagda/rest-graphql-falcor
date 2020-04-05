@@ -14,7 +14,7 @@ export class DietRequests extends RESTRequestsBase implements IDietRequests {
         return got(options);
     }
     
-    public getDietById = async (id: string): Promise<Response> => {
+    public getDietById = async (id: string): Promise<Response<string>> => {
         const options = {
             url: `${API_URL}diets/${id}`
         };
@@ -31,6 +31,15 @@ export class DietRequests extends RESTRequestsBase implements IDietRequests {
     public addUser(diet: IDiet): Promise<Response<string>> {
         const options = {
             url: this.apiUrl + "diets",
+            method: "POST",
+            body: JSON.stringify(diet)
+        };
+        return got(options);
+    }
+
+    public updateDiet(id: string, diet: IDiet): Promise<Response<string>> {
+        const options = {
+            url: `${this.apiUrl}diets/${id}`,
             method: "POST",
             body: JSON.stringify(diet)
         };
