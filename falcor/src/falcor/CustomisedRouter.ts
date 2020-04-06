@@ -1,7 +1,7 @@
 import Router from "falcor-router";
 import { routes } from "./routes";
 
-const BaseRouter = Router.createClass(routes);
+const BaseRouter = Router.createClass(routes, { maxPaths: Number.MAX_SAFE_INTEGER });
 
 const CustomisedRouter = function(token: string) {
     BaseRouter.call(this);

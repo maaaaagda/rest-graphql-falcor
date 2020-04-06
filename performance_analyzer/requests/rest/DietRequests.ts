@@ -5,7 +5,7 @@ import { Response } from "got/dist/source";
 import { IDiet } from "../../generate_data/diets/IDiet";
 import { RESTRequestsBase } from "./RESTRequestsBase";
 
-export class DietRequests extends RESTRequestsBase implements IDietRequests {
+export class RESTDietRequests extends RESTRequestsBase implements IDietRequests {
     
     public getAllDiets = async (): Promise<Response<string>> => {
         const options = {
@@ -28,7 +28,7 @@ export class DietRequests extends RESTRequestsBase implements IDietRequests {
         return await got(options);
     }
 
-    public addUser(diet: IDiet): Promise<Response<string>> {
+    public addDiet(diet: IDiet): Promise<Response<string>> {
         const options = {
             url: this.apiUrl + "diets",
             method: "POST",
@@ -40,7 +40,7 @@ export class DietRequests extends RESTRequestsBase implements IDietRequests {
     public updateDiet(id: string, diet: IDiet): Promise<Response<string>> {
         const options = {
             url: `${this.apiUrl}diets/${id}`,
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify(diet)
         };
         return got(options);

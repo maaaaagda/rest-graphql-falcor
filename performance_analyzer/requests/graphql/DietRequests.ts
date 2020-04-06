@@ -87,17 +87,17 @@ export class GraphQLDietRequests extends GraphQLRequestsBase implements IDietReq
 
     public updateDiet(id: string, diet: IDiet): Promise<Response<string>> {
         const query = `
-            mutation ($id: String, $diet: ModifyDiet!) {
+            mutation ($id: String!, $diet: ModifyDiet!) {
                 updateDiet(id: $id, diet: $diet) { 
                     _id
                 }
             }
         `;
         const variables = {
-            diet,
-            id
+            id,
+            diet
         };
-        
+                
         const options: Options = {
             url: this.apiUrl,
             body: JSON.stringify({query, variables}),

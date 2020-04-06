@@ -10,10 +10,10 @@ export const dietRoutes: any = [
             const diets: IDiet[] = (await dietController.getDiets()).slice(0, pathSet.indexRanges[0].to + 1);
             const dietsRoute: object = {};
             diets.forEach((diet, i) => {
-            dietsRoute[i] = {};
-            pathSet[2].forEach((key) => {
-                dietsRoute[i][key] = diet[key];
-                });
+                dietsRoute[i] = {};
+                pathSet[2].forEach((key) => {
+                    dietsRoute[i][key] = diet[key];
+                    });
             });
             return { jsonGraph: {diets: dietsRoute} };
         }
