@@ -23,14 +23,14 @@ export class DietStatistics extends StatisticsBase {
 
     protected async getRESTStatistics(): Promise<void> {
         const dietRequests: IDietRequests = await new RESTDietRequests();
-        this.getAllDietsMetrics(dietRequests, Tool.REST);
+        await this.getAllDietsMetrics(dietRequests, Tool.REST);
         const newDietsIds: string[] = await this.addDietsMetrics(
             dietRequests, Tool.REST, (res: any) => res.message._id);
         this.updateDietsMetrics(dietRequests, Tool.REST, newDietsIds);
     }
     protected async getGraphQLStatistics(): Promise<void> {
         const dietRequests: IDietRequests = await new GraphQLDietRequests();
-        this.getAllDietsMetrics(dietRequests, Tool.GraphQL);
+        await this.getAllDietsMetrics(dietRequests, Tool.GraphQL);
         const newDietsIds: string[] = await this.addDietsMetrics(
             dietRequests,
             Tool.GraphQL,
@@ -40,7 +40,7 @@ export class DietStatistics extends StatisticsBase {
     protected async getFalcorStatistics(): Promise<void> {
         const dietRequests: IDietRequests = await new FalcorDietRequests();
         const nrOfDiets = await this.getNrOfAllDiets();
-        this.getAllDietsMetrics(dietRequests, Tool.Falcor, nrOfDiets);
+        await this.getAllDietsMetrics(dietRequests, Tool.Falcor, nrOfDiets);
         const newDietsIds: string[] = await this.addDietsMetrics(
             dietRequests,
             Tool.Falcor,
