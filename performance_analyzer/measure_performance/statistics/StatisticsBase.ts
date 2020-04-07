@@ -1,9 +1,9 @@
-import { IGenerator } from "./../generate_data/IGenerator";
-import { IUserGenerator } from "../generate_data/users/IUserGenerator";
-import { Operation, OperationDetails } from "./../types/OperationTypes";
-import { Tool } from "./../types/ToolTypes";
-import { IStatistics } from "./../types/IStatistics";
-import { ILogger } from "./StatsLogger/ILogger";
+import { IGenerator } from "../../generate_data/IGenerator";
+import { IUserGenerator } from "../../generate_data/users/IUserGenerator";
+import { Operation, OperationDetails } from "../../types/OperationTypes";
+import { Tool } from "../../types/ToolTypes";
+import { IStatistics } from "../../types/IStatistics";
+import { ILogger } from "../StatsLogger/ILogger";
 
 export abstract class StatisticsBase {
     protected numberOfRepetitions: number;
@@ -32,5 +32,13 @@ export abstract class StatisticsBase {
         this.logger.log(
             this.dbSize, tool, collection, operation, operationDetails, statistics.size,
             statistics.wait, statistics.firstByte, statistics.download, statistics.total);
+    }
+
+    protected shuffle(array: any[]): any[] {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
 }

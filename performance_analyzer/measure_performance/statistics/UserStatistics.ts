@@ -1,14 +1,14 @@
-import { FalcorUserRequests } from "./../../requests/falcor/UserRequests";
+import { FalcorUserRequests } from "../../requests/falcor/UserRequests";
 import { IUser } from "../../generate_data/users/IUser";
 import { IUserGenerator } from "../../generate_data/users/IUserGenerator";
 import { UserGenerator } from "../../generate_data/users/UserGenerator";
-import { Operation, OperationDetails } from "./../../types/OperationTypes";
+import { Operation, OperationDetails } from "../../types/OperationTypes";
 import { StatisticsCalculator } from "../StatisticsCalculator.ts/StatisticsCalculator";
-import { Tool } from "./../../types/ToolTypes";
-import { GraphQLUserRequests } from "./../../requests/graphql/UserRequests";
-import { RESTUserRequests } from "./../../requests/rest/UserRequests";
+import { Tool } from "../../types/ToolTypes";
+import { GraphQLUserRequests } from "../../requests/graphql/UserRequests";
+import { RESTUserRequests } from "../../requests/rest/UserRequests";
 import { ILogger } from "../StatsLogger/ILogger";
-import { StatisticsBase } from "../StatisticsBase";
+import { StatisticsBase } from "./StatisticsBase";
 import { IUserRequests } from "../../requests/IUserRequests";
 import { Response } from "got/dist/source";
 

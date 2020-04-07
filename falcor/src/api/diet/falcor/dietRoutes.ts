@@ -1,21 +1,20 @@
 import { IDiet } from "./../model/Diet";
 import { DietController } from "../controller/DietController";
+import * as falcor from "falcor";
+const $ref = falcor.Model.ref;
 
 const dietController = new DietController();
 
 export const dietRoutes: any = [
     {
-        route: "diets[{ranges:indexRanges}][\"name\", \"dailyCost\", \"photoUrl\", \"_id\"]",
+        route: "diets[{ranges:indexRanges}]",
         get: async (pathSet) => {
             const diets: IDiet[] = (await dietController.getDiets()).slice(0, pathSet.indexRanges[0].to + 1);
             const dietsRoute: object = {};
             diets.forEach((diet, i) => {
-            dietsRoute[i] = {};
-            pathSet[2].forEach((key) => {
-                dietsRoute[i][key] = diet[key];
-                });
+                dietsRoute[i] = $ref([ "dietsByIds", diet._id]);
             });
-            return { jsonGraph: {diets: dietsRoute} };
+            return { jsonGraph: { diets: dietsRoute} };
         }
     },
     {

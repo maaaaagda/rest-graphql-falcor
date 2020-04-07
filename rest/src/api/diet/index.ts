@@ -102,7 +102,7 @@ export class DietController implements interfaces.Controller {
     }
   }
 
-  @httpPut("/")
+  @httpPut("/:id")
   public async updateDiet(
     req: Request,
     res: Response,
@@ -112,7 +112,7 @@ export class DietController implements interfaces.Controller {
       this._authenticator.authenticate(req.headers.authorization);
       this._validator.validate(req.body, dietPutSchema);
       const updatedDiet: IDiet = await this._dietService.putDiet(
-        req.query.id,
+        req.params.id,
         req.body
       );
       return res.json(SuccessResponse.Ok(updatedDiet));

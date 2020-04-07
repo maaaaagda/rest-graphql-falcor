@@ -1,11 +1,11 @@
 import { IDietRequests } from "../IDietRequests";
-import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
 import { API_URL } from "../../common";
 import got from "../got";
-import { IMetricsResponse } from "../../types/IMetricsResponsee";
 import { Response } from "got/dist/source";
+import { IDiet } from "../../generate_data/diets/IDiet";
+import { RESTRequestsBase } from "./RESTRequestsBase";
 
-export class DietRequests implements IDietRequests {
+export class RESTDietRequests extends RESTRequestsBase implements IDietRequests {
     
     public getAllDiets = async (): Promise<Response<string>> => {
         const options = {
@@ -14,7 +14,7 @@ export class DietRequests implements IDietRequests {
         return got(options);
     }
     
-    public getDietById = async (id: string): Promise<Response> => {
+    public getDietById = async (id: string): Promise<Response<string>> => {
         const options = {
             url: `${API_URL}diets/${id}`
         };
@@ -26,5 +26,23 @@ export class DietRequests implements IDietRequests {
             url: API_URL + "diets/kcal-options"
         };
         return await got(options);
+    }
+
+    public addDiet(diet: IDiet): Promise<Response<string>> {
+        const options = {
+            url: this.apiUrl + "diets",
+            method: "POST",
+            body: JSON.stringify(diet)
+        };
+        return got(options);
+    }
+
+    public updateDiet(id: string, diet: IDiet): Promise<Response<string>> {
+        const options = {
+            url: `${this.apiUrl}diets/${id}`,
+            method: "PUT",
+            body: JSON.stringify(diet)
+        };
+        return got(options);
     }
 }
