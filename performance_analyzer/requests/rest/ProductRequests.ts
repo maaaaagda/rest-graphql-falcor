@@ -5,11 +5,11 @@ import got from "../got";
 import { IMetricsResponse } from "../../types/IMetricsResponsee";
 import { Response } from "got";
 
-export class ProductRequests implements IProductRequests {
+export class RESTProductRequests implements IProductRequests {
     
-    public async getProducts(name?): Promise<Response<any>> {
+    public async getProducts(name: string): Promise<Response<any>> {
         const options = {
-            url: `${API_URL}products${name ? `?name=${name}` : ""}`
+            url: `${API_URL}products?name=${name}`
         };
         return await got(options);
     }
