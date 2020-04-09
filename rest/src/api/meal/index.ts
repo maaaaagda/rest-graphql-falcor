@@ -5,7 +5,8 @@ import {
   httpGet,
   httpPost,
   httpPut,
-  interfaces
+  interfaces,
+  httpDelete
 } from "inversify-express-utils";
 import { TYPES } from "../../ioc/types";
 import { MEAL_TYPES } from "./ioc/MealTypes";
@@ -93,6 +94,26 @@ export class MealController implements interfaces.Controller {
       );
       this._validator.validate(req.body, mealPostSchema);
       const meal: IMeal = await this._mealService.postMeal(req.body, userId);
+      return res.json(SuccessResponse.Created(meal));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
+  }
+
+  @httpDelete("/:mealId")
+  public async deleteMeal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    try {
+      this._authenticator.authenticate(
+        req.headers.authorization,
+        UserRole.DIETITIAN
+      );
+      const meal: IMeal = await this._mealService.removeMeal(req.params.mealId);
       return res.json(SuccessResponse.Created(meal));
     } catch (error) {
       return new Promise(() => {
