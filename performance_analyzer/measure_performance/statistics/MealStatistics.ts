@@ -25,28 +25,31 @@ export class MealStatistics extends StatisticsBase {
     protected async getRESTStatistics(): Promise<void> {
         const mealRequests: IMealRequests = await new RESTMealRequests();
         await this.getMealsMetrics(mealRequests, Tool.REST);
-        const newMealsIds: string[] = await this.addMealsMetrics(
+        const mealIds: string[] = await this.addMealsMetrics(
             mealRequests, Tool.REST, (res: any) => res.message._id);
-        this.updateMealsMetrics(mealRequests, Tool.REST, newMealsIds);
+        await this.getMealByIdMetrics(mealRequests, Tool.REST, mealIds);
+        await this.updateMealsMetrics(mealRequests, Tool.REST, mealIds);
     }
     protected async getGraphQLStatistics(): Promise<void> {
         const mealRequests: IMealRequests = await new GraphQLMealRequests();
         await this.getMealsMetrics(mealRequests, Tool.GraphQL);
-        const newMealsIds: string[] = await this.addMealsMetrics(
+        const mealIds: string[] = await this.addMealsMetrics(
             mealRequests,
             Tool.GraphQL,
             (res: any) => res.data.addMeal._id);
-        this.updateMealsMetrics(mealRequests, Tool.GraphQL, newMealsIds);
+        await this.getMealByIdMetrics(mealRequests, Tool.GraphQL, mealIds);
+        await this.updateMealsMetrics(mealRequests, Tool.GraphQL, mealIds);
     }
     protected async getFalcorStatistics(): Promise<void> {
         const mealRequests: IMealRequests = await new FalcorMealRequests();
         const nrOfMeals = await this.getNrOfAllMeals();
         await this.getMealsMetrics(mealRequests, Tool.Falcor, nrOfMeals);
-        const newMealsIds: string[] = await this.addMealsMetrics(
+        const mealIds: string[] = await this.addMealsMetrics(
             mealRequests,
             Tool.Falcor,
-            (res: any) => res.jsonGraph.meal._id);   
-        this.updateMealsMetrics(mealRequests, Tool.Falcor, newMealsIds);
+            (res: any) => res.jsonGraph.meal._id);
+        await this.getMealByIdMetrics(mealRequests, Tool.Falcor, mealIds);
+        await this.updateMealsMetrics(mealRequests, Tool.Falcor, mealIds);
     }
 
     private async getMealsMetrics(mealRequests: IMealRequests, tool: Tool, nrOfMeals?: number): Promise<void> {
@@ -91,6 +94,25 @@ export class MealStatistics extends StatisticsBase {
         this.writeStatistics(
             "meals", tool, Operation.UPDATE, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
         return mealIds;
+    }
+
+    private async getMealByIdMetrics(
+        mealRequests: IMealRequests, tool: Tool, mealIds: string[]): Promise<any> {
+            const statisticsCalculator = new StatisticsCalculator();
+            let i: number = 0;
+            for (const mealId of mealIds) {
+                const response: Response<string> = await mealRequests.getMealById(
+                    mealId);
+                statisticsCalculator.recalculateStatistics(response);
+                i += 1;
+                this.writeStatistics(
+                    "meals",
+                    tool,
+                    Operation.GET,
+                    OperationDetails.GET_BY_ID,
+                    statisticsCalculator.getAverageStatistics());
+                return mealIds;
+            }
     }
 
     private async generateRandomMeals(): Promise<void> {
