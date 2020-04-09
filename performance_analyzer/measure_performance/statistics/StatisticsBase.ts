@@ -28,7 +28,7 @@ export abstract class StatisticsBase {
     protected async abstract getGraphQLStatistics(): Promise<void>;
     protected async abstract getFalcorStatistics(): Promise<void>;
     protected async writeStatistics(collection: string, tool: Tool, operation: Operation, 
-                                    operationDetails: OperationDetails, statistics: IStatistics) {
+                                    operationDetails: OperationDetails | string, statistics: IStatistics) {
         this.logger.log(
             this.dbSize, tool, collection, operation, operationDetails, statistics.size,
             statistics.wait, statistics.firstByte, statistics.download, statistics.total);
