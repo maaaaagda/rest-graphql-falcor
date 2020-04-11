@@ -56,12 +56,26 @@ export const mealRoutes: any = [
     },
     {
         route: "meal.update",
-        call: async (callPath, args, pathSet, paths) => {
+        async call (callPath, args, pathSet, paths) {
         const {id, ...meal} = args;
-        const updatedMeal: IMeal = await mealController.updateMeal(id, meal);
+        const updatedMeal: IMeal = await mealController.updateMeal(id, meal, this.token);
         return pathSet.map((key) => {
                 return { path: ["meal", key], value: updatedMeal[key]};
             });
         }
+    },
+    {
+        route: "meal[{keys:ids}].delete",
+        async call (callPath, args, pathSet, paths){
+            console.log("inside")
+            const mealPaths: any = [];
+            for (const mealId of callPath.ids) {
+                await mealController.removeMeal(mealId, this.token);
+                mealPaths.push({path: ["meal", mealId], value: true});
+            }
+
+            return mealPaths;    
+    }
+
     }
 ];

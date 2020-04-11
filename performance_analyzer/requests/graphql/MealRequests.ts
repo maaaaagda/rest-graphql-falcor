@@ -93,4 +93,25 @@ export class GraphQLMealRequests extends GraphQLRequestsBase implements IMealReq
 
         return got(options);
     }
+
+    public removeMeal(id: string): Promise<Response<string>> {
+        const query = `
+            mutation ($id: String!) {
+                removeMeal(id: $id) { 
+                    _id
+                }
+            }
+        `;
+        const variables = {
+            id
+        };
+                
+        const options: Options = {
+            url: this.apiUrl,
+            body: JSON.stringify({query, variables}),
+            method: "POST"
+        };
+
+        return got(options);
+    }
 }

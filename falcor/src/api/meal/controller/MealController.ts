@@ -44,16 +44,27 @@ export class MealController {
     return meal;
   }
 
-  public readonly updateMeal = async ( id: string, meal: IMeal ): Promise<IMeal> => {
-    // this._authenticator.authenticate(
-    //     ctx.token,
-    //     UserRole.DIETITIAN
-    // );
+  public readonly updateMeal = async ( id: string, meal: IMeal, authToken: string ): Promise<IMeal> => {
+    this._authenticator.authenticate(
+        authToken,
+        UserRole.DIETITIAN
+    );
     this._validator.validate(meal, mealUpdateSchema);
     const updatedMeal: IMeal = await this._mealService.updateMeal(
         id,
         meal
     );
     return updatedMeal;
+  }
+
+  public readonly removeMeal = async ( id: string, authToken: string ): Promise<boolean> => {
+    this._authenticator.authenticate(
+        authToken,
+        UserRole.DIETITIAN
+    );
+    await this._mealService.removeMeal(
+        id
+    );
+    return true;
   }
 }
