@@ -38,11 +38,10 @@ export class RESTMealRequests extends RESTRequestsBase implements IMealRequests 
         return got(options);
     }
 
-    public removeMeal(id: string, meal: IMeal): Promise<Response<string>> {
+    public removeMeal(id: string): Promise<Response<string>> {
         const options = {
             url: `${this.apiUrl}meals/${id}`,
-            method: "DELETE",
-            body: JSON.stringify(meal)
+            method: "DELETE"
         };
         return got(options);
     }

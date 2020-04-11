@@ -57,4 +57,20 @@ export class FalcorMealRequests extends FalcorRequestsBase implements IMealReque
 
         return got(options);
     }
+
+    public removeMeal(id: string): Promise<Response<string>> {
+        const options: Options = {
+            url: this.apiUrl,
+            body: JSON.stringify(
+                {
+                    method: "call",
+                    callPath: JSON.stringify(["meal", [id], "delete"]),
+                    pathSuffixes: JSON.stringify(["delete"])
+                }
+            ),
+            method: "POST"
+        };
+
+        return got(options);
+    }
 }

@@ -12,7 +12,7 @@ async function getPerformanceData() {
             // await new UserStatistics(logger, NUMBER_OF_REPETITION, DatabaseSize.MEDIUM).getStatistics();
         // await new DietStatistics(logger, NUMBER_OF_REPETITION, DatabaseSize.MEDIUM).getStatistics();
         // await new ProductStatistics(logger, NUMBER_OF_REPETITION, DatabaseSize.MEDIUM).getStatistics();
-        // await new MealStatistics(logger, NUMBER_OF_REPETITION, DatabaseSize.MEDIUM).getStatistics();
+        await new MealStatistics(logger, NUMBER_OF_REPETITION, DatabaseSize.MEDIUM).getStatistics();
     } catch (err) {
         console.log(err);
         console.log(err?.response?.body);

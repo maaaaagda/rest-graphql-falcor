@@ -97,9 +97,7 @@ export class GraphQLMealRequests extends GraphQLRequestsBase implements IMealReq
     public removeMeal(id: string): Promise<Response<string>> {
         const query = `
             mutation ($id: String!) {
-                removeMeal(id: $id) { 
-                    _id
-                }
+                removeMeal(id: $id)
             }
         `;
         const variables = {

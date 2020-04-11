@@ -5,4 +5,5 @@ export interface IMealRequests {
     getMealById(id: string): Promise<Response<string>>;
     addMeal(meal: IMeal): Promise<Response<string>>;
     updateMeal(id: string, meal: IMeal): Promise<Response<string>>;
+    removeMeal(id: string): Promise<Response<string>>;
 }
