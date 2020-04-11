@@ -29,7 +29,7 @@ export class MealService {
     return await this._mealRepository.removeOneById(id);
   }
 
-  public async postMeal(mealParams: IMeal, authorId: string) {
+  public async addMeal(mealParams: IMeal, authorId: string) {
     const { ingredients } = mealParams;
     mealParams.authorId = authorId;
     const productIds = Array.from(
@@ -51,7 +51,7 @@ export class MealService {
     );
   }
 
-  public async putMeal(id: string, mealParams: IMeal) {
+  public async updateMeal(id: string, mealParams: IMeal) {
     const mealToModify: IMeal = await this._mealRepository.getOne({
       _id: id
     });

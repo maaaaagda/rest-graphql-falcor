@@ -2,4 +2,5 @@
 type Mutation {
   addMeal(meal: ModifyMeal!): Meal
   updateMeal(id: String!, meal: ModifyMeal!): Meal
-} 
+  removeMeal(id: String!): Boolean
+}

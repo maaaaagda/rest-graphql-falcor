@@ -38,6 +38,12 @@ export class MealController {
     }
     return meal;
   }
+
+  public readonly removeMeal = async (parent, args: { id: string}, ctx: Context, info): Promise<boolean> => {
+    this._authenticator.authenticate(ctx.token);  
+    await this._mealService.removeMeal(args.id);
+    return true;
+  }
   
   public readonly addMeal = async (parent, args: { meal: IMeal }, ctx: Context, info): Promise<IMeal> => {
     const { userId } = this._authenticator.authenticate(ctx.token, UserRole.DIETITIAN);
@@ -46,7 +52,8 @@ export class MealController {
     return meal;
   }
 
-  public readonly updateMeal = async (parent, args: { id: string, meal: IMeal }, ctx: Context, info): Promise<IMeal> => {
+  public readonly updateMeal 
+  = async (parent, args: { id: string, meal: IMeal }, ctx: Context, info): Promise<IMeal> => {
     this._authenticator.authenticate(
         ctx.token,
         UserRole.DIETITIAN
