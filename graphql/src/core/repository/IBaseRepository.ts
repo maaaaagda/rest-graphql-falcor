@@ -8,4 +8,5 @@ export interface IBaseRepository<T> {
   getCountByIds(ids: string[]): Promise<number>;
   getOneById(id: string): Promise<T>;
   getOneByName(name: string): Promise<T>;
+  removeOneById(id: string): Promise<T>;
 }

@@ -68,6 +68,11 @@ export abstract class BaseRepository<T extends Document>
     return model.findOne({ _id: id });
   }
 
+  public async removeOneById(id: string): Promise<T> {
+    const model: Model<T> = await this.getModel();
+    return model.findOneAndRemove({ _id: id });
+  }
+
   public async getOneByName(name: string): Promise<T> {
     const model: Model<T> = await this.getModel();
     return model.findOne({ name });

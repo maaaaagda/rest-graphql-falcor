@@ -20,8 +20,13 @@ export class MealService {
   public async getMeals(): Promise<IMeal[]> {
     return await this._mealRepository.getMeals();
   }
+
   public async getMealById(id: string): Promise<IMeal[]> {
     return await this._mealRepository.getMeal(id);
+  }
+
+  public async removeMeal(id: string): Promise<IMeal> {
+    return await this._mealRepository.removeOneById(id);
   }
 
   public async addMeal(mealParams: IMeal, authorId: string) {

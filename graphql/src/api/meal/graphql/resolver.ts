@@ -9,6 +9,7 @@ export const MealResolvers: IResolver = {
   },
   Mutation: {
     addMeal: mealController.addMeal,
-    updateMeal: mealController.updateMeal
+    updateMeal: mealController.updateMeal,
+    removeMeal: mealController.removeMeal
   }
 };

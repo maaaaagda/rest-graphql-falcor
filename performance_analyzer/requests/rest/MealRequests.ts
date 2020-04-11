@@ -1,20 +1,47 @@
 import { Response } from "got";
 import { IMealRequests } from "../IMealRequests";
-import { API_URL } from "../../common";
 import got from "../got";
+import { RESTRequestsBase } from "./RESTRequestsBase";
+import { IMeal } from "../../generate_data/meals/IMeal";
 
-export class MealRequests implements IMealRequests {
+export class RESTMealRequests extends RESTRequestsBase implements IMealRequests {
 
     public async getMealById(id: string): Promise<Response<string>> {
         const options = {
-            url: `${API_URL}meals/${id}`
+            url: `${this.apiUrl}meals/${id}`
         };
         return got(options);
     }
     
     public async getMeals(): Promise<Response<string>> {
         const options = {
-            url: `${API_URL}meals`
+            url: `${this.apiUrl}meals`
+        };
+        return got(options);
+    }
+
+    public addMeal(meal: IMeal): Promise<Response<string>> {
+        const options = {
+            url: this.apiUrl + "meals",
+            method: "POST",
+            body: JSON.stringify(meal)
+        };
+        return got(options);
+    }
+
+    public updateMeal(id: string, meal: IMeal): Promise<Response<string>> {
+        const options = {
+            url: `${this.apiUrl}meals/${id}`,
+            method: "PUT",
+            body: JSON.stringify(meal)
+        };
+        return got(options);
+    }
+
+    public removeMeal(id: string): Promise<Response<string>> {
+        const options = {
+            url: `${this.apiUrl}meals/${id}`,
+            method: "DELETE"
         };
         return got(options);
     }

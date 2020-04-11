@@ -5,7 +5,8 @@ import {
   httpGet,
   httpPost,
   httpPut,
-  interfaces
+  interfaces,
+  httpDelete
 } from "inversify-express-utils";
 import { TYPES } from "../../ioc/types";
 import { MEAL_TYPES } from "./ioc/MealTypes";
@@ -101,7 +102,27 @@ export class MealController implements interfaces.Controller {
     }
   }
 
-  @httpPut("?:mealId")
+  @httpDelete("/:mealId")
+  public async deleteMeal(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    try {
+      this._authenticator.authenticate(
+        req.headers.authorization,
+        UserRole.DIETITIAN
+      );
+      const meal: IMeal = await this._mealService.removeMeal(req.params.mealId);
+      return res.json(SuccessResponse.Created(meal));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
+  }
+
+  @httpPut("/:mealId")
   public async updateMeal(
     req: Request,
     res: Response,
@@ -112,14 +133,9 @@ export class MealController implements interfaces.Controller {
         req.headers.authorization,
         UserRole.DIETITIAN
       );
-      if (!req.query.mealId) {
-        throw new BadRequestError(
-          "Please provide valid mealId query parameter"
-        );
-      }
       this._validator.validate(req.body, mealPutSchema);
       const updatedMeal: IMeal = await this._mealService.putMeal(
-        req.query.mealId,
+        req.params.mealId,
         req.body
       );
       return res.json(SuccessResponse.Ok(updatedMeal));
