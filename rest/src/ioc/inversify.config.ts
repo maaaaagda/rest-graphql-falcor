@@ -24,6 +24,7 @@ import "../api/dietOrder/";
 import "../api/meal/";
 import "../api/product/";
 import "../api/user/";
+import "../api/utils/";
 
 const getContainer: () => Container = (): Container => {
   const container: Container = new Container();
