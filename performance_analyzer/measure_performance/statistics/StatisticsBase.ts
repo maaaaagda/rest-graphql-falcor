@@ -1,3 +1,4 @@
+import { COLLECTION_SIZES } from "./../../types/DatabaseSizeTypes";
 import { IGenerator } from "../../generate_data/IGenerator";
 import { Operation, OperationDetails } from "../../types/OperationTypes";
 import { Tool } from "../../types/ToolTypes";
@@ -29,8 +30,17 @@ export abstract class StatisticsBase {
     protected async writeStatistics(collection: string, tool: Tool, operation: Operation, 
                                     operationDetails: OperationDetails | string, statistics: IStatistics) {
         this.logger.log(
-            this.dbSize, tool, collection, operation, operationDetails, statistics.size,
-            statistics.wait, statistics.firstByte, statistics.download, statistics.total);
+            this.dbSize,
+            COLLECTION_SIZES[collection][this.dbSize],
+            tool,
+            collection,
+            operation,
+            operationDetails,
+            statistics.size,
+            statistics.wait,
+            statistics.firstByte,
+            statistics.download,
+            statistics.total);
     }
 
     protected shuffle(array: any[]): any[] {

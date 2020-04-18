@@ -23,19 +23,19 @@ export class UserStatistics extends StatisticsBase {
 
     protected async getRESTStatistics(): Promise<void> {
         const userRequests: IUserRequests = await new RESTUserRequests();
-        this.getAllUsersMetrics(userRequests, Tool.REST);
-        this.addUsersMetrics(userRequests, Tool.REST, (res: Response<string>) => "");
+        await this.getAllUsersMetrics(userRequests, Tool.REST);
+        await this.addUsersMetrics(userRequests, Tool.REST, (res: Response<string>) => "");
     }
     protected async getGraphQLStatistics(): Promise<void> {
         const userRequests: IUserRequests = await new GraphQLUserRequests();
-        this.getAllUsersMetrics(userRequests, Tool.GraphQL);
-        this.addUsersMetrics(userRequests, Tool.GraphQL, (res: Response<string>) => "");
+        await this.getAllUsersMetrics(userRequests, Tool.GraphQL);
+        await this.addUsersMetrics(userRequests, Tool.GraphQL, (res: Response<string>) => "");
 
     }
     protected async getFalcorStatistics(): Promise<void> {
         const userRequests: IUserRequests = await new FalcorUserRequests();
-        this.getAllUsersMetrics(userRequests, Tool.Falcor);
-        this.addUsersMetrics(userRequests, Tool.Falcor, (res: Response<string>) => "");    }
+        await this.getAllUsersMetrics(userRequests, Tool.Falcor);
+        await this.addUsersMetrics(userRequests, Tool.Falcor, (res: Response<string>) => "");    }
 
     private async getAllUsersMetrics(userRequests: IUserRequests, tool: Tool): Promise<void> {
         let i = 0;

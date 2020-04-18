@@ -1,3 +1,4 @@
+import { DatabaseSize, COLLECTION_SIZES } from "./../types/DatabaseSizeTypes";
 import { DietOrderGenerator } from "./../generate_data/dietOrders/DietOrderGenerator";
 import { IDietOrderGenerator } from "./../generate_data/dietOrders/IDietOrderGenerator";
 import { RESTUserRequests } from "./../requests/rest/UserRequests";
@@ -18,13 +19,31 @@ import got from "../requests/got";
 import { RESTProductRequests } from "../requests/rest/ProductRequests";
 
 const NR_OF_MS_IN_A_DAY: number = 86400000;
-const MAX_NR_OF_ORDERS_PER_PERSON = 5;
+const NR_OF_ADMINISTRATORS_COEFFICIENT = 1 / 100;
+const NR_OF_DIETITIANS_COEFFICIENT = 1 / 60;
 
 export class Seeder extends RESTRequestsBase implements ISeeder {
 
-    public addUsers = async ({ nrOfUsers = 10, nrOfAdmins = 1, nrOfDietitians = 1, insertTestUser = false} = {})
+    public async seed(databaseSize: DatabaseSize) {
+        try {
+            await this.addUsers(COLLECTION_SIZES.users[databaseSize], false);
+            await this.addDiets(COLLECTION_SIZES.diets[databaseSize]);
+            await this.addMeals(COLLECTION_SIZES.meals[databaseSize]);
+            await this.addDailyDiets(COLLECTION_SIZES.dailyDiets[databaseSize]);
+            await this.addDietOrders(
+                Math.floor(COLLECTION_SIZES.dietOrders[databaseSize] / COLLECTION_SIZES.users[databaseSize]));
+        } catch (err) {
+            console.log(err);
+            console.log(err?.response?.body);
+        }
+    }
+
+    public addUsers = async (nrOfAllUsers = 10, insertTestUser = false)
     : Promise<void> => {
         const userGenerator: IUserGenerator = new UserGenerator();
+        const nrOfAdmins: number = Math.ceil(nrOfAllUsers * NR_OF_ADMINISTRATORS_COEFFICIENT);
+        const nrOfDietitians: number = Math.ceil(nrOfAllUsers * NR_OF_DIETITIANS_COEFFICIENT);
+        const nrOfUsers: number = nrOfAllUsers - nrOfAdmins - nrOfDietitians;
 
         let i: number = 0;
         const options = {
@@ -118,7 +137,7 @@ export class Seeder extends RESTRequestsBase implements ISeeder {
             i = i + 1;
         }
     }
-    public async addDietOrders() {
+    public async addDietOrders(nrOfOrdersPerPerson: number) {
         const dietOrderGenertor: IDietOrderGenerator = new DietOrderGenerator();
         const options = {
             url: this.apiUrl + "diet-orders",
@@ -129,9 +148,8 @@ export class Seeder extends RESTRequestsBase implements ISeeder {
         const userIds: string[] = await this.getAllUserIds();
         const dietIds = await this.getAllDietIds();    
         for (const userId of userIds) {
-            const nrOfOrders = Math.ceil(Math.random() * MAX_NR_OF_ORDERS_PER_PERSON);
             let i = 0;
-            while (i < nrOfOrders) {
+            while (i < nrOfOrdersPerPerson) {
                 options.body = JSON.stringify(dietOrderGenertor.generateRandomDietOrder(dietIds, kcalOptions, userId));
                 await got(options);
                 i += 1;

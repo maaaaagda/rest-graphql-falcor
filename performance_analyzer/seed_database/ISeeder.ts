@@ -1,8 +1,10 @@
+import { DatabaseSize } from "./../types/DatabaseSizeTypes";
 export interface ISeeder {
-    addUsers(addUserParams: {nrOfUsers: number, nrOfAdmins: number, nrOfDietitians: number, insertTestUser: boolean});
+    seed(databaseSize: DatabaseSize);
+    addUsers(nrOfUsers: number, insertTestUser: boolean);
     addDiets(nrOfDiets: number);
     addProducts();
     addMeals(nrOfMeals: number);
     addDailyDiets(nrOfMonths: number);
-    addDietOrders();
+    addDietOrders(nrOfOrdersPerPerson: number);
 }
