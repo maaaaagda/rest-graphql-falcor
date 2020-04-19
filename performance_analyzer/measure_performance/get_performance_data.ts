@@ -8,12 +8,11 @@ import { UserStatistics } from "./statistics/UserStatistics";
 import { Logger } from "./StatsLogger/Logger";
 const NUMBER_OF_REPETITION = 30;
 
-const databaseSizes: DatabaseSize[] = [DatabaseSize.SMALL];
-
 async function getPerformanceData() {
-    const logger = new Logger("C:\\Users\\magda\\pwr\\Dyplom\\eksperyment\\stats.csv");
+    const dateTime: string = new Date().toISOString().replace(/:/g, "-").substring(0, 19);
+    const logger = new Logger(`C:\\Users\\magda\\pwr\\Dyplom\\eksperyment\\stats_${dateTime}.csv`);
     try {
-        for ( const dbSize of databaseSizes) {
+        for ( const dbSize of Object.values(DatabaseSize)) {
             await new Seeder().seed(dbSize);
             await new UserStatistics(logger, NUMBER_OF_REPETITION, dbSize).getStatistics();
             await new DietStatistics(logger, NUMBER_OF_REPETITION, dbSize).getStatistics();

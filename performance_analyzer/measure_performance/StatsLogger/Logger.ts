@@ -7,6 +7,9 @@ export class Logger implements ILogger {
 
     constructor(filePath: string) {
         this._filePath = filePath;
+        fs.writeFile(this._filePath, "", () => {
+            console.log("Created log file.", this._filePath);
+        });
     }
 
     public log(dbSize: string, collectionSize: number, tool: string, collection: string, operation: string,
