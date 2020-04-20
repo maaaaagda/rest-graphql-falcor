@@ -1,5 +1,5 @@
 # import DailyDiet from 'type.gql'
 type Query {
-    dailyDiets: [DailyDiet]!
+    dailyDiets(date: String, dietId: String): [DailyDiet]!
     dailyDiet(id: String!): DailyDiet
 }

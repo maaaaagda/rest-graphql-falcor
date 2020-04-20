@@ -1,5 +1,8 @@
-import { IMetricsResponse } from "../types/IMetricsResponsee";
+import { IDailyDiet } from "./../generate_data/dailyDiets/IDailyDiet";
+import { Response } from "got";
 
 export interface IDailyDietRequests {
-    getDailyDiet(date: string, dietId: string): Promise<IMetricsResponse>;
+    getDailyDiets(date: string, dietId: string): Promise<Response<string>>;
+    addDailyDiet(dailyDiet: IDailyDiet): Promise<Response<string>>;
+    updateDailyDiet(id: string, dailyDiet: IDailyDiet): Promise<Response<string>>;
 }
