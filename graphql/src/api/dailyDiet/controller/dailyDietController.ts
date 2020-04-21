@@ -25,8 +25,8 @@ export class DailyDietController {
   @inject(TYPES.IValidator)
   private readonly _validator: IValidator = this._container.get(TYPES.IValidator);
 
-  public async getDailyDiets(parent, args: {date: string, dietId: string}, ctx: Context, info)
-  : Promise<IDailyDiet[]> {  
+  public readonly getDailyDiets = async (parent, args: {date: string, dietId: string}, ctx: Context, info)
+  : Promise<IDailyDiet[]> => {  
     const dailyDiets: IDailyDiet[] = await this._dailyDietService.getDailyDiets(
         args.date,
         args.dietId
@@ -34,8 +34,8 @@ export class DailyDietController {
     return dailyDiets;
   }
 
-  public async getDailyDietById(parent, args: {id: string}, ctx: Context, info)
-  : Promise<IDailyDiet> {
+  public getDailyDietById = async (parent, args: {id: string}, ctx: Context, info) 
+  : Promise<IDailyDiet> => {
       const dailyDiet: IDailyDiet = await this._dailyDietService.getDailyDietById(
         args.id
       );
@@ -45,8 +45,8 @@ export class DailyDietController {
       throw new UserInputError("Daily diet with given id does not exist");
   }
 
-  public async addDailyDiet (parent, args: {dailyDiet: IDailyDiet}, ctx: Context, info)
-  : Promise<IDailyDiet> {
+  public addDailyDiet = async (parent, args: {dailyDiet: IDailyDiet}, ctx: Context, info)
+  : Promise<IDailyDiet> => {
       this._authenticator.authenticate(ctx.token);
       this._validator.validate(args.dailyDiet, dailyDietAddSchema);
       const dailyDiet: IDailyDiet = await this._dailyDietService.addDailyDiet(
@@ -55,8 +55,8 @@ export class DailyDietController {
       return dailyDiet;
   }
 
-  public async updateDailyDiet(parent, args: {id: string, dailyDiet: IDailyDiet}, ctx: Context, info)
-  : Promise<IDailyDiet> {
+  public updateDailyDiet = async (parent, args: {id: string, dailyDiet: IDailyDiet}, ctx: Context, info)
+  : Promise<IDailyDiet> => {
         this._authenticator.authenticate(ctx.token);
         this._validator.validate(args.dailyDiet, dailyDietUpdateSchema);
         const dailyDiet: IDailyDiet = await this._dailyDietService.updateDailyDiet(args.id, args.dailyDiet);

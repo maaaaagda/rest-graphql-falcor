@@ -1,5 +1,5 @@
 # import DailyDiet, ModifyDailyDiet from 'type.gql'
 type Mutation {
   addDailyDiet(dailyDiet: ModifyDailyDiet!): DailyDiet
-  updateDailyDiet(id: ID!, diet: ModifyDailyDiet!): DailyDiet
+  updateDailyDiet(id: String!, dailyDiet: ModifyDailyDiet!): DailyDiet
 } 

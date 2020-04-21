@@ -4,7 +4,7 @@ import { IDailyDietRequests } from "../IDailyDietRequests";
 import got from "../got";
 import { RESTRequestsBase } from "./RESTRequestsBase";
 
-export class DailyDietRequests extends RESTRequestsBase implements IDailyDietRequests {
+export class RESTDailyDietRequests extends RESTRequestsBase implements IDailyDietRequests {
     
     public async getDailyDiets(date: string, dietId: string): Promise<Response<string>> {
         const options = {
