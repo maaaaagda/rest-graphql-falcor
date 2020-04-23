@@ -1,4 +1,4 @@
-import { IDailyDietGenerator } from './dailyDiets/IDailyDietGenerator';
+import { IDailyDietGenerator } from "./dailyDiets/IDailyDietGenerator";
 import { IDietGenerator } from "./diets/IDietGenerator";
 import { IDietOrderGenerator } from "./dietOrders/IDietOrderGenerator";
 import { IMealGenerator } from "./meals/IMealGenerator";
