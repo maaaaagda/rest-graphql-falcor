@@ -27,7 +27,8 @@ export class DailyDietStatistics extends StatisticsBase {
     protected async getRESTStatistics(): Promise<void> {
         await this.init();
         const dailyDietRequests: IDailyDietRequests = await new RESTDailyDietRequests();
-        await this.getDailyDietsMetrics(dailyDietRequests, Tool.REST);
+        await this.getDailyDietsMetricsForOneDiet(dailyDietRequests, Tool.REST);
+        await this.getDailyDietsMetricsForAllDiets(dailyDietRequests, Tool.REST);
         const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
             dailyDietRequests, Tool.REST, (res: any) => res.message._id);
         await this.updateDailyDietsMetrics(dailyDietRequests, Tool.REST, newDailyDietsIds);
@@ -35,7 +36,8 @@ export class DailyDietStatistics extends StatisticsBase {
     protected async getGraphQLStatistics(): Promise<void> {
         await this.init();
         const dailyDietRequests: IDailyDietRequests = await new GraphQLDailyDietRequests();
-        await this.getDailyDietsMetrics(dailyDietRequests, Tool.GraphQL);
+        await this.getDailyDietsMetricsForOneDiet(dailyDietRequests, Tool.GraphQL);
+        await this.getDailyDietsMetricsForAllDiets(dailyDietRequests, Tool.GraphQL);
         const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
             dailyDietRequests,
             Tool.GraphQL,
@@ -45,15 +47,16 @@ export class DailyDietStatistics extends StatisticsBase {
     protected async getFalcorStatistics(): Promise<void> {
         await this.init();
         const dailyDietRequests: IDailyDietRequests = await new FalcorDailyDietRequests();
-        await this.getDailyDietsMetrics(dailyDietRequests, Tool.Falcor);
+        await this.getDailyDietsMetricsForOneDiet(dailyDietRequests, Tool.Falcor);
+        await this.getDailyDietsMetricsForAllDiets(dailyDietRequests, Tool.Falcor);
         const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
             dailyDietRequests,
             Tool.Falcor,
             (res: any) => res.jsonGraph.dailyDiet._id);   
-        this.updateDailyDietsMetrics(dailyDietRequests, Tool.Falcor, newDailyDietsIds);
+        await this.updateDailyDietsMetrics(dailyDietRequests, Tool.Falcor, newDailyDietsIds);
     }
 
-    private async getDailyDietsMetrics(dailyDietRequests: IDailyDietRequests, tool: Tool)
+    private async getDailyDietsMetricsForOneDiet(dailyDietRequests: IDailyDietRequests, tool: Tool)
     : Promise<void> {
         let i = 0;
         const statisticsCalculator = new StatisticsCalculator() ;
@@ -66,7 +69,25 @@ export class DailyDietStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "dailyDiets", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getAverageStatistics());
+            "dailyDiets", tool, Operation.GET, "Get one diet for one day", statisticsCalculator.getAverageStatistics());
+    }
+
+    private async getDailyDietsMetricsForAllDiets(dailyDietRequests: IDailyDietRequests, tool: Tool)
+    : Promise<void> {
+        let i = 0;
+        const statisticsCalculator = new StatisticsCalculator() ;
+        while (i < this.numberOfRepetitions) {
+            const response: Response<string> 
+                = await dailyDietRequests.getDailyDiets(this._randomDate, "");
+            statisticsCalculator.recalculateStatistics(response);
+            i += 1;
+        }
+        this.writeStatistics(
+            "dailyDiets",
+            tool,
+            Operation.GET,
+            "Get all diets for one day",
+            statisticsCalculator.getAverageStatistics());
     }
 
     private async addDailyDietsMetrics(
