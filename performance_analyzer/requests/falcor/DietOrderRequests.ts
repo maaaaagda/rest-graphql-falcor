@@ -24,7 +24,7 @@ export class FalcorDietOrderRequests extends FalcorRequestsBase implements IDiet
         return got(options);
     }
 
-    public getDietOrders = async (): Promise<Response<string>> => {
+    public getDietOrders = async (token: string): Promise<Response<string>> => {
         const options: Options = {
             url: this.apiUrl,
             body: JSON.stringify(
@@ -35,14 +35,17 @@ export class FalcorDietOrderRequests extends FalcorRequestsBase implements IDiet
                     pathSuffixes: JSON.stringify(["_id", "kcal", "status", "cost"])
                 }
             ),
-            method: "POST"
+            method: "POST",
+            headers: {
+                ...got.defaults.options.headers,
+                authorization: `Bearer ${token}`
+            }
         };
 
         return got(options);
     }
 
-
-    public addDietOrder(dietOrder: IDietOrder): Promise<Response<string>> {     
+    public addDietOrder(dietOrder: IDietOrder, token: string): Promise<Response<string>> {     
         const options: Options = {
             url: this.apiUrl,
             body: JSON.stringify(
@@ -53,7 +56,11 @@ export class FalcorDietOrderRequests extends FalcorRequestsBase implements IDiet
                     pathSuffixes: JSON.stringify(["_id"])
                 }
             ),
-            method: "POST"
+            method: "POST",
+            headers: {
+                ...got.defaults.options.headers,
+                authorization: `Bearer ${token}`
+            }
         };
 
         return got(options);

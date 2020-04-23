@@ -24,11 +24,15 @@ export class RESTDietOrderRequests extends RESTRequestsBase implements IDietOrde
         return got(options);
     }
 
-    public async addDietOrder(dailyDiet: IDietOrder): Promise<Response<string>> {
+    public async addDietOrder(dailyDiet: IDietOrder, token: string): Promise<Response<string>> {
         const options = {
-            url: this.apiUrl + "daily-diets",
+            url: this.apiUrl + "diet-orders",
             method: "POST",
-            body: JSON.stringify(dailyDiet)
+            body: JSON.stringify(dailyDiet),
+            headers: {
+                ...got.defaults.options.headers,
+                authorization: `Bearer ${token}`
+            }
         };
         return got(options);
     }

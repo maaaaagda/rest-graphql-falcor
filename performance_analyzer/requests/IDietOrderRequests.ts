@@ -4,5 +4,5 @@ import { Response } from 'got';
 export interface IDietOrderRequests {
     getAllDietOrders(nrOfDietOrders?: number): Promise<Response<string>>;
     getDietOrders(token: string): Promise<Response<string>>;
-    addDietOrder(dietOrder: IDietOrder): Promise<Response<string>>;
+    addDietOrder(dietOrder: IDietOrder, token: string): Promise<Response<string>>;
 }

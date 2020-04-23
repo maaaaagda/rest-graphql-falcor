@@ -10,12 +10,12 @@ import { Context } from "vm";
 
 export class AuthController implements interfaces.Controller {
 
-  private readonly _container: Container = getContainer();
-
   @inject(TYPES.IValidator)
   protected readonly _validator: IValidator = this._container.get(
     TYPES.IValidator
   );
+
+  private readonly _container: Container = getContainer();
 
   @inject(AUTH_TYPES.IAuthService)
   private readonly _authService: IAuthService = this._container.get(

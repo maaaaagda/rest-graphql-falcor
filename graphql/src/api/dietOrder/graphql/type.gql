@@ -12,7 +12,7 @@ type DietOrder {
 
 input DietOrderInput {
   dietId: ID!
-  customerId: ID
+  userId: ID
   kcal: Int!
   dates: [String!]
   deliveryAddress: String

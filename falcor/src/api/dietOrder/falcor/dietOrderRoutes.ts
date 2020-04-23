@@ -131,7 +131,7 @@ export const dietOrderRoutes: any = [
             (await dietOrderController.getDietOrders(this.token));
             const pathsToReturn: object[] = [];
             dietOrders.forEach((dietOrder, i) => {
-                pathSet[0].forEach((key) => {
+                pathSet.forEach((key) => {
                     pathsToReturn.push({ path: ["dietOrders", i, key], value: dietOrder[key]});
                 });
             });

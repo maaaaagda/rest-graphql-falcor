@@ -50,7 +50,7 @@ export class GraphQLDietOrderRequests extends GraphQLRequestsBase implements IDi
         return got(options);
     }
 
-    public addDietOrder(dietOrder: IDietOrder): Promise<Response<string>> {
+    public addDietOrder(dietOrder: IDietOrder, token: string): Promise<Response<string>> {
         const query = `
             mutation ($dietOrder: DietOrderInput!) {
                 addDietOrder(dietOrder: $dietOrder) { 
@@ -65,7 +65,11 @@ export class GraphQLDietOrderRequests extends GraphQLRequestsBase implements IDi
         const options: Options = {
             url: this.apiUrl,
             body: JSON.stringify({query, variables}),
-            method: "POST"
+            method: "POST",
+            headers: {
+                ...got.defaults.options.headers,
+                authorization: `Bearer ${token}`
+            }
         };
 
         return got(options);
