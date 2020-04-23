@@ -9,8 +9,8 @@ export class GraphQLDailyDietRequests extends GraphQLRequestsBase implements IDa
     
     public async getDailyDiets(date: string, dietId: string): Promise<Response<string>> {
         const query = `
-            query ($dietId: String!) {
-                    dailyDiets(dietId: $dietId) {
+            query ($date: String, $dietId: String) {
+                    dailyDiets(date: $date, dietId: $dietId) {
                         dailyMeals {
                             breakfast {
                                 name
