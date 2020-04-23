@@ -41,6 +41,22 @@ export const dailyDietRoutes: any = [
         }
     },
     {
+        route: "dailyDietMeals.search",
+        call: async (callPath, args, pathSet, paths) => {
+            const dailyDiets: IDailyDiet[] = (await dailyDietController.getDailyDiets(args[0].date, args[0].dietId));
+            const pathsToReturn: object[] = [];
+            dailyDiets.forEach((dailyDiet, i) => {
+                pathSet[0].forEach((key) => {
+                    pathSet[1].forEach((mealProperty) => {
+                        pathsToReturn.push({ path: ["dailyDiet", i, "dailyMeals", key, mealProperty],
+                         value: dailyDiet.dailyMeals[key][mealProperty]});
+                    });
+                });
+            });
+            return pathsToReturn;
+            }
+        }, 
+    {
         route: "dailyDiet.add",
         async call(callPath, args, pathSet, paths) {
         const dailyDiet: IDailyDiet = await dailyDietController.addDailyDiet(args, this.token);

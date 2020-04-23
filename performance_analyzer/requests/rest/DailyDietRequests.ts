@@ -1,16 +1,33 @@
+import { Response } from "got";
+import { IDailyDiet } from "./../../generate_data/dailyDiets/IDailyDiet";
 import { IDailyDietRequests } from "../IDailyDietRequests";
-import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
-import { API_URL } from "../../common";
 import got from "../got";
+import { RESTRequestsBase } from "./RESTRequestsBase";
 
-export class DailyDietRequests implements IDailyDietRequests {
+export class RESTDailyDietRequests extends RESTRequestsBase implements IDailyDietRequests {
     
-    public getDailyDiet = async (date: string, dietId: string) => {
+    public async getDailyDiets(date: string, dietId: string): Promise<Response<string>> {
         const options = {
-            url: `${API_URL}daily-diets?date=${date}&dietId=${dietId}`
+            url: `${this.apiUrl}daily-diets?date=${date}&dietId=${dietId}`
         };
-        let metrics = initialIMetricsResponse;
-        metrics = recalculateMetrics(metrics, await got(options), true);
-        return metrics;
+        return await got(options);
+    }
+
+    public async addDailyDiet(dailyDiet: IDailyDiet): Promise<Response<string>> {
+        const options = {
+            url: this.apiUrl + "daily-diets",
+            method: "POST",
+            body: JSON.stringify(dailyDiet)
+        };
+        return got(options);
+    }
+
+    public async updateDailyDiet(id: string, dailyDiet: IDailyDiet): Promise<Response<string>> {
+        const options = {
+            url: `${this.apiUrl}daily-diets/${id}`,
+            method: "PUT",
+            body: JSON.stringify(dailyDiet)
+        };
+        return got(options);
     }
 }

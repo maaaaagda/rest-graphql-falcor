@@ -1,24 +1,19 @@
+import { RequestHelpers } from "./RequestHelpers";
 import { DatabaseSize, COLLECTION_SIZES } from "./../types/DatabaseSizeTypes";
 import { DietOrderGenerator } from "./../generate_data/dietOrders/DietOrderGenerator";
 import { IDietOrderGenerator } from "./../generate_data/dietOrders/IDietOrderGenerator";
-import { RESTUserRequests } from "./../requests/rest/UserRequests";
 import { DailyDietGenerator } from "./../generate_data/dailyDiets/DailyDietGenerator";
 import { IDailyDietGenerator } from "./../generate_data/dailyDiets/IDailyDietGenerator";
-import { RESTDietRequests } from "./../requests/rest/DietRequests";
-import { RESTMealRequests } from "./../requests/rest/MealRequests";
 import { DietGenerator } from "./../generate_data/diets/DietGenerator";
 import { IDietGenerator } from "./../generate_data/diets/IDietGenerator";
-import { Response } from "got";
 import { MealGenerator } from "./../generate_data/meals/MealGenerator";
 import { IMealGenerator } from "./../generate_data/meals/IMealGenerator";
 import { UserGenerator } from "../generate_data/users/UserGenerator";
 import { IUserGenerator } from "../generate_data/users/IUserGenerator";
 import { ISeeder } from "./ISeeder";
-import { RESTRequestsBase } from "../requests/rest/RESTRequestsBase";
 import got from "../requests/got";
-import { RESTProductRequests } from "../requests/rest/ProductRequests";
+import { RESTRequestsBase } from "../requests/rest/RESTRequestsBase";
 
-const NR_OF_MS_IN_A_DAY: number = 86400000;
 const NR_OF_ADMINISTRATORS_COEFFICIENT = 1 / 100;
 const NR_OF_DIETITIANS_COEFFICIENT = 1 / 60;
 
@@ -92,7 +87,7 @@ export class Seeder extends RESTRequestsBase implements ISeeder {
             body: ""
         };
         let i: number = 0;
-        const productIds = await this.getAllProductIds();
+        const productIds = await RequestHelpers.getAllProductIds();
         while (i < nrOfMeals) {
             options.body = JSON.stringify(mealGenerator.generateRandomMeal(productIds));
             await got(options);
@@ -124,9 +119,9 @@ export class Seeder extends RESTRequestsBase implements ISeeder {
             body: ""
         };
         let i: number = 0;
-        const nextDateGeneratorInstance = this.nextDateGenerator();
-        const mealIds = await this.getAllMealIds();
-        const dietIds = await this.getAllDietIds();
+        const nextDateGeneratorInstance = RequestHelpers.nextDateGenerator();
+        const mealIds = await RequestHelpers.getAllMealIds();
+        const dietIds = await RequestHelpers.getAllDietIds();
         
         while (i < nrOfDietDays) {
             const date = nextDateGeneratorInstance.next().value as string;
@@ -144,9 +139,9 @@ export class Seeder extends RESTRequestsBase implements ISeeder {
             method: "POST",
             body: ""
         };
-        const kcalOptions: number[] = await this.getKcalOptions();
-        const userIds: string[] = await this.getAllUserIds();
-        const dietIds = await this.getAllDietIds();    
+        const kcalOptions: number[] = await RequestHelpers.getKcalOptions();
+        const userIds: string[] = await RequestHelpers.getAllUserIds();
+        const dietIds = await RequestHelpers.getAllDietIds();    
         for (const userId of userIds) {
             let i = 0;
             while (i < nrOfOrdersPerPerson) {
@@ -154,41 +149,6 @@ export class Seeder extends RESTRequestsBase implements ISeeder {
                 await got(options);
                 i += 1;
             }
-        }
-    }
-
-    private async getAllProductIds(): Promise<string[]> {
-        const res: Response<string> = await new RESTProductRequests().getProducts("");
-        return JSON.parse(res.body).message.map((product) => product._id);    
-    }
-
-    private async getAllMealIds(): Promise<string[]> {
-        const res: Response<string> = await new RESTMealRequests().getMeals();
-        return JSON.parse(res.body).message.map((meal) => meal._id);
-    }
-        
-    private async getAllDietIds(): Promise<string[]> {
-        const res: Response<string> = await new RESTDietRequests().getAllDiets();
-        return JSON.parse(res.body).message.map((diet) => diet._id);
-    }
-
-    private async getAllUserIds(): Promise<string[]> {
-        const res: Response<string> = await new RESTUserRequests().getAllUsers();
-        return JSON.parse(res.body).message.map((user) => user._id);
-    }
-
-    private async getKcalOptions(): Promise<number[]> {
-        const res: Response<string> = await new RESTDietRequests().getKcalOptions();
-        return JSON.parse(res.body).message.map((kcalOption) => kcalOption.value);
-    }
-
-    private *nextDateGenerator() {
-        let currentDateMs = new Date().getTime();
-        while (true) {
-            currentDateMs += NR_OF_MS_IN_A_DAY;
-            const currentDate = new Date(currentDateMs).toISOString();
-    
-            yield currentDate.slice(0, 10);
         }
     }
 }
