@@ -1,6 +1,5 @@
 import { IDietOrder } from "./../model/DietOrder";
 import { DietOrderController } from "../controller/DietOrderController";
-import { type } from "os";
 
 const dietOrderController = new DietOrderController();
 
@@ -109,6 +108,34 @@ export const dietOrderRoutes: any = [
                 return { path: ["dietOrder", key], value: updatedDietOrder[key]};
             }
             });
+        }
+    },
+    {
+        route: "dietOrders.all",
+        async call(callPath, args, pathSet, paths) {
+            const dietOrders: Array<IDietOrder<Date>> = 
+            (await dietOrderController.getAllDietOrders(this.token));
+            const pathsToReturn: object[] = [];
+            dietOrders.forEach((dietOrder, i) => {
+                pathSet.forEach((key) => {
+                    pathsToReturn.push({ path: ["allDietOrders", i, key], value: dietOrder[key]});
+                });
+            });
+            return pathsToReturn;
+        }
+    },
+    {
+        route: "dietOrders.user",
+        async call(callPath, args, pathSet, paths) {
+            const dietOrders: Array<IDietOrder<Date>> = 
+            (await dietOrderController.getDietOrders(this.token));
+            const pathsToReturn: object[] = [];
+            dietOrders.forEach((dietOrder, i) => {
+                pathSet[0].forEach((key) => {
+                    pathsToReturn.push({ path: ["dietOrders", i, key], value: dietOrder[key]});
+                });
+            });
+            return pathsToReturn;
         }
     }
 ];

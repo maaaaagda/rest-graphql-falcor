@@ -21,7 +21,7 @@ export class Seeder extends RESTRequestsBase implements ISeeder {
 
     public async seed(databaseSize: DatabaseSize) {
         try {
-            await this.addUsers(COLLECTION_SIZES.users[databaseSize], false);
+            await this.addUsers(COLLECTION_SIZES.users[databaseSize], true);
             await this.addDiets(COLLECTION_SIZES.diets[databaseSize]);
             await this.addMeals(COLLECTION_SIZES.meals[databaseSize]);
             await this.addDailyDiets(COLLECTION_SIZES.dailyDiets[databaseSize]);
