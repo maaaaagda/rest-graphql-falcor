@@ -1,3 +1,4 @@
+import { RESTAuthRequests } from './../requests/rest/AuthRequests';
 import { RESTUserRequests } from "../requests/rest/UserRequests";
 import { RESTDietRequests } from "../requests/rest/DietRequests";
 import { RESTMealRequests } from "../requests/rest/MealRequests";
@@ -31,6 +32,11 @@ export class RequestHelpers {
     public static async getKcalOptions(): Promise<number[]> {
         const res: Response<string> = await new RESTDietRequests().getKcalOptions();
         return JSON.parse(res.body).message.map((kcalOption) => kcalOption.value);
+    }
+
+    public static async getTestUserToken(): Promise<string> {
+        const res: Response<string> = await new RESTAuthRequests().login();
+        return JSON.parse(res.body).message.token;
     }
 
     public static *nextDateGenerator() {

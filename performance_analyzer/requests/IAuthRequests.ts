@@ -1,4 +1,5 @@
-import { IMetricsResponse } from "../types/IMetricsResponsee";
+import { Response } from 'got';
+
 export interface IAuthRequests {
-    login(): Promise<IMetricsResponse>;
+    login(email?: string, password?: string): Promise<Response<string>>;
 }

@@ -16,7 +16,7 @@ export class Authenticator implements IAuthenticator {
   private readonly _config: IConfig;
 
   public authenticate(authorization?: string, role?: UserRole): ITokenData {
-    if (this._config.isDev()) {
+    if (this._config.isDev() && !authorization) {
       return { role: UserRole.ADMIN, userId: "" };
     }
     if (!authorization) {
