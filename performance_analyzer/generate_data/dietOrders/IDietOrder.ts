@@ -1,5 +1,5 @@
 export interface IDietOrder {
-    userId: string;
+    userId?: string;
     dietId: string;
     dates: string[];
     deliveryAddress: string;

@@ -1,26 +1,39 @@
+import { IDietOrder } from './../../generate_data/dietOrders/IDietOrder';
+import { Response } from 'got';
 import { IDietOrderRequests } from "../IDietOrderRequests";
-import { IMetricsResponse } from "../../types/IMetricsResponsee";
-import { initialIMetricsResponse, recalculateMetrics } from "../helpers";
-import { API_URL } from "../../common";
 import got from "../got";
+import { RESTRequestsBase } from "./RESTRequestsBase";
 
-export class DietOrderRequests implements IDietOrderRequests {
+export class RESTDietOrderRequests extends RESTRequestsBase implements IDietOrderRequests {
     
-    public getAllDietOrders = async (): Promise<IMetricsResponse> => {
+    public getAllDietOrders = async (): Promise<Response<string>> => {
         const options = {
-            url: API_URL + "diet-orders/all"
+            url: this.apiUrl + "diet-orders/all"
         };
-        return recalculateMetrics(initialIMetricsResponse, await got(options), true);
+        return got(options);
     }
     
-    public getDietOrders = async (token: string): Promise<IMetricsResponse> => {
+    public getDietOrders = async (token: string): Promise<Response<string>> => {
         const options = {
-            url: API_URL + "diet-orders",
+            url: this.apiUrl + "diet-orders",
             headers: {
                 ...got.defaults.options.headers,
                 authorization: `Bearer ${token}`
             }
         };
-        return recalculateMetrics(initialIMetricsResponse, await got(options), true);
+        return got(options);
+    }
+
+    public async addDietOrder(dailyDiet: IDietOrder, token: string): Promise<Response<string>> {
+        const options = {
+            url: this.apiUrl + "diet-orders",
+            method: "POST",
+            body: JSON.stringify(dailyDiet),
+            headers: {
+                ...got.defaults.options.headers,
+                authorization: `Bearer ${token}`
+            }
+        };
+        return got(options);
     }
 }

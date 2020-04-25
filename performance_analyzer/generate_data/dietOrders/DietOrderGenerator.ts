@@ -7,9 +7,8 @@ const MAX_NR_OF_ORDER_DATES = 20;
 
 export class DietOrderGenerator implements IDietOrderGenerator {
 
-    public generateRandomDietOrder(dietIds: string[], kcalOptions: number[], userId: string): IDietOrder {
+    public generateRandomDietOrder(dietIds: string[], kcalOptions: number[]): IDietOrder {
         return {
-            userId,
             dietId: dietIds[Math.floor(Math.random() * dietIds.length)],
             dates: this.getRandomDietOrderDates(),
             deliveryAddress: faker.fake("{{address.streetAddress}}, {{address.zipCode}} {{address.city}}"),

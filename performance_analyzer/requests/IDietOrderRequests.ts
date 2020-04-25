@@ -1,6 +1,8 @@
-import { IMetricsResponse } from "../types/IMetricsResponsee";
+import { IDietOrder } from './../generate_data/dietOrders/IDietOrder';
+import { Response } from 'got';
 
 export interface IDietOrderRequests {
-    getAllDietOrders(): Promise<IMetricsResponse>;
-    getDietOrders(token: string): Promise<IMetricsResponse>;
+    getAllDietOrders(nrOfDietOrders?: number): Promise<Response<string>>;
+    getDietOrders(token: string): Promise<Response<string>>;
+    addDietOrder(dietOrder: IDietOrder, token: string): Promise<Response<string>>;
 }

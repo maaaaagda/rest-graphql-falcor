@@ -55,19 +55,19 @@ export class DietOrderController {
         return cost;
     }
   
-    public readonly addDietOrder = async (parent, args: { dietOrder: IDietOrder}, ctx: Context, info): Promise<IDietOrder> => {
-        const { userId } = this._authenticator.authenticate(
+    public readonly addDietOrder = async (parent, args: { dietOrder: any}, ctx: Context, info): Promise<IDietOrder> => {
+      const { userId } = this._authenticator.authenticate(
           ctx.token
         );
-        this._validator.validate(args.dietOrder, dietOrderAddSchema);
-        const dietOrder: IDietOrder = await this._dietOrderService.addDietOrder(
+      this._validator.validate(args.dietOrder, dietOrderAddSchema);
+      const dietOrder: IDietOrder = await this._dietOrderService.addDietOrder(
           args.dietOrder,
           userId
         );
-        return dietOrder;
+      return dietOrder;
     }
   
-    public readonly updateDietOrder = async (parent, args: { id: string, dietOrder: IDietOrder}, ctx: Context, info): Promise<IDietOrder> => {
+    public readonly updateDietOrder = async (parent, args: { id: string, dietOrder: any}, ctx: Context, info): Promise<IDietOrder> => {
         this._authenticator.authenticate(ctx.token);
         this._validator.validate(args.dietOrder, dietOrderUpdateSchema);
         const updatedDietOrder: IDietOrder = await this._dietOrderService.updateDietOrder(
@@ -77,4 +77,4 @@ export class DietOrderController {
         return updatedDietOrder;
     }
   }
-  
+  

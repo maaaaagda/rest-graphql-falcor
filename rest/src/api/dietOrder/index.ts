@@ -108,12 +108,9 @@ export class DietOrderController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      let { userId } = this._authenticator.authenticate(
+      const { userId } = this._authenticator.authenticate(
         req.headers.authorization
       );
-      if (req.body.userId) {
-        userId = req.body.userId;
-      }
       this._validator.validate(req.body, dietOrderPostSchema);
       const dietOrder: IDietOrder = await this._dietOrderService.postDietOrder(
         req.body,
