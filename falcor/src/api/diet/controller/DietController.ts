@@ -1,3 +1,4 @@
+import { UserRole } from "./../../user/model/UserRole";
 import { Container, inject } from "inversify";
 import { TYPES } from "../../../ioc/types";
 import { DIET_TYPES } from "../ioc/DietTypes";
@@ -9,7 +10,6 @@ import { IAuthenticator } from "../../../core/auth/IAuthenticator";
 import { IValidator } from "../../../core/validator/IValidator";
 import { dietUpdateSchema } from "../schema/updateDiet";
 import { KcalOptions } from "../constants/KcalOptions";
-import { Context } from "vm";
 
 export class DietController  {
   private readonly _container: Container = getContainer();
@@ -49,5 +49,16 @@ export class DietController  {
     this._validator.validate(dietData, dietUpdateSchema);
     const diet: IDiet = await this._dietService.updateDiet(id, dietData);
     return diet;
+  }
+
+  public readonly removeDiet = async ( id: string, authToken: string ): Promise<boolean> => {
+    this._authenticator.authenticate(
+        authToken,
+        UserRole.DIETITIAN
+    );
+    await this._dietService.removeDiet(
+        id
+    );
+    return true;
   }
 }

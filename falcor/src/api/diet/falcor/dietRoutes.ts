@@ -49,5 +49,17 @@ export const dietRoutes: any = [
                 return { path: ["diet", key], value: updatedDiet[key]};
             });
         }
+    },
+    {
+        route: "diet[{keys:ids}].delete",
+        async call(callPath, args, pathSet, paths) {
+            const mealPaths: any = [];
+            for (const dietId of callPath.ids) {
+                await dietController.removeDiet(dietId, this.token);
+                mealPaths.push({path: ["diet", dietId], value: true});
+            }
+
+            return mealPaths;    
+        }
     }
 ];

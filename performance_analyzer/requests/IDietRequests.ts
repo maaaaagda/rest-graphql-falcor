@@ -5,4 +5,5 @@ export interface IDietRequests {
     getDietById(id: string): Promise<Response<string>>;
     addDiet(diet: IDiet): Promise<Response<string>>;
     updateDiet(id: string, diet: IDiet): Promise<Response<string>>;
+    removeDiet(id: string): Promise<Response<string>>;
 }

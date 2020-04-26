@@ -57,4 +57,20 @@ export class FalcorDietRequests extends FalcorRequestsBase implements IDietReque
 
         return got(options);
     }
+
+    public removeDiet(id: string): Promise<Response<string>> {
+        const options: Options = {
+            url: this.apiUrl,
+            body: JSON.stringify(
+                {
+                    method: "call",
+                    callPath: JSON.stringify(["diet", [id], "delete"]),
+                    pathSuffixes: JSON.stringify(["delete"])
+                }
+            ),
+            method: "POST"
+        };
+
+        return got(options);
+    }
 }

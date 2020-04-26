@@ -21,6 +21,10 @@ export class DietService {
     return await this._dietRepository.insertOne(dietParams);
   }
 
+  public async removeDiet(id: string): Promise<IDiet> {
+    return await this._dietRepository.removeOneById(id);
+  }
+
   public async updateDiet(id: string, dietParams: IDiet) {
     const dietToModify: IDiet = await this._dietRepository.getOne({
       _id: id

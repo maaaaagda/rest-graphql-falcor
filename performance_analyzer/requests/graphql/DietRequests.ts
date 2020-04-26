@@ -106,4 +106,23 @@ export class GraphQLDietRequests extends GraphQLRequestsBase implements IDietReq
 
         return got(options);
     }
+
+    public removeDiet(id: string): Promise<Response<string>> {
+        const query = `
+            mutation ($id: String!) {
+                removeDiet(id: $id)
+            }
+        `;
+        const variables = {
+            id
+        };
+                
+        const options: Options = {
+            url: this.apiUrl,
+            body: JSON.stringify({query, variables}),
+            method: "POST"
+        };
+
+        return got(options);
+    }
 }

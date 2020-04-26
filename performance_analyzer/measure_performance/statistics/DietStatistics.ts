@@ -26,7 +26,8 @@ export class DietStatistics extends StatisticsBase {
         await this.getAllDietsMetrics(dietRequests, Tool.REST);
         const newDietsIds: string[] = await this.addDietsMetrics(
             dietRequests, Tool.REST, (res: any) => res.message._id);
-        this.updateDietsMetrics(dietRequests, Tool.REST, newDietsIds);
+        await this.updateDietsMetrics(dietRequests, Tool.REST, newDietsIds);
+        await this.removeDietsMetrics(dietRequests, Tool.REST, newDietsIds);
     }
     protected async getGraphQLStatistics(): Promise<void> {
         const dietRequests: IDietRequests = await new GraphQLDietRequests();
@@ -35,7 +36,8 @@ export class DietStatistics extends StatisticsBase {
             dietRequests,
             Tool.GraphQL,
             (res: any) => res.data.addDiet._id);
-        this.updateDietsMetrics(dietRequests, Tool.GraphQL, newDietsIds);
+        await this.updateDietsMetrics(dietRequests, Tool.GraphQL, newDietsIds);
+        await this.removeDietsMetrics(dietRequests, Tool.GraphQL, newDietsIds);
     }
     protected async getFalcorStatistics(): Promise<void> {
         const dietRequests: IDietRequests = await new FalcorDietRequests();
@@ -45,7 +47,8 @@ export class DietStatistics extends StatisticsBase {
             dietRequests,
             Tool.Falcor,
             (res: any) => res.jsonGraph.diet._id);   
-        this.updateDietsMetrics(dietRequests, Tool.Falcor, newDietsIds);
+        await this.updateDietsMetrics(dietRequests, Tool.Falcor, newDietsIds);
+        await this.removeDietsMetrics(dietRequests, Tool.Falcor, newDietsIds);
     }
 
     private async getAllDietsMetrics(dietRequests: IDietRequests, tool: Tool, nrOfDiets?: number): Promise<void> {
@@ -90,6 +93,22 @@ export class DietStatistics extends StatisticsBase {
         this.writeStatistics(
             "diets", tool, Operation.UPDATE, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
         return dietIds;
+    }
+
+    private async removeDietsMetrics(
+        dietRequests: IDietRequests, tool: Tool, dietIds: string[]): Promise<any> {
+            const statisticsCalculator = new StatisticsCalculator();
+            for (const dietId of dietIds) {
+                const response: Response<string> = await dietRequests.removeDiet(
+                    dietId);
+                statisticsCalculator.recalculateStatistics(response);
+            }
+            this.writeStatistics(
+                "diets",
+                tool,
+                Operation.DELETE,
+                OperationDetails.NONE,
+                statisticsCalculator.getAverageStatistics());
     }
 
     private generateRandomDiets(): IDiet[] {

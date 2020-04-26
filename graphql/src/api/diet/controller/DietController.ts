@@ -1,3 +1,4 @@
+import { UserRole } from './../../../../../falcor/src/api/user/model/UserRole';
 import { Container, inject } from "inversify";
 import { TYPES } from "../../../ioc/types";
 import { DIET_TYPES } from "../ioc/DietTypes";
@@ -50,5 +51,16 @@ export class DietController  {
     this._validator.validate(args.diet, dietUpdateSchema);
     const diet: IDiet = await this._dietService.updateDiet(args.id, args.diet);
     return diet;
+  }
+
+  public readonly removeDiet = async ( id: string, authToken: string ): Promise<boolean> => {
+    this._authenticator.authenticate(
+        authToken,
+        UserRole.DIETITIAN
+    );
+    await this._dietService.removeDiet(
+        id
+    );
+    return true;
   }
 }

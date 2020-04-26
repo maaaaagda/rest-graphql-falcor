@@ -45,4 +45,12 @@ export class RESTDietRequests extends RESTRequestsBase implements IDietRequests 
         };
         return got(options);
     }
+
+    public removeDiet(id: string): Promise<Response<string>> {
+        const options = {
+            url: `${this.apiUrl}diets/${id}`,
+            method: "DELETE"
+        };
+        return got(options);
+    }
 }

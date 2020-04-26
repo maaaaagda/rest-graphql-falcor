@@ -67,7 +67,6 @@ export const mealRoutes: any = [
     {
         route: "meal[{keys:ids}].delete",
         async call(callPath, args, pathSet, paths) {
-            console.log("inside");
             const mealPaths: any = [];
             for (const mealId of callPath.ids) {
                 await mealController.removeMeal(mealId, this.token);
@@ -75,7 +74,6 @@ export const mealRoutes: any = [
             }
 
             return mealPaths;    
-    }
-
+        }
     }
 ];

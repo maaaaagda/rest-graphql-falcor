@@ -10,6 +10,7 @@ export const DietResolvers: IResolver = {
   },
   Mutation: {
     addDiet: dietController.addDiet,
-    updateDiet: dietController.updateDiet
+    updateDiet: dietController.updateDiet,
+    removeDiet: dietController.removeDiet
   }
 };

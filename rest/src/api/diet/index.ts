@@ -1,3 +1,4 @@
+import { UserRole } from './../../../../falcor/src/api/user/model/UserRole';
 import { NextFunction, Request, Response } from "express";
 import { Container, inject } from "inversify";
 import {
@@ -5,7 +6,8 @@ import {
   httpGet,
   httpPost,
   httpPut,
-  interfaces
+  interfaces,
+  httpDelete
 } from "inversify-express-utils";
 import { TYPES } from "../../ioc/types";
 import { DIET_TYPES } from "./ioc/DietTypes";
@@ -109,13 +111,33 @@ export class DietController implements interfaces.Controller {
     next: NextFunction
   ): Promise<Response> {
     try {
-      this._authenticator.authenticate(req.headers.authorization);
+      this._authenticator.authenticate(req.headers.authorization, UserRole.DIETITIAN);
       this._validator.validate(req.body, dietPutSchema);
       const updatedDiet: IDiet = await this._dietService.putDiet(
         req.params.id,
         req.body
       );
       return res.json(SuccessResponse.Ok(updatedDiet));
+    } catch (error) {
+      return new Promise(() => {
+        next(error);
+      });
+    }
+  }
+
+  @httpDelete("/:id")
+  public async deleteDiet(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    try {
+      this._authenticator.authenticate(
+        req.headers.authorization,
+        UserRole.DIETITIAN
+      );
+      await this._dietService.removeDiet(req.params.id);
+      return res.json(SuccessResponse.Ok());
     } catch (error) {
       return new Promise(() => {
         next(error);
