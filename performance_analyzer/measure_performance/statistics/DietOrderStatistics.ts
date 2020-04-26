@@ -1,4 +1,4 @@
-import { RequestHelpers } from './../../seed_database/RequestHelpers';
+import { RequestHelpers } from "./../../seed_database/RequestHelpers";
 import { FalcorDietOrderRequests } from "../../requests/falcor/DietOrderRequests";
 import { IDietOrder } from "../../generate_data/dietOrders/IDietOrder";
 import { IDietOrderGenerator } from "../../generate_data/dietOrders/IDietOrderGenerator";
@@ -112,7 +112,7 @@ export class DietOrderStatistics extends StatisticsBase {
             const dietIds: string[] = await RequestHelpers.getAllDietIds();
             const kcalOptions: number[] = await RequestHelpers.getKcalOptions();
             this._randomDietOrders = await this.generateRandomDietOrders(dietIds, kcalOptions);
-            this._testUserToken = await RequestHelpers.getTestUserToken()
+            this._testUserToken = await RequestHelpers.getTestUserToken();
             this._isInitiated = true;
         }
     }

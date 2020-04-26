@@ -1,3 +1,5 @@
+import { DietOrderStatistics } from "./statistics/DietOrderStatistics";
+import { DailyDietStatistics } from "./statistics/DailyDietStatistics";
 import { Cleaner } from "./../clear_database/Cleaner";
 import { Seeder } from "./../seed_database/Seeder";
 import { MealStatistics } from "./statistics/MealStatistics";
@@ -13,12 +15,14 @@ async function getPerformanceData() {
     const logger = new Logger(`C:\\Users\\magda\\pwr\\Dyplom\\eksperyment\\stats_${dateTime}.csv`);
     try {
         for ( const dbSize of Object.values(DatabaseSize)) {
+            await new Cleaner().clean();
             await new Seeder().seed(dbSize);
             await new UserStatistics(logger, NUMBER_OF_REPETITION, dbSize).getStatistics();
             await new DietStatistics(logger, NUMBER_OF_REPETITION, dbSize).getStatistics();
             await new ProductStatistics(logger, NUMBER_OF_REPETITION, dbSize).getStatistics();
             await new MealStatistics(logger, NUMBER_OF_REPETITION, dbSize).getStatistics();
-            await new Cleaner().clean();
+            await new DailyDietStatistics(logger, NUMBER_OF_REPETITION, dbSize).getStatistics();
+            await new DietOrderStatistics(logger, NUMBER_OF_REPETITION, dbSize).getStatistics();
         }
     } catch (err) {
         console.log(err);

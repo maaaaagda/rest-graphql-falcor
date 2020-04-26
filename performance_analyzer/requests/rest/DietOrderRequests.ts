@@ -1,5 +1,5 @@
-import { IDietOrder } from './../../generate_data/dietOrders/IDietOrder';
-import { Response } from 'got';
+import { IDietOrder } from "./../../generate_data/dietOrders/IDietOrder";
+import { Response } from "got";
 import { IDietOrderRequests } from "../IDietOrderRequests";
 import got from "../got";
 import { RESTRequestsBase } from "./RESTRequestsBase";

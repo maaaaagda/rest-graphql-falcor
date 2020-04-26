@@ -1,4 +1,4 @@
-import { UserRole } from './../../../../falcor/src/api/user/model/UserRole';
+import { UserRole } from "./../../../../falcor/src/api/user/model/UserRole";
 import { NextFunction, Request, Response } from "express";
 import { Container, inject } from "inversify";
 import {

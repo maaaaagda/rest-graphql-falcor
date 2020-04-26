@@ -1,9 +1,9 @@
-import { Response } from 'got';
+import { Response } from "got";
 import { IAuthRequests } from "../IAuthRequests";
 import { TEST_USER } from "../../common";
 import { API_URL } from "../../common";
 import got from "../got";
-import { RESTRequestsBase } from './RESTRequestsBase';
+import { RESTRequestsBase } from "./RESTRequestsBase";
 
 export class RESTAuthRequests extends RESTRequestsBase implements IAuthRequests {
     public login = async (email?: string, password?: string): Promise<Response<string>> => {

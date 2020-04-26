@@ -1,4 +1,4 @@
-import { RESTAuthRequests } from './../requests/rest/AuthRequests';
+import { RESTAuthRequests } from "./../requests/rest/AuthRequests";
 import { RESTUserRequests } from "../requests/rest/UserRequests";
 import { RESTDietRequests } from "../requests/rest/DietRequests";
 import { RESTMealRequests } from "../requests/rest/MealRequests";

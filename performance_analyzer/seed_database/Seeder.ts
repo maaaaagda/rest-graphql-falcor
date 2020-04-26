@@ -21,13 +21,15 @@ export class Seeder extends RESTRequestsBase implements ISeeder {
 
     public async seed(databaseSize: DatabaseSize) {
         try {
+            console.log(`Seeding db with size: ${databaseSize} started`);
             await this.addUsers(COLLECTION_SIZES.users[databaseSize], true);
             await this.addDiets(COLLECTION_SIZES.diets[databaseSize]);
             await this.addMeals(COLLECTION_SIZES.meals[databaseSize]);
             await this.addDailyDiets(COLLECTION_SIZES.dailyDiets[databaseSize]);
             await this.addDietOrders(
                 Math.floor(COLLECTION_SIZES.dietOrders[databaseSize] / COLLECTION_SIZES.users[databaseSize]));
-        } catch (err) {
+            console.log(`Seeding db with size: ${databaseSize} finished`);
+            } catch (err) {
             console.log(err);
             console.log(err?.response?.body);
         }

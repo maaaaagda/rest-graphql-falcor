@@ -14,8 +14,7 @@ export const dietOrderSchema: mongoose.Schema = new mongoose.Schema({
   },
   customerId: {
     type: String,
-    ref: "User",
-    required: true
+    ref: "User"
   },
   dates: {
     type: [{ type: Date }]
