@@ -1,3 +1,4 @@
+import { RequestHelpers } from "./../../seed_database/RequestHelpers";
 import { FalcorDietRequests } from "../../requests/falcor/DietRequests";
 import { IDiet } from "../../generate_data/diets/IDiet";
 import { IDietGenerator } from "../../generate_data/diets/IDietGenerator";
@@ -41,7 +42,7 @@ export class DietStatistics extends StatisticsBase {
     }
     protected async getFalcorStatistics(): Promise<void> {
         const dietRequests: IDietRequests = await new FalcorDietRequests();
-        const nrOfDiets = await this.getNrOfAllDiets();
+        const nrOfDiets = (await RequestHelpers.getAllDietIds()).length;
         await this.getAllDietsMetrics(dietRequests, Tool.Falcor, nrOfDiets);
         const newDietsIds: string[] = await this.addDietsMetrics(
             dietRequests,
@@ -120,11 +121,5 @@ export class DietStatistics extends StatisticsBase {
             i += 1;
         }
         return diets;
-    }
-
-    private async getNrOfAllDiets(): Promise<number> {
-        const dietRequests: IDietRequests = await new GraphQLDietRequests();
-        const response: Response<string> = await dietRequests.getAllDiets();
-        return JSON.parse(response.body).data.diets.length;
     }
 }

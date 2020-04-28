@@ -6,9 +6,9 @@ import { FalcorRequestsBase } from "./FalcorRequestsBase";
 
 export class FalcorUserRequests extends FalcorRequestsBase implements IUserRequests {
 
-    public getAllUsers = async (): Promise<Response<string>> => {
+    public getAllUsers = async (nrOfUsers?: number): Promise<Response<string>> => {
         const options: Options = {
-            url: `${this.apiUrl}?paths=[["users",["name","_id"]]]&method=get`
+            url: `${this.apiUrl}?paths=[["users",[{"length": ${nrOfUsers}}],["name","_id"]]]&method=get`
         };
 
         return got(options);

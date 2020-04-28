@@ -32,6 +32,20 @@ export const dietRoutes: any = [
         }
     },
     {
+        route: "dietsAll[{ranges:indexRanges}][\"name\", \"dailyCost\", \"photoUrl\", \"_id\"]",
+        get: async (pathSet) => {
+            const diets: IDiet[] = (await dietController.getDiets()).slice(0, pathSet.indexRanges[0].to + 1);
+            const dietsRoute: object = {};
+            diets.forEach((diet, i) => {
+                dietsRoute[i] = {};
+                pathSet[2].forEach((key) => {
+                    dietsRoute[i][key] = diet[key];
+                });
+            });
+            return { jsonGraph: { diets: dietsRoute} };
+        }
+    },
+    {
         route: "diet.add",
         async call(callPath, args, pathSet, paths) {
         const diet: IDiet = await dietController.addDiet(args, this.token);
@@ -60,6 +74,18 @@ export const dietRoutes: any = [
             }
 
             return mealPaths;    
+        }
+    },
+    {
+        route: "diets.all",
+        async call(callPath, args, pathSet, paths) {
+        const diets: IDiet[] = await dietController.getDiets();
+        for (const diet of diets) {
+            const dietPaths: any = {};
+            pathSet.map((key) => {
+                dietPaths.push({ path: ["diet", key], value: diet[key]});
+                });
+            }
         }
     }
 ];

@@ -1,3 +1,4 @@
+import { RequestHelpers } from "./../../seed_database/RequestHelpers";
 import { FalcorUserRequests } from "../../requests/falcor/UserRequests";
 import { IUser } from "../../generate_data/users/IUser";
 import { IUserGenerator } from "../../generate_data/users/IUserGenerator";
@@ -34,14 +35,15 @@ export class UserStatistics extends StatisticsBase {
     }
     protected async getFalcorStatistics(): Promise<void> {
         const userRequests: IUserRequests = await new FalcorUserRequests();
-        await this.getAllUsersMetrics(userRequests, Tool.Falcor);
+        const usersCount: number = (await RequestHelpers.getAllUserIds()).length;
+        await this.getAllUsersMetrics(userRequests, Tool.Falcor, usersCount);
         await this.addUsersMetrics(userRequests, Tool.Falcor, (res: Response<string>) => "");    }
 
-    private async getAllUsersMetrics(userRequests: IUserRequests, tool: Tool): Promise<void> {
+    private async getAllUsersMetrics(userRequests: IUserRequests, tool: Tool, nrOfAllUsers?: number): Promise<void> {
         let i = 0;
         const statisticsCalculator = new StatisticsCalculator() ;
         while (i < this.numberOfRepetitions) {
-            const response: Response<string> = await userRequests.getAllUsers();
+            const response: Response<string> = await userRequests.getAllUsers(nrOfAllUsers);
             statisticsCalculator.recalculateStatistics(response);
             i += 1;
         }

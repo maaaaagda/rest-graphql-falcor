@@ -50,5 +50,19 @@ export const userRoutes: any = [
             return { path: ["user", key], value: user[key]};
         });
       }
-  }
+  },
+    {
+        route: "users.all",
+        async call(callPath, args, pathSet, paths) {
+        const users: IUser[] = await userController.getUsers();
+        const userPaths: any = {};
+
+        for (const user of users) {
+            pathSet.map((key) => {
+                userPaths.push({ path: ["user", key], value: user[key]});
+                });
+            }
+        return userPaths;
+      }
+    }
 ];

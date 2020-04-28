@@ -9,7 +9,7 @@ export class FalcorDietRequests extends FalcorRequestsBase implements IDietReque
     
     public getAllDiets = async (nrOfDiets: number): Promise<Response<string>> => {
         const options: Options = {
-            url: `${this.apiUrl}?paths=[["diets",[{"length": ${nrOfDiets}}],["name", "photoUrl", "dailyCost", "_id"]]]&method=get`
+            url: `${this.apiUrl}?paths=[["dietsAll",[{"length": ${nrOfDiets}}],["name", "photoUrl", "dailyCost", "_id"]]]&method=get`
         };
 
         return got(options);
