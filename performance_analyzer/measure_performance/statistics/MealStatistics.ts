@@ -64,7 +64,7 @@ export class MealStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "meals", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getAverageStatistics());
+            "meals", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getMedianStatistics());
     }
 
     private async addMealsMetrics(
@@ -77,7 +77,7 @@ export class MealStatistics extends StatisticsBase {
             mealIds.push(getIdFromRes(JSON.parse(response.body)));
         }
         this.writeStatistics(
-            "meals", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
+            "meals", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return mealIds;
     }
 
@@ -95,7 +95,7 @@ export class MealStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "meals", tool, Operation.UPDATE, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
+            "meals", tool, Operation.UPDATE, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return mealIds;
     }
 
@@ -112,7 +112,7 @@ export class MealStatistics extends StatisticsBase {
                 tool,
                 Operation.GET,
                 OperationDetails.GET_BY_ID,
-                statisticsCalculator.getAverageStatistics());
+                statisticsCalculator.getMedianStatistics());
     }
 
     private async removeMealsMetrics(
@@ -128,7 +128,7 @@ export class MealStatistics extends StatisticsBase {
                 tool,
                 Operation.DELETE,
                 OperationDetails.NONE,
-                statisticsCalculator.getAverageStatistics());
+                statisticsCalculator.getMedianStatistics());
     }
 
     private async generateRandomMeals(): Promise<void> {

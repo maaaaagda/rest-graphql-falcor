@@ -48,7 +48,7 @@ export class UserStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "users", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getAverageStatistics());
+            "users", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getMedianStatistics());
     }
 
     private async addUsersMetrics(
@@ -61,7 +61,7 @@ export class UserStatistics extends StatisticsBase {
             userIds.push(getIdFromRes(response));
         }
         this.writeStatistics(
-            "users", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
+            "users", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return userIds;
     }
 

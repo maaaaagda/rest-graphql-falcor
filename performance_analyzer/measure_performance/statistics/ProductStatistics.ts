@@ -47,7 +47,7 @@ export class ProductStatistics extends StatisticsBase {
                 tool,
                 Operation.GET,
                 `Searched phrase: ${search}`,
-                statisticsCalculator.getAverageStatistics());    
+                statisticsCalculator.getMedianStatistics());    
         }
     }
 }

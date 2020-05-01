@@ -61,7 +61,7 @@ export class DietStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "diets", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getAverageStatistics());
+            "diets", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getMedianStatistics());
     }
 
     private async addDietsMetrics(
@@ -74,7 +74,7 @@ export class DietStatistics extends StatisticsBase {
             dietIds.push(getIdFromRes(JSON.parse(response.body)));
         }
         this.writeStatistics(
-            "diets", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
+            "diets", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return dietIds;
     }
 
@@ -92,7 +92,7 @@ export class DietStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "diets", tool, Operation.UPDATE, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
+            "diets", tool, Operation.UPDATE, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return dietIds;
     }
 
@@ -109,7 +109,7 @@ export class DietStatistics extends StatisticsBase {
                 tool,
                 Operation.DELETE,
                 OperationDetails.NONE,
-                statisticsCalculator.getAverageStatistics());
+                statisticsCalculator.getMedianStatistics());
     }
 
     private generateRandomDiets(): IDiet[] {

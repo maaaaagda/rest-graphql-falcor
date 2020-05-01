@@ -69,7 +69,7 @@ export class DailyDietStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "dailyDiets", tool, Operation.GET, "Get one diet for one day", statisticsCalculator.getAverageStatistics());
+            "dailyDiets", tool, Operation.GET, "Get one diet for one day", statisticsCalculator.getMedianStatistics());
     }
 
     private async getDailyDietsMetricsForAllDiets(dailyDietRequests: IDailyDietRequests, tool: Tool)
@@ -87,7 +87,7 @@ export class DailyDietStatistics extends StatisticsBase {
             tool,
             Operation.GET,
             "Get all diets for one day",
-            statisticsCalculator.getAverageStatistics());
+            statisticsCalculator.getMedianStatistics());
     }
 
     private async addDailyDietsMetrics(
@@ -100,7 +100,7 @@ export class DailyDietStatistics extends StatisticsBase {
             dailyDietIds.push(getIdFromRes(JSON.parse(response.body)));
         }
         this.writeStatistics(
-            "dailyDiets", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
+            "dailyDiets", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return dailyDietIds;
     }
 
@@ -118,7 +118,7 @@ export class DailyDietStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "dailyDiets", tool, Operation.UPDATE, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
+            "dailyDiets", tool, Operation.UPDATE, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return dailyDietIds;
     }
 

@@ -63,7 +63,7 @@ export class DietOrderStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "dietOrders", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getAverageStatistics());
+            "dietOrders", tool, Operation.GET, OperationDetails.GET_ALL, statisticsCalculator.getMedianStatistics());
     }
 
     private async getUserDietOrdersMetrics(dietOrderRequests: IDietOrderRequests, tool: Tool): Promise<void> {
@@ -75,7 +75,7 @@ export class DietOrderStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "dietOrders", tool, Operation.GET, "GET user's diet orders", statisticsCalculator.getAverageStatistics());
+            "dietOrders", tool, Operation.GET, "GET user's diet orders", statisticsCalculator.getMedianStatistics());
     }
 
     private async addDietOrdersMetrics(
@@ -88,7 +88,7 @@ export class DietOrderStatistics extends StatisticsBase {
             dietOrderIds.push(getIdFromRes(JSON.parse(response.body)));
         }
         this.writeStatistics(
-            "dietOrders", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getAverageStatistics());
+            "dietOrders", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return dietOrderIds;
     }
 
