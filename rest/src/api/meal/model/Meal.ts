@@ -14,5 +14,5 @@ export interface IMeal extends Document, Entity {
   carbohydrate: number;
   fat: number;
   fibre: number;
-  photo: string;
+  photoUrl: string;
 }

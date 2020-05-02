@@ -14,23 +14,28 @@ export class GraphQLDailyDietRequests extends GraphQLRequestsBase implements IDa
                         dailyMeals {
                             breakfast {
                                 name
-                                photo
+                                photoUrl
+                                _id
                             }
                             morningSnack {
                                 name
-                                photo
+                                photoUrl
+                                _id
                             }
                             lunch {
                                 name
-                                photo
+                                photoUrl
+                                _id
                             }
                             afternoonSnack {
                                 name
-                                photo
+                                photoUrl
+                                _id
                             }
                             dinner {
                                 name
-                                photo
+                                photoUrl
+                                _id
                             }
                         }                        
                     }

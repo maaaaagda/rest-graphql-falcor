@@ -40,7 +40,7 @@ export const mealSchema: mongoose.Schema = new mongoose.Schema({
   fibre: {
     type: Number
   },
-  photo: {
-    type: Buffer
+  photoUrl: {
+    type: String
   }
 });

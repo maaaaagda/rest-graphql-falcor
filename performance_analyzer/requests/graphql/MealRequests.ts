@@ -36,7 +36,7 @@ export class GraphQLMealRequests extends GraphQLRequestsBase implements IMealReq
                         carbohydrate
                         fat
                         fibre
-                        photo
+                        photoUrl
                     }
                 }
         `;

@@ -12,12 +12,12 @@ type Meal implements NutritionValues {
   carbohydrate: Float
   fat: Float
   fibre: Float
-  photo: String
+  photoUrl: String
 }
 
 input ModifyMeal {
   name: String!
-  photo: String!
+  photoUrl: String!
   ingredients: [ModifyIngredient!]!
   recipe: String
   rating: Float

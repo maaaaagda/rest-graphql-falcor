@@ -5,5 +5,5 @@ export const mealAddSchema: Joi.Schema = Joi.object().keys({
   name: Joi.string().required(),
   ingredients: Joi.array().items(Ingredient),
   recipe: Joi.string(),
-  photo: Joi.string()
+  photoUrl: Joi.string()
 });

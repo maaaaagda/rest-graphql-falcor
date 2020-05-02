@@ -15,7 +15,9 @@ export class FalcorDailyDietRequests extends FalcorRequestsBase implements IDail
                     method: "call",
                     callPath: JSON.stringify(["dailyDietMeals", "search"]),
                     arguments: JSON.stringify([{date, dietId}]),
-                    pathSuffixes: JSON.stringify([["breakfast"], ["name", "kcal", "_id"]])
+                    pathSuffixes: JSON.stringify(
+                        [["breakfast", "morningSnack", "lunch", "afternoonSnack", "dinner"],
+                        ["name", "photoUrl", "_id"]])
                 }
             ),
             method: "POST"

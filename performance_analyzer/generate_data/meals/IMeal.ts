@@ -3,5 +3,5 @@ export interface IMeal {
     name: string;
     ingredients: IIngredient[];
     recipe: string;
-    photo: string;
+    photoUrl: string;
 }

@@ -16,7 +16,7 @@ export class MealGenerator {
             name: capitalize(faker.lorem.words()),
             ingredients,
             recipe: faker.lorem.paragraph(),
-            photo: faker.image.imageUrl()
+            photoUrl: faker.image.imageUrl()
         };
     }
 

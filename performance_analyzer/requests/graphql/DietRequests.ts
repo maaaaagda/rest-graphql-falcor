@@ -14,6 +14,7 @@ export class GraphQLDietRequests extends GraphQLRequestsBase implements IDietReq
                     name
                     _id
                     photoUrl
+                    dailyCost
                 }
             }
         `;

@@ -48,7 +48,7 @@ const productNameAggregation = [
       carbohydrate: { $first: "$carbohydrate" },
       fat: { $first: "$fat" },
       fibre: { $first: "$fibre" },
-      photo: { $first: "$photo" },
+      photoUrl: { $first: "$photoUrl" },
       authorId: { $first: "$authorId" },
       ingredients: {
         $push: {
@@ -69,7 +69,7 @@ const productNameAggregation = [
       carbohydrate: 1,
       fat: 1,
       fibre: 1,
-      photo: 1,
+      photoUrl: 1,
       authorId: 1,
       ingredients: {
         $cond: {
