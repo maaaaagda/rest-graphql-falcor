@@ -17,7 +17,8 @@ export class FalcorMealRequests extends FalcorRequestsBase implements IMealReque
     
     public getMealById = async (id: string): Promise<Response<string>> => {
         const options = {
-            url: `${this.apiUrl}?paths=[["mealsByIds",["${id}"],["name","_id", "photoUrl", "kcal", "protein", "fat", "fibre", "carbohydrate"]]]&method=get`
+            url: `${this.apiUrl}?paths=[["mealsByIds",["${id}"],
+            ["name","_id", "photoUrl", "kcal", "protein", "fat", "fibre", "carbohydrate"]]]&method=get`
         };
         return got(options);
     }

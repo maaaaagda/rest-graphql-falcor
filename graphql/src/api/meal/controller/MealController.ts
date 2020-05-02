@@ -30,9 +30,9 @@ export class MealController {
     return meals;
   }
 
-  public readonly getMealById = async (parent, args: { mealId: string}, ctx: Context, info): Promise<IMeal> => {
+  public readonly getMealById = async (parent, args: { id: string}, ctx: Context, info): Promise<IMeal> => {
     this._authenticator.authenticate(ctx.token);  
-    const meal: IMeal = (await this._mealService.getMealById(args.mealId))[0];
+    const meal: IMeal = (await this._mealService.getMealById(args.id))[0];
     if (!meal) {
         throw new UserInputError("Meal with given id does not exist");
     }

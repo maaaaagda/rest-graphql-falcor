@@ -19,6 +19,20 @@ export const mealRoutes: any = [
         }
     },
     {
+        route: "mealsByIds[{keys:ids}][\"name\", \"kcal\", \"recipe\", \"_id\", \"photoUrl\", \"protein\", \"fat\", \"fibre\", \"carbohydrate\"]",
+        get: async (pathSet) => {
+            const mealsRoute: object = {};
+            for (const id of pathSet.ids) {
+                const meal: IMeal = await mealController.getMealById(id);
+                mealsRoute[id] = {};
+                pathSet[2].forEach((key) => {
+                    mealsRoute[id][key] = meal[key];
+                });
+            }
+            return { jsonGraph: {mealsByIds: mealsRoute} };
+        }
+    },
+    {
         route: "meals[{keys:ids}].ingredients[{ranges:indexRanges}][\"productName\", \"weight\"]",
         get: async (pathSet) => {
           const mealRoute: object = {};
