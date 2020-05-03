@@ -1,6 +1,6 @@
 export interface IStatistics {
     size: number;
-    wait: number;
+    request: number;
     firstByte: number;
     download: number;
     total: number;

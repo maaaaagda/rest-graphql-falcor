@@ -4,7 +4,7 @@ export class StatisticsCalculator {
 
     private _nrOfRepetition: number = 0;
     private readonly _size: number[] = [];
-    private readonly _wait: number[] = [];
+    private readonly _request: number[] = [];
     private readonly _firstByte: number[] = [];
     private readonly _download: number[] = [];
     private readonly _total: number[] = [];
@@ -12,7 +12,7 @@ export class StatisticsCalculator {
 
     public recalculateStatistics(res: Response<string>, withResponseData = false) {
         this._nrOfRepetition += 1;
-        this._wait.push(res.timings.phases.wait);
+        this._request.push(res.timings.phases.request);
         this._firstByte.push(res.timings.phases.firstByte);
         this._download.push(res.timings.phases.download);
         this._total.push(res.timings.phases.total);
@@ -27,7 +27,7 @@ export class StatisticsCalculator {
     public getAverageStatistics(): IStatistics {
         return {
             size: this.average(this._size),
-            wait: this.average(this._wait),
+            request: this.average(this._request),
             firstByte: this.average(this._firstByte),
             download: this.average(this._download),
             total: this.average(this._total)
@@ -37,7 +37,7 @@ export class StatisticsCalculator {
     public getMedianStatistics(): IStatistics {
         return {
             size: this.median(this._size),
-            wait: this.median(this._wait),
+            request: this.median(this._request),
             firstByte: this.median(this._firstByte),
             download: this.median(this._download),
             total: this.median(this._total)

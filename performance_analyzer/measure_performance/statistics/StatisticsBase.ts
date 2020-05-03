@@ -37,7 +37,7 @@ export abstract class StatisticsBase {
             operation,
             operationDetails,
             statistics.size,
-            statistics.wait,
+            statistics.request,
             statistics.firstByte,
             statistics.download,
             statistics.total);
