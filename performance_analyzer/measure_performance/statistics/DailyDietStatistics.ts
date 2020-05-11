@@ -29,31 +29,31 @@ export class DailyDietStatistics extends StatisticsBase {
         const dailyDietRequests: IDailyDietRequests = await new RESTDailyDietRequests();
         await this.getDailyDietsMetricsForOneDiet(dailyDietRequests, Tool.REST);
         await this.getDailyDietsMetricsForAllDiets(dailyDietRequests, Tool.REST);
-        const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
-            dailyDietRequests, Tool.REST, (res: any) => res.message._id);
-        await this.updateDailyDietsMetrics(dailyDietRequests, Tool.REST, newDailyDietsIds);
+        // const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
+        //     dailyDietRequests, Tool.REST, (res: any) => res.message._id);
+        // await this.updateDailyDietsMetrics(dailyDietRequests, Tool.REST, newDailyDietsIds);
     }
     protected async getGraphQLStatistics(): Promise<void> {
         await this.init();
         const dailyDietRequests: IDailyDietRequests = await new GraphQLDailyDietRequests();
         await this.getDailyDietsMetricsForOneDiet(dailyDietRequests, Tool.GraphQL);
         await this.getDailyDietsMetricsForAllDiets(dailyDietRequests, Tool.GraphQL);
-        const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
-            dailyDietRequests,
-            Tool.GraphQL,
-            (res: any) => res.data.addDailyDiet._id);
-        await this.updateDailyDietsMetrics(dailyDietRequests, Tool.GraphQL, newDailyDietsIds);
+        // const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
+        //     dailyDietRequests,
+        //     Tool.GraphQL,
+        //     (res: any) => res.data.addDailyDiet._id);
+        // await this.updateDailyDietsMetrics(dailyDietRequests, Tool.GraphQL, newDailyDietsIds);
     }
     protected async getFalcorStatistics(): Promise<void> {
         await this.init();
         const dailyDietRequests: IDailyDietRequests = await new FalcorDailyDietRequests();
         await this.getDailyDietsMetricsForOneDiet(dailyDietRequests, Tool.Falcor);
         await this.getDailyDietsMetricsForAllDiets(dailyDietRequests, Tool.Falcor);
-        const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
-            dailyDietRequests,
-            Tool.Falcor,
-            (res: any) => res.jsonGraph.dailyDiet._id);   
-        await this.updateDailyDietsMetrics(dailyDietRequests, Tool.Falcor, newDailyDietsIds);
+        // const newDailyDietsIds: string[] = await this.addDailyDietsMetrics(
+        //     dailyDietRequests,
+        //     Tool.Falcor,
+        //     (res: any) => res.jsonGraph.dailyDiet._id);   
+        // await this.updateDailyDietsMetrics(dailyDietRequests, Tool.Falcor, newDailyDietsIds);
     }
 
     private async getDailyDietsMetricsForOneDiet(dailyDietRequests: IDailyDietRequests, tool: Tool)
@@ -69,7 +69,10 @@ export class DailyDietStatistics extends StatisticsBase {
             i += 1;
         }
         this.writeStatistics(
-            "dailyDiets", tool, Operation.GET, "Get one diet for one day", statisticsCalculator.getMedianStatistics());
+            "dailyDiets",
+            tool, Operation.GET,
+            "Get menu for one diet for one day",
+            statisticsCalculator.getMedianStatistics());
     }
 
     private async getDailyDietsMetricsForAllDiets(dailyDietRequests: IDailyDietRequests, tool: Tool)
@@ -86,7 +89,7 @@ export class DailyDietStatistics extends StatisticsBase {
             "dailyDiets",
             tool,
             Operation.GET,
-            "Get all diets for one day",
+            "Get menus for all diets for one day",
             statisticsCalculator.getMedianStatistics());
     }
 
@@ -99,8 +102,8 @@ export class DailyDietStatistics extends StatisticsBase {
             statisticsCalculator.recalculateStatistics(response);
             dailyDietIds.push(getIdFromRes(JSON.parse(response.body)));
         }
-        this.writeStatistics(
-            "dailyDiets", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
+        // this.writeStatistics(
+        //     "dailyDiets", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return dailyDietIds;
     }
 
@@ -130,6 +133,8 @@ export class DailyDietStatistics extends StatisticsBase {
             this._randomDate = RequestHelpers.nextDateGenerator().next().value as string;
             this._randomDietId = dietIds[Math.floor(Math.random() * dietIds.length)];
             this._randomDailyDiets = await this.generateRandomDailyDiets();
+            await this.addDailyDietsMetrics(
+                await new RESTDailyDietRequests(), Tool.REST, (res: any) => res.message._id);
             this._isInitiated = true;
         }
     }

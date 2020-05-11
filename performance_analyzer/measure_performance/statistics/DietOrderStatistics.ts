@@ -30,28 +30,18 @@ export class DietOrderStatistics extends StatisticsBase {
         const dietOrderRequests: IDietOrderRequests = await new RESTDietOrderRequests();
         await this.getAllDietOrdersMetrics(dietOrderRequests, Tool.REST);
         await this.getUserDietOrdersMetrics(dietOrderRequests, Tool.REST);
-        const newDietOrdersIds: string[] = await this.addDietOrdersMetrics(
-            dietOrderRequests, Tool.REST, (res: any) => res.message._id);
     }
     protected async getGraphQLStatistics(): Promise<void> {
         await this.init();
         const dietOrderRequests: IDietOrderRequests = await new GraphQLDietOrderRequests();
         await this.getAllDietOrdersMetrics(dietOrderRequests, Tool.GraphQL);
         await this.getUserDietOrdersMetrics(dietOrderRequests, Tool.GraphQL);
-        const newDietOrdersIds: string[] = await this.addDietOrdersMetrics(
-            dietOrderRequests,
-            Tool.GraphQL,
-            (res: any) => res.data.addDietOrder._id);
     }
     protected async getFalcorStatistics(): Promise<void> {
         await this.init();
         const dietOrderRequests: IDietOrderRequests = await new FalcorDietOrderRequests();
         await this.getAllDietOrdersMetrics(dietOrderRequests, Tool.Falcor);
         await this.getUserDietOrdersMetrics(dietOrderRequests, Tool.Falcor);
-        const newDietOrdersIds: string[] = await this.addDietOrdersMetrics(
-            dietOrderRequests,
-            Tool.Falcor,
-            (res: any) => res.jsonGraph.dietOrder._id);   
     }
 
     private async getAllDietOrdersMetrics(dietOrderRequests: IDietOrderRequests, tool: Tool): Promise<void> {
@@ -87,8 +77,8 @@ export class DietOrderStatistics extends StatisticsBase {
             statisticsCalculator.recalculateStatistics(response);
             dietOrderIds.push(getIdFromRes(JSON.parse(response.body)));
         }
-        this.writeStatistics(
-            "dietOrders", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
+        // this.writeStatistics(
+        //     "dietOrders", tool, Operation.ADD, OperationDetails.NONE, statisticsCalculator.getMedianStatistics());
         return dietOrderIds;
     }
 
@@ -113,6 +103,8 @@ export class DietOrderStatistics extends StatisticsBase {
             const kcalOptions: number[] = await RequestHelpers.getKcalOptions();
             this._randomDietOrders = await this.generateRandomDietOrders(dietIds, kcalOptions);
             this._testUserToken = await RequestHelpers.getTestUserToken();
+            await this.addDietOrdersMetrics(
+                await new RESTDietOrderRequests(), Tool.REST, (res: any) => res.message._id);
             this._isInitiated = true;
         }
     }

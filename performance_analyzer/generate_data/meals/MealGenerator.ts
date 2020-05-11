@@ -21,7 +21,7 @@ export class MealGenerator {
     }
 
     private generateIngredients(productIds: string[]): IIngredient[] {
-        const nrOfIngredients = Math.ceil(Math.random() * MAX_NR_OF_INGREDIENTS);
+        const nrOfIngredients = MAX_NR_OF_INGREDIENTS;
         let i = 0;
         const ingredients = [];
         while (i < nrOfIngredients) {
