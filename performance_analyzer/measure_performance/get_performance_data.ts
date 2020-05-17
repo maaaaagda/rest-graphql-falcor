@@ -12,7 +12,7 @@ const NUMBER_OF_REPETITION = 30;
 
 async function getPerformanceData() {
     const dateTime: string = new Date().toISOString().replace(/:/g, "-").substring(0, 19);
-    const logger = new Logger(`C:\\Users\\magda\\pwr\\Dyplom\\eksperyment\\stats_${dateTime}.csv`);
+    const logger = new Logger(`C:\\Users\\ep15543\\Documents\\OtherProjects\\perf_results\\stats_${dateTime}.csv`);
     try {
         for ( const dbSize of Object.values(DatabaseSize)) {
             await new Cleaner().clean();

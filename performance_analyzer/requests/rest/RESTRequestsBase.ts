@@ -4,6 +4,6 @@ export abstract class RESTRequestsBase {
     protected apiUrl: string;
 
     constructor() {
-        this.apiUrl = "http://localhost:5000/api/";
+        this.apiUrl = "http://192.168.1.1:5000/api/";
     }
 }

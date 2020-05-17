@@ -1,7 +1,6 @@
 import { Response } from "got";
 import { IAuthRequests } from "../IAuthRequests";
 import { TEST_USER } from "../../common";
-import { API_URL } from "../../common";
 import got from "../got";
 import { RESTRequestsBase } from "./RESTRequestsBase";
 

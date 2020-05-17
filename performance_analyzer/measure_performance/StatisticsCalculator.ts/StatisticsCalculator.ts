@@ -12,7 +12,7 @@ export class StatisticsCalculator {
 
     public recalculateStatistics(res: Response<string>, withResponseData = false) {
         this._nrOfRepetition += 1;
-        this._request.push(res.timings.phases.request);
+        this._request.push(res.timings.phases.request || 0);
         this._firstByte.push(res.timings.phases.firstByte);
         this._download.push(res.timings.phases.download);
         this._total.push(res.timings.phases.total);

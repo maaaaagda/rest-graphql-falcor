@@ -1,5 +1,4 @@
 import { IDietRequests } from "../IDietRequests";
-import { API_URL } from "../../common";
 import got from "../got";
 import { Response } from "got/dist/source";
 import { IDiet } from "../../generate_data/diets/IDiet";
@@ -9,21 +8,21 @@ export class RESTDietRequests extends RESTRequestsBase implements IDietRequests 
     
     public getAllDiets = async (): Promise<Response<string>> => {
         const options = {
-            url: API_URL + "diets"
+            url: this.apiUrl + "diets"
         };
         return got(options);
     }
     
     public getDietById = async (id: string): Promise<Response<string>> => {
         const options = {
-            url: `${API_URL}diets/${id}`
+            url: `${this.apiUrl}diets/${id}`
         };
         return got(options);
     }
     
     public getKcalOptions = async () => {
         const options = {
-            url: API_URL + "diets/kcal-options"
+            url: this.apiUrl + "diets/kcal-options"
         };
         return await got(options);
     }
