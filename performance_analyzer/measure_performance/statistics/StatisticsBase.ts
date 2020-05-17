@@ -40,7 +40,10 @@ export abstract class StatisticsBase {
             statistics.request,
             statistics.firstByte,
             statistics.download,
-            statistics.total);
+            statistics.total,
+            statistics.firstByteData,
+            statistics.firstByteData,
+            statistics.totalData);
     }
 
     protected shuffle(array: any[]): any[] {
