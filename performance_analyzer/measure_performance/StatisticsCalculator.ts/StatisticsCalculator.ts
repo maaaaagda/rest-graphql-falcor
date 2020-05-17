@@ -30,7 +30,10 @@ export class StatisticsCalculator {
             request: this.average(this._request),
             firstByte: this.average(this._firstByte),
             download: this.average(this._download),
-            total: this.average(this._total)
+            total: this.average(this._total),
+            firstByteData: this._firstByte.join("|"),
+            downloadData: this._download.join("|"),
+            totalData: this._total.join("|")
         };
     }
 
@@ -40,7 +43,10 @@ export class StatisticsCalculator {
             request: this.median(this._request),
             firstByte: this.median(this._firstByte),
             download: this.median(this._download),
-            total: this.median(this._total)
+            total: this.median(this._total),
+            firstByteData: this._firstByte.join("|"),
+            downloadData: this._download.join("|"),
+            totalData: this._total.join("|")
         };
     }
 

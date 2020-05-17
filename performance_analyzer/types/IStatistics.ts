@@ -4,4 +4,7 @@ export interface IStatistics {
     firstByte: number;
     download: number;
     total: number;
+    firstByteData: string;
+    downloadData: string;
+    totalData: string;
 }

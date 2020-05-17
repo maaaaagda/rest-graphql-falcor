@@ -14,8 +14,9 @@ export class Logger implements ILogger {
 
     public log(dbSize: string, collectionSize: number, tool: string, collection: string, operation: string,
                operationDetails: string, size: number, request: number,
-               TTFB: number, download: number, total: number): void {
-        const csvLine = `${dbSize},${collectionSize},${tool},${collection},${operation},${operationDetails},${size},${request},${TTFB},${download},${total}`;
+               TTFB: number, download: number, total: number, firstByteData: string,
+               downloadData: string, totalData: string): void {
+        const csvLine = `${dbSize},${collectionSize},${tool},${collection},${operation},${operationDetails},${size},${request},${TTFB},${download},${total},${firstByteData},${downloadData},${totalData}`;
         this.writeToCsv(csvLine);
         console.log("Received metrics: ", csvLine);
     }
