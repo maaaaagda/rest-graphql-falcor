@@ -20,7 +20,7 @@ export const userRoutes: any = [
     }
   },
   {
-    route: "users[{ranges:indexRanges}][\"name\", \"email\", \"role\"]",
+    route: "users[{ranges:indexRanges}][\"name\", \"email\", \"role\", \"_id\"]",
     get: async (pathSet) => {
       const users: IUser[] = (await userController.getUsers()).slice(0, pathSet.indexRanges[0].to + 1);
       const usersRoute: object = {};

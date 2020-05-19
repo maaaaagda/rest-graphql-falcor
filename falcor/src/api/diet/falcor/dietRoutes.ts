@@ -7,7 +7,7 @@ const dietController = new DietController();
 
 export const dietRoutes: any = [
     {
-        route: "diets[{ranges:indexRanges}]",
+        route: "diets[{ranges:indexRanges}][\"name\", \"dailyCost\", \"photoUrl\", \"_id\"]",
         get: async (pathSet) => {
             const diets: IDiet[] = (await dietController.getDiets()).slice(0, pathSet.indexRanges[0].to + 1);
             const dietsRoute: object = {};
@@ -42,7 +42,7 @@ export const dietRoutes: any = [
                     dietsRoute[i][key] = diet[key];
                 });
             });
-            return { jsonGraph: { diets: dietsRoute} };
+            return { jsonGraph: { dietsAll: dietsRoute} };
         }
     },
     {
